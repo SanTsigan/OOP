@@ -40,4 +40,13 @@ class MainTest {
         Main.heapsort(numbers);
         assertArrayEquals(expected, numbers);
     }
+
+    @Test
+    void checkDuplicates() {
+        int[] expected = {1, 1, 2, 3, 3};
+        int[] numbers = {3, 1, 2, 3, 1};
+
+        Main.heapsort(numbers);
+        assertArrayEquals(expected, numbers);
+    }
 }

@@ -53,7 +53,7 @@ public class Main {
         System.out.println();
     }
     public static void main(String[] args) {
-        int[] arr = {1};
+        int[] arr = {3, 1, 2, 3, 1};
 
         Main ob = new Main();
         ob.heapsort(arr);
