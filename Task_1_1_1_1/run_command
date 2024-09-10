@@ -1,0 +1,17 @@
+mkdir OOP #create folder for OOP labs
+mkdir tmp #create folder for Anastasia's sample project
+
+# clone sample project and copy useful file in own folder
+cd tmp
+git clone https://github.com/shadrina/OOP.git
+cd OOP
+cp -r .github ../../OOP
+
+# workflow
+cd ../../OOP
+git init
+git add .github/* 
+git commit -m "add workflow"
+git branch -M main
+git remote add origin https://$2@github.com/$1/OOP.git
+git push -u origin main
