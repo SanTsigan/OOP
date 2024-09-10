@@ -1,13 +1,12 @@
 package ru.nsu.tsyganov;
 
 public class Main {
-    public static int[] heapsort(int[] arr){
+    public static void heapsort(int[] arr){
         int N = arr.length;
 
         for (int i = N / 2 - 1; i >= 0; i--) {
             heapify(arr, N, i);
         }
-        return arr;
     }
 
     static void heapify(int[] arr, int N, int i){
