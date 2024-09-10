@@ -6,9 +6,17 @@ import org.junit.jupiter.api.Test;
 
 class MainTest {
     @Test
-    void checkMain() {
+    void checkMainOneIfBranch() {
         int[] expected = {1, 2, 3, 4, 5};
-        int[] numbers = {5, 3, 4, 1, 2};
+        int[] numbers = {1, 3, 4, 5, 2};
+
+        Main.heapsort(numbers);
+        assertArrayEquals(expected, numbers);
+    }
+
+    void checkMainOverIfBranch() {
+        int[] expected = {1, 2, 3, 4, 5};
+        int[] numbers = {1, 3, 5, 4, 2};
 
         Main.heapsort(numbers);
         assertArrayEquals(expected, numbers);
