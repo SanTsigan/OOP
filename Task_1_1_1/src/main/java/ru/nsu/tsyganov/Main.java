@@ -1,14 +1,13 @@
 package ru.nsu.tsyganov;
 
 /**
- * Класс Main
+ * Класс Main.
  */
 public class Main {
     /**
-     * Основная функция пирамидальной сортировки
-     * Сначала создаёт кучу затем достаём элементы и перемещаем в конец по одному и на каждом
-     * шаге строим максимальную кучу (max-heap) из оставшихся элементов
-     * @param arr
+     * Основная функция пирамидальной сортировки.
+     * Сначала создаёт кучу затем достаём элементы и перемещаем в конец по одному и на каждом.
+     * шаге строим максимальную кучу (max-heap) из оставшихся элементов.
      */
     public static void heapsort(int[] arr) {
         int n = arr.length;
@@ -26,30 +25,30 @@ public class Main {
         }
     }
 
-    static void heapify(int[] arr, int N, int i) {
+    static void heapify(int[] arr, int n, int i) {
         int largest = i;
         int l = 2 * i + 1;
         int r = 2 * i + 2;
 
-        if (l < N && arr[l] > arr[largest]) {
+        if (l < n && arr[l] > arr[largest]) {
             largest = l;
         }
-        if (r < N && arr[r] > arr[largest]) {
+        if (r < n && arr[r] > arr[largest]) {
             largest = r;
         }
-        if (largest != i){
+        if (largest != i) {
             int swap = arr[i];
             arr[i] = arr[largest];
             arr[largest] = swap;
 
-            heapify(arr, N, largest);
+            heapify(arr, n, largest);
         }
     }
 
     static void printArray(int[] arr) {
         int n = arr.length;
-        for (int i = 0; i < n; i++){
-            System.out.print(arr[i]+" ");
+        for (int i = 0; i < n; i++) {
+            System.out.print(arr[i] + " ");
         }
         System.out.println();
     }

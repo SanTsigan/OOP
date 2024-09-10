@@ -8,9 +8,9 @@ class MainTest {
     @Test
     void checkMain() {
         int[] numbers = {1, 2, 3, 4, 5};
-        int[] to_sort = {5, 3, 4, 1, 2};
+        int[] expected = {5, 3, 4, 1, 2};
 
-        Main.heapsort(to_sort);
-        assertArrayEquals(numbers, to_sort);
+        Main.heapsort(expected);
+        assertArrayEquals(numbers, expected);
     }
 }
