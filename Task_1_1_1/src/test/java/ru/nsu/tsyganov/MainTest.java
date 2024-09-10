@@ -1,12 +1,12 @@
 package ru.nsu.tsyganov;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 class MainTest {
     @Test
-    void MainTest(){
+    void checkMain() {
         int[] numbers = {1, 2, 3, 4, 5};
         int[] to_sort = {5, 3, 4, 1, 2};
 
