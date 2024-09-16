@@ -54,7 +54,7 @@ public class Main {
     }
 
     /**
-     * main
+     * main.
      */
     public static void main(String[] args) {
         int[] arr = {};
