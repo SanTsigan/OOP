@@ -1,22 +1,26 @@
 package ru.nsu.tsyganov;
 
 /**
- * Класс Game, который ведёт игру
+ * Класс Game, который ведёт игру.
  */
 public class Game {
 
-    private Deck deck, discarded;
+    private Deck deck;
+    private Deck discarded;
 
     private Dealer dealer;
     private Player player;
-    private int wins, losses, pushes, rounds, choose;
+    private int wins;
+    private int losses;
+    private int rounds;
+    private int choose;
 
     /**
      * Конструктор game, создаёт переменные и начинает игру
      */
     public Game() {
 
-        wins = 0; losses = 0; pushes = 0; rounds = 0;
+        wins = 0; losses = 0; rounds = 0;
         //создаём колоду
         deck = new Deck(true);
         discarded = new Deck();
@@ -25,7 +29,7 @@ public class Game {
         player = new Player();
 
         deck.shuffle();
-        startRound();
+        //startRound();
     }
 
     /**
@@ -58,7 +62,7 @@ public class Game {
     /**
      * Полный раунд игры.
      */
-    private void startRound() {
+    public void startRound() {
         rounds++;
 
         System.out.println("\nРаунд " + rounds);
@@ -89,7 +93,6 @@ public class Game {
             dealer.printHand();
 
             if (player.hasBlackjack()) {
-                pushes++;
                 System.out.println("У вас обоих 21 - Ничья.");
                 printScore();
                 startRound();
