@@ -1,0 +1,163 @@
+package ru.nsu.tsyganov;
+
+/**
+ * Класс Game, который ведёт игру
+ */
+public class Game {
+
+    private Deck deck, discarded;
+
+    private Dealer dealer;
+    private Player player;
+    private int wins, losses, pushes, rounds, choose;
+
+    /**
+     * Конструктор game, создаёт переменные и начинает игру
+     */
+    public Game() {
+
+        wins = 0; losses = 0; pushes = 0; rounds = 0;
+        //создаём колоду
+        deck = new Deck(true);
+        discarded = new Deck();
+
+        dealer = new Dealer();
+        player = new Player();
+
+        deck.shuffle();
+        startRound();
+    }
+
+    /**
+     * Печатает форматированный счёт.
+     */
+    private void printScore() {
+        System.out.print("Счёт " + wins + ":" + losses);
+        if(wins > losses) {
+            System.out.println(" в вашу пользу.");
+        } else if (wins < losses) {
+            System.out.println(" в пользу Дилера.");
+        } else {
+            System.out.println(".");
+        }
+    }
+
+    /**
+     * Печатает содержимое рук игрока и дилера.
+     */
+    private void printHands() {
+        player.printHand();
+        if (choose == 0) {
+            dealer.printFirstHand();
+        } else {
+            dealer.printHand();
+        }
+        System.out.println();
+    }
+
+    /**
+     * Полный раунд игры.
+     */
+    private void startRound() {
+        rounds++;
+
+        System.out.println("\nРаунд " + rounds);
+        System.out.println("Дилер раздал карты.");
+
+        choose = 0;
+
+        if (rounds > 1) {
+            System.out.println();
+            dealer.getHand().discardHandToDeck(discarded);
+            player.getHand().discardHandToDeck(discarded);
+        }
+
+        if(deck.cardsLeft() < 4) {
+            deck.reloadDeckFromDiscard(discarded);
+        }
+
+        dealer.getHand().takeCardFromDeck(deck);
+        dealer.getHand().takeCardFromDeck(deck);
+
+        player.getHand().takeCardFromDeck(deck);
+        player.getHand().takeCardFromDeck(deck);
+
+        player.printHand();
+        dealer.printFirstHand();
+
+        if (dealer.hasBlackjack()) {
+            dealer.printHand();
+
+            if (player.hasBlackjack()) {
+                pushes++;
+                System.out.println("У вас обоих 21 - Ничья.");
+                printScore();
+                startRound();
+            } else {
+                losses++;
+                System.out.println("У крупье блэкджек. Вы проиграли.");
+                printScore();
+                startRound();
+            }
+        }
+
+        if (player.hasBlackjack()) {
+            wins++;
+            System.out.println("У вас блэкджек! Вы выиграли!");
+            printScore();
+            startRound();
+        }
+
+        System.out.println("\nВаш ход\n-------");
+        while (player.getHand().calculatedValue() <= 20 && player.makeDecision(deck, discarded) == 1) {
+            //player.makeDecision(deck, discarded);
+            printHands();
+        }
+
+        choose = 1;
+
+        if (player.getHand().calculatedValue() > 21) {
+            losses++;
+            System.out.println("У вас больше 21.");
+            System.out.print("Вы проиграли этот раунд. ");
+            printScore();
+            startRound();
+        }
+
+        if (player.getHand().calculatedValue() == 21) {
+            wins++;
+            System.out.print("Вы выиграли этот раунд. ");
+            printScore();
+            startRound();
+        }
+
+        System.out.println("Ход дилера\n-------");
+        System.out.println("Дилер открывает закрытую карту " + dealer.getHand().getCard(1));
+        printHands();
+        while (dealer.getHand().calculatedValue() < 17) {
+            System.out.println();
+            dealer.hit(deck, discarded);
+            printHands();
+        }
+
+        if(dealer.getHand().calculatedValue() > 21) {
+            wins++;
+            System.out.print("Вы выиграли этот раунд. ");
+            printScore();
+        } else if (player.getHand().calculatedValue() > dealer.getHand().calculatedValue()) {
+            wins++;
+            System.out.print("Вы выиграли этот раунд. ");
+            printScore();
+        } else if (dealer.getHand().calculatedValue() > player.getHand().calculatedValue()) {
+            losses++;
+            System.out.print("Вы проиграли этот раунд. ");
+            printScore();
+        } else {
+            System.out.print("Ничья. ");
+            printScore();
+        }
+
+        startRound();
+    }
+
+}
