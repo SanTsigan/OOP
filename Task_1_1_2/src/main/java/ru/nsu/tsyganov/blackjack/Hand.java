@@ -17,6 +17,9 @@ public class Hand {
         hand.add(deck.takeCard());
     }
 
+    /**
+     * Рука в строку.
+     */
     public String toString() {
         String output = "";
         for (Card card : hand) {
@@ -25,6 +28,9 @@ public class Hand {
         return output;
     }
 
+    /**
+     * Выводит очки всей руки.
+     */
     public int calculatedValue() {
 
         int value = 0;

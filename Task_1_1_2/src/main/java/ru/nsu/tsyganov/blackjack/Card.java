@@ -38,7 +38,7 @@ public class Card {
     }
 
     /**
-     * Представляет класс Card
+     * Представляет класс Card в строчном виде.
      */
     public String toString() {
         if (rank.gender == 0) {

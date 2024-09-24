@@ -25,7 +25,7 @@ public class Deck {
     }
 
     /**
-     * Приводит к строчному виду
+     * Приводит к строчному виду.
      */
     public String toString() {
         String output = "";
@@ -58,7 +58,7 @@ public class Deck {
         ArrayList<Card> shuffled = new ArrayList<Card>();
 
         while (!deck.isEmpty()) {
-            int cardToPull = (int)(Math.random() * (deck.size() - 1));
+            int cardToPull = (int) (Math.random() * (deck.size() - 1));
             shuffled.add(deck.get(cardToPull));
             deck.remove(cardToPull);
         }

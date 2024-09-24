@@ -42,10 +42,10 @@ public abstract class Person {
      * Печатает содержимое руки участника в форматированном виде.
      */
     public void printHand() {
-        System.out.println("Карты " +
-                this.name + "а: [" +
-                this.hand + "] -> " +
-                this.hand.calculatedValue());
+        System.out.println("Карты "
+                + this.name + "а: ["
+                + this.hand + "] -> "
+                + this.hand.calculatedValue());
     }
 
     /**
@@ -56,8 +56,8 @@ public abstract class Person {
             deck.reloadDeckFromDiscard(discard);
         }
         this.hand.takeCardFromDeck(deck);
-        System.out.println(this.name +
-                " открыл карту " +
-                this.hand.getCard(this.hand.getSize() - 1));
+        System.out.println(this.name
+                + " открыл карту "
+                + this.hand.getCard(this.hand.getSize() - 1));
     }
 }
