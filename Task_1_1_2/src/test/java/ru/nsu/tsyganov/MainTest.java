@@ -3,6 +3,11 @@ package ru.nsu.tsyganov;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Scanner;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
@@ -68,4 +73,33 @@ class MainTest {
         assertEquals(fullDeck.toString(), testDeck.toString());
     }
 
+    @Test
+    void checkDealerPrintFirstHand() {
+        dealer.getHand().takeCardFromDeck(fullDeck);
+        dealer.getHand().takeCardFromDeck(fullDeck);
+        dealer.printFirstHand();
+    }
+
+    @Test
+    void checkPlayerMakeDecision()
+        throws IOException {
+        String inputString = "1";
+        InputStream stream = new ByteArrayInputStream(inputString.getBytes());
+        player.input = new Scanner(stream);
+        int returnValue = player.makeDecision(fullDeck, emptyDeck);
+        assertEquals(1, returnValue);
+    }
+
+    @Test
+    void checkPrintHand() {
+        player.getHand().takeCardFromDeck(fullDeck);
+        player.getHand().takeCardFromDeck(fullDeck);
+        player.printHand();
+    }
+
+    @Test
+    void checkHit() {
+        player.hit(fullDeck, emptyDeck);
+        assertEquals("Туз Трефы (11), ", player.getHand().toString());
+    }
 }
