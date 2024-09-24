@@ -115,7 +115,9 @@ public class Game {
 
         System.out.println("\nВаш ход\n-------");
         while (player.getHand().calculatedValue() <= 20) {
-            if (player.makeDecision(deck, discarded) == 0){ break; }
+            if (player.makeDecision(deck, discarded) == 0) {
+                break;
+            }
             printHands();
         }
 
