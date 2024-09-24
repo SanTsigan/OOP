@@ -1,4 +1,4 @@
-package ru.nsu.tsyganov;
+package ru.nsu.tsyganov.blackjack;
 
 /**
  * Класс участник игры. То есть дилера либо живого игрока.

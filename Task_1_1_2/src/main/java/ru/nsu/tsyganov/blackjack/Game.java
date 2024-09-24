@@ -1,4 +1,4 @@
-package ru.nsu.tsyganov;
+package ru.nsu.tsyganov.blackjack;
 
 /**
  * Класс Game, который ведёт игру.
@@ -16,11 +16,13 @@ public class Game {
     private int choose;
 
     /**
-     * Конструктор game, создаёт переменные и начинает игру
+     * Конструктор game, создаёт переменные и начинает игру.
      */
     public Game() {
 
-        wins = 0; losses = 0; rounds = 0;
+        wins = 0;
+        losses = 0;
+        rounds = 0;
         //создаём колоду
         deck = new Deck(true);
         discarded = new Deck();

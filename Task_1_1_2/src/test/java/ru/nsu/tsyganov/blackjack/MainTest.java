@@ -1,14 +1,16 @@
-package ru.nsu.tsyganov;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+package ru.nsu.tsyganov.blackjack;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class MainTest {
     private Game game;
@@ -39,7 +41,10 @@ class MainTest {
         emptyDeck.addCard(spadeQ);
         emptyDeck.addCard(clubK);
 
-        assertEquals("Шестёрка Бубны (6)\nТуз Червы (11)\nПиковая Дама (10)\nТрефовый Король (10)\n", emptyDeck.toString());
+        assertEquals("Шестёрка Бубны (6)", emptyDeck.takeCard().toString());
+        assertEquals("Туз Червы (11)", emptyDeck.takeCard().toString());
+        assertEquals("Пиковая Дама (10)", emptyDeck.takeCard().toString());
+        assertEquals("Трефовый Король (10)", emptyDeck.takeCard().toString());
     }
 
     @Test
@@ -81,7 +86,7 @@ class MainTest {
     }
 
     @Test
-    void checkPlayerMakeDecision()
+    void checkPlayerMakeDecision1()
         throws IOException {
         String inputString = "1";
         InputStream stream = new ByteArrayInputStream(inputString.getBytes());
@@ -89,6 +94,16 @@ class MainTest {
         int returnValue = player.makeDecision(fullDeck, emptyDeck);
         assertEquals(1, returnValue);
         assertEquals("Туз Трефы (11), ", player.getHand().toString());
+    }
+
+    @Test
+    void checkPlayerMakeDecision2()
+            throws IOException {
+        String inputString = "0";
+        InputStream stream = new ByteArrayInputStream(inputString.getBytes());
+        player.input = new Scanner(stream);
+        int returnValue = player.makeDecision(fullDeck, emptyDeck);
+        assertEquals(0, returnValue);
     }
 
     @Test
@@ -102,5 +117,28 @@ class MainTest {
     void checkHit() {
         player.hit(fullDeck, emptyDeck);
         assertEquals("Туз Трефы (11), ", player.getHand().toString());
+    }
+
+    @Test
+    void checkHasBlackjack() {
+        Card ClubA = new Card(Suit.CLUB, Rank.ACE);
+        Card ClubK = new Card(Suit.CLUB, Rank.KING);
+        emptyDeck.addCard(ClubA);
+        emptyDeck.addCard(ClubK);
+
+        player.getHand().takeCardFromDeck(emptyDeck);
+        player.getHand().takeCardFromDeck(emptyDeck);
+
+        assertTrue(player.hasBlackjack());
+    }
+
+    @Test
+    void checkPersonGetSet() {
+        hand.takeCardFromDeck(fullDeck);
+        player.setHand(hand);
+        assertEquals("Туз Трефы (11), ", player.getHand().toString());
+        assertEquals("Дилер", dealer.getName());
+        player.setName("Санёк");
+        assertEquals("Санёк", player.getName());
     }
 }

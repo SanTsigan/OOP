@@ -1,4 +1,4 @@
-package ru.nsu.tsyganov;
+package ru.nsu.tsyganov.blackjack;
 
 import java.util.Scanner;
 

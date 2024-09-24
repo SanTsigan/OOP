@@ -1,4 +1,4 @@
-package ru.nsu.tsyganov;
+package ru.nsu.tsyganov.blackjack;
 
 /**
  * Содержит достоинства и названия карт, а также кол-во очков за каждую из них.

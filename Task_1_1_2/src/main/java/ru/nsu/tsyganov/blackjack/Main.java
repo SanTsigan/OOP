@@ -1,4 +1,4 @@
-package ru.nsu.tsyganov;
+package ru.nsu.tsyganov.blackjack;
 
 /**
  * Класс Main чтобы поприветсвовать игрока и запустить саму игру.
