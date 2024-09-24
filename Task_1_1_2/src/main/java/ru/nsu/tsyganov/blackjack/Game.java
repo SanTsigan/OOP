@@ -114,8 +114,8 @@ public class Game {
         }
 
         System.out.println("\nВаш ход\n-------");
-        while (player.getHand().calculatedValue() <= 20 && player.makeDecision(deck, discarded) == 1) {
-            //player.makeDecision(deck, discarded);
+        while (player.getHand().calculatedValue() <= 20) {
+            if (player.makeDecision(deck, discarded) == 0){ break; }
             printHands();
         }
 
@@ -145,7 +145,7 @@ public class Game {
             printHands();
         }
 
-        if(dealer.getHand().calculatedValue() > 21) {
+        if (dealer.getHand().calculatedValue() > 21) {
             wins++;
             System.out.print("Вы выиграли этот раунд. ");
             printScore();
