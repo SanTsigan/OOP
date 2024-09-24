@@ -19,7 +19,7 @@ public class Hand {
 
     public String toString() {
         String output = "";
-        for(Card card: hand) {
+        for (Card card : hand) {
             output += card + ", ";
         }
         return output;
@@ -30,17 +30,17 @@ public class Hand {
         int value = 0;
         int aceCount = 0;
 
-        for(Card card: hand) {
+        for (Card card : hand) {
             value += card.getValue();
 
             if (card.getValue() == 11) {
-                aceCount ++;
+                aceCount++;
             }
         }
 
         if (value > 21 && aceCount > 0) {
-            while(aceCount > 0 && value > 21) {
-                aceCount --;
+            while (aceCount > 0 && value > 21) {
+                aceCount--;
                 value -= 10;
             }
         }

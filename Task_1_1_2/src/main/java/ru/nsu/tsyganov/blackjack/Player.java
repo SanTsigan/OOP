@@ -9,13 +9,15 @@ public class Player extends Person {
 
     Scanner input = new Scanner(System.in);
 
+    /**
+     * Конструктор.
+     */
     public Player() {
         super.setName("Игрок");
     }
 
     /**
      * Метод обрабатывающий пользовательский ввод.
-     * @return возвращает 1 если введена единица или 0 если введено что-то ещё.
      */
     public int makeDecision(Deck deck, Deck discard) {
 
@@ -28,8 +30,7 @@ public class Player extends Person {
                 System.out.println("Введите “1”, чтобы взять карту, и “0”, чтобы остановиться...");
                 decision = input.nextInt();
                 getNum = false;
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("Неверно.");
                 input.next();
             }

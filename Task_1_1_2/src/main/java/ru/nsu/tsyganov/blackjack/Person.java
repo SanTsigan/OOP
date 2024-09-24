@@ -25,12 +25,15 @@ public abstract class Person {
     public Hand getHand() {
         return this.hand;
     }
+
     public String getName() {
         return this.name;
     }
+
     public void setHand(Hand hand) {
         this.hand = hand;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -39,19 +42,22 @@ public abstract class Person {
      * Печатает содержимое руки участника в форматированном виде.
      */
     public void printHand() {
-        System.out.println("Карты " + this.name + "а: [" + this.hand + "] -> " + this.hand.calculatedValue());
+        System.out.println("Карты " +
+                this.name + "а: [" +
+                this.hand + "] -> " +
+                this.hand.calculatedValue());
     }
 
     /**
      * Взять карту.
-     * @param deck - из какой колоды берем.
-     * @param discard - колода сброса если нужно обновить колоду.
      */
     public void hit(Deck deck, Deck discard) {
-        if(!deck.hasCards()) {
+        if (!deck.hasCards()) {
             deck.reloadDeckFromDiscard(discard);
         }
         this.hand.takeCardFromDeck(deck);
-        System.out.println(this.name + " открыл карту " + this.hand.getCard(this.hand.getSize() - 1));
+        System.out.println(this.name +
+                " открыл карту " +
+                this.hand.getCard(this.hand.getSize() - 1));
     }
 }
