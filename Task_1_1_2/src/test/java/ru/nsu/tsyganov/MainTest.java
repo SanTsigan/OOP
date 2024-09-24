@@ -58,7 +58,7 @@ class MainTest {
     @Test
     void checkEmptyDeck() {
         fullDeck.emptyDeck();
-        assertEquals(fullDeck, emptyDeck);
+        assertEquals(fullDeck.toString(), emptyDeck.toString());
     }
 
     @Test
