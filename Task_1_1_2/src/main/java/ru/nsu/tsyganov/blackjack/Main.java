@@ -11,6 +11,6 @@ public class Main {
         System.out.println("Добро пожаловать в Блэкджек!");
 
         Game blackjack = new Game();
-        blackjack.startRound();
+        blackjack.startRound() ;
     }
 }

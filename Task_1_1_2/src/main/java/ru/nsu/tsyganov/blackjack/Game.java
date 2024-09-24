@@ -9,11 +9,12 @@ public class Game {
     private Deck discarded;
 
     private Dealer dealer;
-    private Player player;
+    public Player player;
     private int wins;
-    private int losses;
+    public int losses;
     private int rounds;
-    private int choose;
+    private int turn;
+    private int playerAction;
 
     /**
      * Конструктор game, создаёт переменные и начинает игру.
@@ -31,7 +32,6 @@ public class Game {
         player = new Player();
 
         deck.shuffle();
-        //startRound();
     }
 
     /**
@@ -53,7 +53,7 @@ public class Game {
      */
     private void printHands() {
         player.printHand();
-        if (choose == 0) {
+        if (turn == 0) {
             dealer.printFirstHand();
         } else {
             dealer.printHand();
@@ -70,7 +70,7 @@ public class Game {
         System.out.println("\nРаунд " + rounds);
         System.out.println("Дилер раздал карты.");
 
-        choose = 0;
+        turn = 0;
 
         if (rounds > 1) {
             System.out.println();
@@ -115,13 +115,16 @@ public class Game {
 
         System.out.println("\nВаш ход\n-------");
         while (player.getHand().calculatedValue() <= 20) {
-            if (player.makeDecision(deck, discarded) == 0) {
+            playerAction = player.makeDecision(deck, discarded);
+            if (playerAction == 0) {
+                break;
+            } else if (playerAction == -1) {
+                System.out.print("Итоговый ");
+                printScore();
                 break;
             }
             printHands();
         }
-
-        choose = 1;
 
         if (player.getHand().calculatedValue() > 21) {
             losses++;
@@ -137,34 +140,38 @@ public class Game {
             printScore();
             startRound();
         }
+        if (playerAction != -1) {
+            turn = 1;
 
-        System.out.println("Ход дилера\n-------");
-        System.out.println("Дилер открывает закрытую карту " + dealer.getHand().getCard(1));
-        printHands();
-        while (dealer.getHand().calculatedValue() < 17) {
-            System.out.println();
-            dealer.hit(deck, discarded);
+            System.out.println("Ход дилера\n-------");
+            System.out.println("Дилер открывает закрытую карту " + dealer.getHand().getCard(1));
             printHands();
-        }
+            while (dealer.getHand().calculatedValue() < 17) {
+                System.out.println();
+                dealer.hit(deck, discarded);
+                printHands();
+            }
 
-        if (dealer.getHand().calculatedValue() > 21) {
-            wins++;
-            System.out.print("Вы выиграли этот раунд. ");
-            printScore();
-        } else if (player.getHand().calculatedValue() > dealer.getHand().calculatedValue()) {
-            wins++;
-            System.out.print("Вы выиграли этот раунд. ");
-            printScore();
-        } else if (dealer.getHand().calculatedValue() > player.getHand().calculatedValue()) {
-            losses++;
-            System.out.print("Вы проиграли этот раунд. ");
-            printScore();
+            if (dealer.getHand().calculatedValue() > 21) {
+                wins++;
+                System.out.print("Вы выиграли этот раунд. ");
+                printScore();
+            } else if (player.getHand().calculatedValue() > dealer.getHand().calculatedValue()) {
+                wins++;
+                System.out.print("Вы выиграли этот раунд. ");
+                printScore();
+            } else if (dealer.getHand().calculatedValue() > player.getHand().calculatedValue()) {
+                losses++;
+                System.out.print("Вы проиграли этот раунд. ");
+                printScore();
+            } else {
+                System.out.print("Ничья. ");
+                printScore();
+            }
+
+            startRound();
         } else {
-            System.out.print("Ничья. ");
-            printScore();
+            return;
         }
-
-        startRound();
     }
-
 }

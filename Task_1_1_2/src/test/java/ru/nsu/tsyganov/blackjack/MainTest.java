@@ -21,12 +21,12 @@ class MainTest {
 
     @BeforeEach
     void setUp() {
-        //game = new Game();
         emptyDeck = new Deck();
         fullDeck = new Deck(true);
         player = new Player();
         dealer = new Dealer();
         hand = new Hand();
+        game = new Game();
     }
 
     @Test
@@ -139,5 +139,15 @@ class MainTest {
         assertEquals("Дилер", dealer.getName());
         player.setName("Санёк");
         assertEquals("Санёк", player.getName());
+    }
+
+    @Test
+    void checkMain()
+        throws IOException {
+        String inputString = "1\n1\n1\n1\n9\n";
+        InputStream stream = new ByteArrayInputStream(inputString.getBytes());
+        game.player.input = new Scanner(stream);
+        game.startRound();
+        assertNotEquals(0, game.losses);
     }
 }

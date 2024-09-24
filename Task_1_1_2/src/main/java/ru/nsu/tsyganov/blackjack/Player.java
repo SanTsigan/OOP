@@ -27,7 +27,8 @@ public class Player extends Person {
         while (getNum) {
 
             try {
-                System.out.println("Введите “1”, чтобы взять карту, и “0”, чтобы остановиться...");
+                System.out.print("Введите “1”, чтобы взять карту, и “0”, чтобы остановиться...");
+                System.out.println(" (Введи 9 чтобы выйти)");
                 decision = input.nextInt();
                 getNum = false;
             } catch (Exception e) {
@@ -39,6 +40,8 @@ public class Player extends Person {
         if (decision == 1) {
             this.hit(deck, discard);
             return 1;
+        } else if (decision == 9){
+            return -1;
         } else {
             return 0;
         }
