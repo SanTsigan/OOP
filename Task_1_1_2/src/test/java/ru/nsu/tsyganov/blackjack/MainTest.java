@@ -6,10 +6,13 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class MainTest {
@@ -121,10 +124,10 @@ class MainTest {
 
     @Test
     void checkHasBlackjack() {
-        Card ClubA = new Card(Suit.CLUB, Rank.ACE);
-        Card ClubK = new Card(Suit.CLUB, Rank.KING);
-        emptyDeck.addCard(ClubA);
-        emptyDeck.addCard(ClubK);
+        Card clubA = new Card(Suit.CLUB, Rank.ACE);
+        Card clubK = new Card(Suit.CLUB, Rank.KING);
+        emptyDeck.addCard(clubA);
+        emptyDeck.addCard(clubK);
 
         player.getHand().takeCardFromDeck(emptyDeck);
         player.getHand().takeCardFromDeck(emptyDeck);

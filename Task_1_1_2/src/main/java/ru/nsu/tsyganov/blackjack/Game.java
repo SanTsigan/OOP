@@ -39,7 +39,7 @@ public class Game {
      */
     private void printScore() {
         System.out.print("Счёт " + wins + ":" + losses);
-        if(wins > losses) {
+        if (wins > losses) {
             System.out.println(" в вашу пользу.");
         } else if (wins < losses) {
             System.out.println(" в пользу Дилера.");
@@ -78,7 +78,7 @@ public class Game {
             player.getHand().discardHandToDeck(discarded);
         }
 
-        if(deck.cardsLeft() < 4) {
+        if (deck.cardsLeft() < 4) {
             deck.reloadDeckFromDiscard(discarded);
         }
 
