@@ -88,6 +88,7 @@ class MainTest {
         player.input = new Scanner(stream);
         int returnValue = player.makeDecision(fullDeck, emptyDeck);
         assertEquals(1, returnValue);
+        assertEquals("Туз Трефы (11), ", player.getHand().toString());
     }
 
     @Test
