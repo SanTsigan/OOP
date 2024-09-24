@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Указываем директории
-SRC_DIR="src/main/java/ru/nsu/tsyganov"
+SRC_DIR="src/main/java/ru/nsu/tsyganov/blackjack"
 BIN_DIR="bin"
 DOC_DIR="docs"
 JAR_FILE="app.jar"
@@ -20,4 +20,4 @@ javadoc -d $DOC_DIR $SRC_DIR/*.java
 jar cvf $JAR_FILE -C $BIN_DIR .
 
 # Запуск приложения
-java -cp $JAR_FILE ru.nsu.tsyganov.Main
+java -cp $JAR_FILE ru.nsu.tsyganov.blackjack.Main
