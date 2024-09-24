@@ -40,7 +40,7 @@ public class Player extends Person {
         if (decision == 1) {
             this.hit(deck, discard);
             return 1;
-        } else if (decision == 9){
+        } else if (decision == 9) {
             return -1;
         } else {
             return 0;
