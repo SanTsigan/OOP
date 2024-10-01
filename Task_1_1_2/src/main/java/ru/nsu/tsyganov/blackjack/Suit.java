@@ -9,17 +9,24 @@ public enum Suit {
     HEART("Червы", "Червовая", "Червовый"),
     SPADE("Пики", "Пиковая", "Пиковый");
 
-    String suitName0;
-    String suitName1;
-    String suitName2;
+    private final String suitNameNone;
+    private final String suitNameFemale;
+    private final String suitNameMale;
 
-    Suit(String suitName0, String suitName1, String suitName2) {
-        this.suitName0 = suitName0;
-        this.suitName1 = suitName1;
-        this.suitName2 = suitName2;
+    Suit(String suitNameNone, String suitNameFemale, String suitNameMale) {
+        this.suitNameNone = suitNameNone;
+        this.suitNameFemale = suitNameFemale;
+        this.suitNameMale = suitNameMale;
     }
 
-    public String toString() {
-        return suitName0 + suitName1 + suitName2;
+    public String correctGender(Gender gender) {
+        switch (gender) {
+            case MALE:
+                return suitNameMale;
+            case FEMALE:
+                return suitNameFemale;
+            default:
+                return suitNameNone;
+        }
     }
 }

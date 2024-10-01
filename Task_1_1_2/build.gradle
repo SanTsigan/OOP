@@ -3,7 +3,7 @@ plugins {
     id 'jacoco'
 }
 
-group = 'ru.nsu.tsyganov'
+group = 'ru.nsu.tsyganov.blackjack'
 version = '1.0-SNAPSHOT'
 
 repositories {

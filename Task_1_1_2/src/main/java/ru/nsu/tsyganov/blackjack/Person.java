@@ -55,7 +55,7 @@ public abstract class Person {
         if (!deck.hasCards()) {
             deck.reloadDeckFromDiscard(discard);
         }
-        this.hand.takeCardFromDeck(deck);
+        this.hand.takeCardFromDeck(deck, discard);
         System.out.println(this.name
                 + " открыл карту "
                 + this.hand.getCard(this.hand.getSize() - 1));
