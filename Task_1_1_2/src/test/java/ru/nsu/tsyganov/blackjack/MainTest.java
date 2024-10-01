@@ -146,7 +146,7 @@ class MainTest {
     @Test
     void checkMain()
         throws IOException {
-        String inputString = "1\n1\n1\n1\n1\n1\n1\n1\n1\n";
+        String inputString = "1\n1\n1\n1\n1\n";
         InputStream stream = new ByteArrayInputStream(inputString.getBytes());
         game.player.input = new Scanner(stream);
         game.startRound();
