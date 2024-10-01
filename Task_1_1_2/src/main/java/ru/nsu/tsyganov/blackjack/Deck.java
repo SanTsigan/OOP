@@ -14,7 +14,7 @@ public class Deck {
      * Конструктор.
      */
     public Deck() {
-        deck = new ArrayList<Card>();
+        deck = new ArrayList<>();
     }
 
     public List<Card> getCards() {
@@ -56,7 +56,7 @@ public class Deck {
      * Перетасовать колоду.
      */
     public void shuffle() {
-        ArrayList<Card> shuffled = new ArrayList<Card>();
+        ArrayList<Card> shuffled = new ArrayList<>();
 
         while (!deck.isEmpty()) {
             int cardToPull = (int) (Math.random() * (deck.size() - 1));
@@ -82,7 +82,7 @@ public class Deck {
      * Проверка на наличие карт в колоде.
      */
     public boolean hasCards() {
-        return (!deck.isEmpty());
+        return !deck.isEmpty();
     }
 
     /**
