@@ -1,9 +1,9 @@
 package ru.nsu.tsyganov.expressions;
 
 public class Number extends Expression {
-    private final double value;
+    private final int value;
 
-    public Number(double value) {
+    public Number(int value) {
         this.value = value;
     }
 
@@ -14,6 +14,6 @@ public class Number extends Expression {
 
     @Override
     public String toString() {
-        return Double.toString(value);
+        return Integer.toString(value);
     }
 }

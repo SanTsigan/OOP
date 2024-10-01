@@ -19,6 +19,6 @@ public class Variable extends Expression {
 
     @Override
     public String toString() {
-        return "";
+        return name;
     }
 }
