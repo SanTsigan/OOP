@@ -32,16 +32,14 @@ public class Player extends Person {
                 decision = input.nextInt();
                 getNum = false;
             } catch (Exception e) {
-                System.out.println("Неверно.");
-                input.next();
+                System.out.println("Спасибо за игру.");
+                return -1;
             }
         }
 
         if (decision == 1) {
             this.hit(deck, discard);
             return 1;
-        } else if (decision == 9) {
-            return -1;
         } else {
             return 0;
         }

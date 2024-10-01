@@ -126,21 +126,22 @@ public class Game {
             printHands();
         }
 
-        if (player.getHand().calculatedValue() > 21) {
-            losses++;
-            System.out.println("У вас больше 21.");
-            System.out.print("Вы проиграли этот раунд. ");
-            printScore();
-            startRound();
-        }
-
-        if (player.getHand().calculatedValue() == 21) {
-            wins++;
-            System.out.print("Вы выиграли этот раунд. ");
-            printScore();
-            startRound();
-        }
         if (playerAction != -1) {
+            if (player.getHand().calculatedValue() > 21) {
+                losses++;
+                System.out.println("У вас больше 21.");
+                System.out.print("Вы проиграли этот раунд. ");
+                printScore();
+                startRound();
+            }
+
+            if (player.getHand().calculatedValue() == 21) {
+                wins++;
+                System.out.print("Вы выиграли этот раунд. ");
+                printScore();
+                startRound();
+            }
+
             turn = 1;
 
             System.out.println("Ход дилера\n-------");
@@ -170,8 +171,9 @@ public class Game {
             }
 
             startRound();
+
         } else {
-            return;
+            return; // выход из рекурсии.
         }
     }
 }
