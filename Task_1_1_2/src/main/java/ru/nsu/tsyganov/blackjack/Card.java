@@ -48,13 +48,12 @@ public class Card {
     /**
      * Представляет класс Card в строчном виде.
      */
+    @Override
     public String toString() {
         return correctGender() + " (" + this.getValue() + ")";
     }
 
-
-
-/**
+    /**
      * Сделать карту из карты.
      */
     public Card(Card card) {
