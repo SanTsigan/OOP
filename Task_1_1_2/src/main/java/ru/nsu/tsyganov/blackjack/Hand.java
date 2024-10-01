@@ -13,19 +13,20 @@ public class Hand {
         hand = new ArrayList<Card>();
     }
 
-    public void takeCardFromDeck(Deck deck) {
-        hand.add(deck.takeCard());
+    public void takeCardFromDeck(Deck deck, Deck discard) {
+        hand.add(deck.takeCard(discard));
     }
 
     /**
      * Рука в строку.
      */
     public String toString() {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for (Card card : hand) {
-            output += card + ", ";
+            output.append(card);
+            output.append(", ");
         }
-        return output;
+        return output.toString();
     }
 
     /**

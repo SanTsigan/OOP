@@ -15,6 +15,7 @@ class MainTest {
     private Game game;
     private Deck emptyDeck;
     private Deck fullDeck;
+    private Deck discard;
     private Player player;
     private Dealer dealer;
     private Hand hand;
@@ -23,6 +24,7 @@ class MainTest {
     void setUp() {
         emptyDeck = new Deck();
         fullDeck = new Deck(true);
+        discard = new Deck();
         player = new Player();
         dealer = new Dealer();
         hand = new Hand();
@@ -40,10 +42,10 @@ class MainTest {
         emptyDeck.addCard(spadeQ);
         emptyDeck.addCard(clubK);
 
-        assertEquals("Шестёрка Бубны (6)", emptyDeck.takeCard().toString());
-        assertEquals("Туз Червы (11)", emptyDeck.takeCard().toString());
-        assertEquals("Пиковая Дама (10)", emptyDeck.takeCard().toString());
-        assertEquals("Трефовый Король (10)", emptyDeck.takeCard().toString());
+        assertEquals("Шестёрка Бубны (6)", emptyDeck.takeCard(discard).toString());
+        assertEquals("Туз Червы (11)", emptyDeck.takeCard(discard).toString());
+        assertEquals("Пиковая Дама (10)", emptyDeck.takeCard(discard).toString());
+        assertEquals("Трефовый Король (10)", emptyDeck.takeCard(discard).toString());
     }
 
     @Test
@@ -55,7 +57,7 @@ class MainTest {
 
     @Test
     void checkTakeCard() {
-        Card testCard = fullDeck.takeCard();
+        Card testCard = fullDeck.takeCard(discard);
         assertEquals("Туз Трефы (11)", testCard.toString());
     }
 
@@ -79,8 +81,8 @@ class MainTest {
 
     @Test
     void checkDealerPrintFirstHand() {
-        dealer.getHand().takeCardFromDeck(fullDeck);
-        dealer.getHand().takeCardFromDeck(fullDeck);
+        dealer.getHand().takeCardFromDeck(fullDeck, discard);
+        dealer.getHand().takeCardFromDeck(fullDeck, discard);
         dealer.printFirstHand();
     }
 
@@ -90,7 +92,7 @@ class MainTest {
         String inputString = "1";
         InputStream stream = new ByteArrayInputStream(inputString.getBytes());
         player.input = new Scanner(stream);
-        int returnValue = player.makeDecision(fullDeck, emptyDeck);
+        int returnValue = player.makeDecision(fullDeck, discard);
         assertEquals(1, returnValue);
         assertEquals("Туз Трефы (11), ", player.getHand().toString());
     }
@@ -107,8 +109,8 @@ class MainTest {
 
     @Test
     void checkPrintHand() {
-        player.getHand().takeCardFromDeck(fullDeck);
-        player.getHand().takeCardFromDeck(fullDeck);
+        player.getHand().takeCardFromDeck(fullDeck, discard);
+        player.getHand().takeCardFromDeck(fullDeck, discard);
         player.printHand();
     }
 
@@ -125,15 +127,15 @@ class MainTest {
         emptyDeck.addCard(clubA);
         emptyDeck.addCard(clubK);
 
-        player.getHand().takeCardFromDeck(emptyDeck);
-        player.getHand().takeCardFromDeck(emptyDeck);
+        player.getHand().takeCardFromDeck(emptyDeck, discard);
+        player.getHand().takeCardFromDeck(emptyDeck, discard);
 
         assertTrue(player.hasBlackjack());
     }
 
     @Test
     void checkPersonGetSet() {
-        hand.takeCardFromDeck(fullDeck);
+        hand.takeCardFromDeck(fullDeck, discard);
         player.setHand(hand);
         assertEquals("Туз Трефы (11), ", player.getHand().toString());
         assertEquals("Дилер", dealer.getName());

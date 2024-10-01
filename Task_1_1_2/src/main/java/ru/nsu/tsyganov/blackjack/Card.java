@@ -5,8 +5,8 @@ package ru.nsu.tsyganov.blackjack;
  */
 public class Card {
 
-    private Suit suit;
-    private Rank rank;
+    private final Suit suit;
+    private final Rank rank;
 
     /**
      * Конструктор.
@@ -37,20 +37,24 @@ public class Card {
         return rank;
     }
 
-    /**
-     * Представляет класс Card в строчном виде.
-     */
-    public String toString() {
-        if (rank.gender == 0) {
-            return (rank.rankName + " " + suit.suitName0 + " (" + this.getValue() + ")");
-        } else if (rank.gender == 1) {
-            return (suit.suitName1 + " " + rank.rankName + " (" + this.getValue() + ")");
+    private String correctGender() {
+        if (rank.gender == Gender.NONE) {
+            return rank.rankName + " " + suit.correctGender(rank.gender);
         } else {
-            return (suit.suitName2 + " " + rank.rankName + " (" + this.getValue() + ")");
+            return suit.correctGender(rank.gender) + " " + rank.rankName;
         }
     }
 
     /**
+     * Представляет класс Card в строчном виде.
+     */
+    public String toString() {
+        return correctGender() + " (" + this.getValue() + ")";
+    }
+
+
+
+/**
      * Сделать карту из карты.
      */
     public Card(Card card) {

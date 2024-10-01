@@ -8,7 +8,7 @@ public class Game {
     private Deck deck;
     private Deck discarded;
 
-    private Dealer dealer;
+    private final Dealer dealer;
     public Player player;
     private int wins;
     public int losses;
@@ -82,11 +82,11 @@ public class Game {
             deck.reloadDeckFromDiscard(discarded);
         }
 
-        dealer.getHand().takeCardFromDeck(deck);
-        dealer.getHand().takeCardFromDeck(deck);
+        dealer.getHand().takeCardFromDeck(deck, discarded);
+        dealer.getHand().takeCardFromDeck(deck, discarded);
 
-        player.getHand().takeCardFromDeck(deck);
-        player.getHand().takeCardFromDeck(deck);
+        player.getHand().takeCardFromDeck(deck, discarded);
+        player.getHand().takeCardFromDeck(deck, discarded);
 
         player.printHand();
         dealer.printFirstHand();

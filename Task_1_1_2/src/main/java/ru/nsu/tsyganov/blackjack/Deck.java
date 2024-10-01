@@ -1,13 +1,14 @@
 package ru.nsu.tsyganov.blackjack;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Класс колоды карт.
  */
 public class Deck {
 
-    private ArrayList<Card> deck;
+    private List<Card> deck;
 
     /**
      * Конструктор.
@@ -16,7 +17,7 @@ public class Deck {
         deck = new ArrayList<Card>();
     }
 
-    public ArrayList<Card> getCards() {
+    public List<Card> getCards() {
         return deck;
     }
 
@@ -28,20 +29,20 @@ public class Deck {
      * Приводит к строчному виду.
      */
     public String toString() {
-        String output = "";
+        StringBuilder output = new StringBuilder();
 
         for (Card card : deck) {
-            output += card;
-            output += "\n";
+            output.append(card);
+            output.append("\n");
         }
-        return output;
+        return output.toString();
     }
 
     /**
      * Для создания полной колоды со всеми 52 картами.
      */
     public Deck(boolean makeDeck) {
-        deck = new ArrayList<Card>();
+        deck = new ArrayList<>();
         if (makeDeck) {
             for (Suit suit : Suit.values()) {
                 for (Rank rank : Rank.values()) {
@@ -68,7 +69,10 @@ public class Deck {
     /**
      * Взять карту сверху колоды.
      */
-    public Card takeCard() {
+    public Card takeCard(Deck discard) {
+        if (!hasCards()) {
+            reloadDeckFromDiscard(discard);
+        }
         Card cardToTake = new Card(deck.get(0));
         deck.remove(0);
         return cardToTake;
@@ -91,7 +95,7 @@ public class Deck {
     /**
      * Добавить в колоду ArrayList карт.
      */
-    public void addCards(ArrayList<Card> cards) {
+    public void addCards(List<Card> cards) {
         deck.addAll(cards);
     }
 
