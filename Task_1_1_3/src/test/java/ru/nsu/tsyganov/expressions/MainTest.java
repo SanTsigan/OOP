@@ -38,30 +38,30 @@ class MainTest {
     @Test
     void numberParse() {
         Expression e = parser.parse("10");
-        assertEquals(number, e);
+        assertEquals(number.toString(), e.toString());
     }
 
     @Test
     void addParse() {
         Expression e = parser.parse("(2+x)");
-        assertEquals(expAdd, e);
+        assertEquals(expAdd.toString(), e.toString());
     }
 
     @Test
     void subParse() {
         Expression e = parser.parse("(x-3)");
-        assertEquals(expSub, e);
+        assertEquals(expSub.toString(), e.toString());
     }
 
     @Test
     void mulParse() {
         Expression e = parser.parse("(x*4)");
-        assertEquals(expMul, e);
+        assertEquals(expMul.toString(), e.toString());
     }
 
     @Test
     void divParse() {
         Expression e = parser.parse("(5/x)");
-        assertEquals(expDiv, e);
+        assertEquals(expDiv.toString(), e.toString());
     }
 }
