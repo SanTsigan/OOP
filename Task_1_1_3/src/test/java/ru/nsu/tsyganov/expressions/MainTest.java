@@ -42,37 +42,37 @@ class MainTest {
     @Test
     void numberParse() {
         Number e = (Number) parser.parse("10");
-        assertTrue(e.equals(number));
+        assertEquals(e.equals(number), e.hashCode() == number.hashCode());
     }
 
     @Test
     void varParse() {
         Variable e = (Variable) parser.parse("x");
-        assertTrue(e.equals(variable));
+        assertEquals(e.equals(variable), e.hashCode() == variable.hashCode());
     }
 
     @Test
     void addParse() {
         Add e = (Add) parser.parse("(2+x)");
-        assertTrue(e.equals(expAdd));
+        assertEquals(e.equals(expAdd), e.hashCode() == expAdd.hashCode());
     }
 
     @Test
     void subParse() {
         Sub e = (Sub) parser.parse("(x-3)");
-        assertTrue(e.equals(expSub));
+        assertEquals(e.equals(expSub), e.hashCode() == expSub.hashCode());
     }
 
     @Test
     void mulParse() {
         Mul e = (Mul) parser.parse("(x*4)");
-        assertTrue(e.equals(expMul));
+        assertEquals(e.equals(expMul), e.hashCode() == expMul.hashCode());
     }
 
     @Test
     void divParse() {
         Div e = (Div) parser.parse("(5/x)");
-        assertTrue(e.equals(expDiv));
+        assertEquals(e.equals(expDiv), e.hashCode() == expDiv.hashCode());
     }
 
     @Test
