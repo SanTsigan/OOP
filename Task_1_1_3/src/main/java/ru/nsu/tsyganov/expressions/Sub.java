@@ -9,12 +9,17 @@ public class Sub extends Expression {
         this.right = right;
     }
     @Override
-    public double eval() {
-        return left.eval() - right.eval();
+    public double eval(String variables) {
+        return left.eval(variables) - right.eval(variables);
     }
 
     @Override
     public String toString() {
         return "(" + left.toString() + "-" + right.toString() + ")";
+    }
+
+    @Override
+    public Expression derivative(String var) {
+        return new Sub(left.derivative(var), right.derivative(var));
     }
 }

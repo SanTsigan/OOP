@@ -9,12 +9,18 @@ public class Mul extends Expression {
         this.right = right;
     }
     @Override
-    public double eval() {
-        return left.eval() * right.eval();
+    public double eval(String variables) {
+        return left.eval(variables) * right.eval(variables);
     }
 
     @Override
     public String toString() {
         return "(" + left.toString() + "*" + right.toString() + ")";
+    }
+
+    @Override
+    public Expression derivative(String var) {
+        return new Add(new Mul(left.derivative(var), right),
+                       new Mul(left, right.derivative(var)));
     }
 }
