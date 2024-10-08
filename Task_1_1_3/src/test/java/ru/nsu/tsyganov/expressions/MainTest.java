@@ -1,10 +1,9 @@
 package ru.nsu.tsyganov.expressions;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
     private Expression expSimple;
@@ -14,6 +13,7 @@ class MainTest {
     private Expression expDiv;
     private Expression number;
     private ExpressionParser parser;
+    private Variable variable;
 
     @BeforeEach
     void setup() {
@@ -24,6 +24,7 @@ class MainTest {
         expDiv = new Div(new Number(5), new Variable("x")); // (5/x)
         number = new Number(10); // 10
         parser = new ExpressionParser();
+        variable = new Variable("x");
     }
 
     @Test
@@ -34,35 +35,42 @@ class MainTest {
         expSub.print();
         expMul.print();
         expDiv.print();
+        variable.print();
     }
 
     @Test
     void numberParse() {
-        Expression e = parser.parse("10");
-        assertEquals(number.toString(), e.toString());
+        Number e = (Number) parser.parse("10");
+        assertTrue(e.equals(number));
+    }
+
+    @Test
+    void varParse() {
+        Variable e = (Variable) parser.parse("x");
+        assertTrue(e.equals(variable));
     }
 
     @Test
     void addParse() {
-        Expression e = parser.parse("(2+x)");
-        assertEquals(expAdd.toString(), e.toString());
+        Add e = (Add) parser.parse("(2+x)");
+        assertTrue(e.equals(expAdd));
     }
 
     @Test
     void subParse() {
-        Expression e = parser.parse("(x-3)");
-        assertEquals(expSub.toString(), e.toString());
+        Sub e = (Sub) parser.parse("(x-3)");
+        assertTrue(e.equals(expSub));
     }
 
     @Test
     void mulParse() {
-        Expression e = parser.parse("(x*4)");
-        assertEquals(expMul.toString(), e.toString());
+        Mul e = (Mul) parser.parse("(x*4)");
+        assertTrue(e.equals(expMul));
     }
 
     @Test
     void divParse() {
-        Expression e = parser.parse("(5/x)");
-        assertEquals(expDiv.toString(), e.toString());
+        Div e = (Div) parser.parse("(5/x)");
+        assertTrue(e.equals(expDiv));
     }
 }
