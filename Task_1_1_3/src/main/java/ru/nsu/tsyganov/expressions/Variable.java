@@ -63,8 +63,8 @@ public class Variable extends Expression {
 
         final Variable other = (Variable) obj;
 
-        return (value != other.value) && (this.name != null) ?
-                (other.name == null) : Objects.equals(this.name, other.name);
+        return (value != other.value) && (this.name != null)
+                ? (other.name == null) : Objects.equals(this.name, other.name);
     }
 
     @Override
