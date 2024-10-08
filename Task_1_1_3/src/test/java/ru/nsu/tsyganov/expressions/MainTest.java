@@ -3,7 +3,8 @@ package ru.nsu.tsyganov.expressions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MainTest {
     private Expression expSimple;
@@ -72,5 +73,47 @@ class MainTest {
     void divParse() {
         Div e = (Div) parser.parse("(5/x)");
         assertTrue(e.equals(expDiv));
+    }
+
+    @Test
+    void checkDeriv() {
+        Expression de = expSimple.derivative("x");
+        Expression e = parser.parse("(0+((0*x)+(2*1)))");
+        assertEquals(de, e);
+    }
+
+    @Test
+    void evalNumber() {
+        assertEquals(10, number.eval("x = 1"));
+    }
+
+    @Test
+    void evalVar() {
+        assertEquals(10, variable.eval("x = 10"));
+    }
+
+    @Test
+    void evalAdd() {
+        assertEquals(10, expAdd.eval("x = 8"));
+    }
+
+    @Test
+    void evalSub() {
+        assertEquals(10, expSub.eval("x = 13"));
+    }
+
+    @Test
+    void evalMul() {
+        assertEquals(20, expMul.eval("x = 5"));
+    }
+
+    @Test
+    void evalDiv() {
+        assertEquals(1, expDiv.eval("x = 5"));
+    }
+
+    @Test
+    void evalExp() {
+        assertEquals(23, expSimple.eval("x = 10; y = 13"));
     }
 }

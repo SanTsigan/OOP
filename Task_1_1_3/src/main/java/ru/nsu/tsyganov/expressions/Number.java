@@ -9,6 +9,9 @@ public class Number extends Expression {
 
     @Override
     public double eval(String variables) {
+        if (variables.isEmpty()) {
+            throw new RuntimeException("No variables");
+        }
         return value;
     }
 
