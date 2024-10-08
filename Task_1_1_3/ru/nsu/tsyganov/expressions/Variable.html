@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -207,16 +207,21 @@ extends <a href="Expression.html" title="class in ru.nsu.tsyganov.expressions">E
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>double</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#eval()">eval</a></span>()</code></th>
+<td class="colFirst"><code><a href="Expression.html" title="class in ru.nsu.tsyganov.expressions">Expression</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#derivative(java.lang.String)">derivative</a></span>&#8203;(java.lang.String&nbsp;var)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#eval(java.lang.String)">eval</a></span>&#8203;(java.lang.String&nbsp;variables)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setValue(double)">setValue</a></span>&#8203;(double&nbsp;value)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -308,29 +313,42 @@ extends <a href="Expression.html" title="class in ru.nsu.tsyganov.expressions">E
 <pre class="methodSignature">public&nbsp;void&nbsp;setValue&#8203;(double&nbsp;value)</pre>
 </li>
 </ul>
-<a id="eval()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>eval</h4>
-<pre class="methodSignature">public&nbsp;double&nbsp;eval()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Expression.html#eval()">eval</a></code>&nbsp;in class&nbsp;<code><a href="Expression.html" title="class in ru.nsu.tsyganov.expressions">Expression</a></code></dd>
-</dl>
-</li>
-</ul>
 <a id="toString()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>toString</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="Expression.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="Expression.html" title="class in ru.nsu.tsyganov.expressions">Expression</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="derivative(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>derivative</h4>
+<pre class="methodSignature">public&nbsp;<a href="Expression.html" title="class in ru.nsu.tsyganov.expressions">Expression</a>&nbsp;derivative&#8203;(java.lang.String&nbsp;var)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="Expression.html#derivative(java.lang.String)">derivative</a></code>&nbsp;in class&nbsp;<code><a href="Expression.html" title="class in ru.nsu.tsyganov.expressions">Expression</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="eval(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>eval</h4>
+<pre class="methodSignature">public&nbsp;double&nbsp;eval&#8203;(java.lang.String&nbsp;variables)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="Expression.html#eval(java.lang.String)">eval</a></code>&nbsp;in class&nbsp;<code><a href="Expression.html" title="class in ru.nsu.tsyganov.expressions">Expression</a></code></dd>
 </dl>
 </li>
 </ul>
