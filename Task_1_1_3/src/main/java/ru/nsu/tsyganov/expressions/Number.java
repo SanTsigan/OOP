@@ -19,6 +19,9 @@ public class Number extends Expression {
 
     @Override
     public Expression derivative(String var) {
+        if (var.isEmpty()) {
+            throw new RuntimeException("No variables");
+        }
         return new Number(0);
     }
 }

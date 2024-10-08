@@ -10,7 +10,13 @@ public class Div extends Expression {
     }
     @Override
     public double eval(String variables) {
-        return left.eval(variables) / right.eval(variables);
+        double result = 0;
+        try {
+            result = left.eval(variables) / right.eval(variables);
+        } catch (ArithmeticException e) {
+            System.out.println("Division by zero");
+        }
+        return result;
     }
 
     @Override

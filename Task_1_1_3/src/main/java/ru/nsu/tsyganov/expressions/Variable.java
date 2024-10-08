@@ -32,6 +32,9 @@ public class Variable extends Expression {
     }
 
     private Map<String, Double> parseVariables(String variables) {
+        if (variables.isEmpty()) {
+            throw new RuntimeException("No variables");
+        }
         Map<String, Double> varMap = new HashMap<>();
         String[] pairs = variables.split(";");
         for(String pair : pairs) {
