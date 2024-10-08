@@ -40,7 +40,8 @@ class ExpressionParser {
                     }
                     operators.pop(); // Удаляем '('
                 } else if (OPERATORS.contains(String.valueOf(ch))) {
-                    while (!operators.isEmpty() && precedence(operators.peek()) >= precedence(String.valueOf(ch))) {
+                    while (!operators.isEmpty() &&
+                            precedence(operators.peek()) >= precedence(String.valueOf(ch))) {
                         values.push(applyOperator(operators.pop(), values.pop(), values.pop()));
                     }
                     operators.push(String.valueOf(ch));

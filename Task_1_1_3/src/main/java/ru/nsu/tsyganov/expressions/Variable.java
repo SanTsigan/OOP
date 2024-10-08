@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Класс для переменных.
+ */
 public class Variable extends Expression {
     public final String name;
     public double value;
@@ -41,9 +44,9 @@ public class Variable extends Expression {
         }
         Map<String, Double> varMap = new HashMap<>();
         String[] pairs = variables.split(";");
-        for(String pair : pairs) {
+        for (String pair : pairs) {
             String[] parts = pair.split("=");
-            if(parts.length == 2) {
+            if (parts.length == 2) {
                 String varName = parts[0].trim();
                 double varValue = Double.parseDouble(parts[1].trim());
                 varMap.put(varName, varValue);
@@ -60,7 +63,8 @@ public class Variable extends Expression {
 
         final Variable other = (Variable) obj;
 
-        return (value != other.value) && (this.name != null) ? (other.name == null) : Objects.equals(this.name, other.name);
+        return (value != other.value) && (this.name != null) ?
+                (other.name == null) : Objects.equals(this.name, other.name);
     }
 
     @Override

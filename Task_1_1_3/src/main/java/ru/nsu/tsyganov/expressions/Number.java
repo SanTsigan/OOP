@@ -1,5 +1,8 @@
 package ru.nsu.tsyganov.expressions;
 
+/**
+ * Класс для целых чисел.
+ */
 public class Number extends Expression {
     private int value;
 

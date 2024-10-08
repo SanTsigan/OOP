@@ -1,5 +1,8 @@
 package ru.nsu.tsyganov.expressions;
 
+/**
+ * Класс разности.
+ */
 public class Sub extends Expression {
     private final Expression left;
     private final Expression right;
@@ -8,6 +11,7 @@ public class Sub extends Expression {
         this.left = left;
         this.right = right;
     }
+
     @Override
     public double eval(String variables) {
         return left.eval(variables) - right.eval(variables);

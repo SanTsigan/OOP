@@ -2,6 +2,9 @@ package ru.nsu.tsyganov.expressions;
 
 import java.util.Objects;
 
+/**
+ * Класс суммы.
+ */
 public class Add extends Expression {
     public final Expression left;
     public final Expression right;
@@ -10,6 +13,7 @@ public class Add extends Expression {
         this.left = left;
         this.right = right;
     }
+
     @Override
     public double eval(String variables) {
         return left.eval(variables) + right.eval(variables);
