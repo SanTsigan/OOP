@@ -1,7 +1,7 @@
 package ru.nsu.tsyganov.expressions;
 
 public class Number extends Expression {
-    private final int value;
+    private int value;
 
     public Number(int value) {
         this.value = value;
@@ -23,5 +23,21 @@ public class Number extends Expression {
             throw new RuntimeException("No variables");
         }
         return new Number(0);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        final Number other = (Number) obj;
+
+        return value == other.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return value * 31;
     }
 }

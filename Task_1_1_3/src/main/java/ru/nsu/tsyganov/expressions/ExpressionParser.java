@@ -49,7 +49,7 @@ class ExpressionParser {
         }
 
         // Обрабатываем последний токен, если он есть
-        if (token.length() > 0) {
+        if (!token.isEmpty()) {
             processToken(token.toString(), values);
         }
 
@@ -82,31 +82,21 @@ class ExpressionParser {
     }
 
     private int precedence(String operator) {
-        switch (operator) {
-            case "+":
-            case "-":
-                return 1;
-            case "*":
-            case "/":
-                return 2;
-            default:
-                return 0;
-        }
+        return switch (operator) {
+            case "+", "-" -> 1;
+            case "*", "/" -> 2;
+            default -> 0;
+        };
     }
 
     private Expression applyOperator(String operator, Expression right, Expression left) {
-        switch (operator) {
-            case "+":
-                return new Add(left, right);
-            case "-":
-                return new Sub(left, right);
-            case "*":
-                return new Mul(left, right);
-            case "/":
-                return new Div(left, right);
-            default:
-                throw new IllegalArgumentException("Unknown operator: " + operator);
-        }
+        return switch (operator) {
+            case "+" -> new Add(left, right);
+            case "-" -> new Sub(left, right);
+            case "*" -> new Mul(left, right);
+            case "/" -> new Div(left, right);
+            default -> throw new IllegalArgumentException("Unknown operator: " + operator);
+        };
     }
 }
 

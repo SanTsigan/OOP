@@ -30,4 +30,25 @@ public class Div extends Expression {
                                new Mul(left, right.derivative(var))),
                        new Mul(left, left));
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        final Div other = (Div) obj;
+        return (this.left.equals(other.left)) && (this.right.equals(other.right));
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + (this.left != null ? this.left.hashCode() : 0);
+        hash = 53 * hash + (this.right != null ? this.right.hashCode() : 0);
+        return hash;
+    }
 }

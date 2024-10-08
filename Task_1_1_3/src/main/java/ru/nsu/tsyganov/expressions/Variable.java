@@ -2,6 +2,7 @@ package ru.nsu.tsyganov.expressions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Variable extends Expression {
     public final String name;
@@ -46,6 +47,25 @@ public class Variable extends Expression {
             }
         }
         return varMap;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        final Variable other = (Variable) obj;
+
+        return (value != other.value) && (this.name != null) ? (other.name == null) : Objects.equals(this.name, other.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + (this.name != null ? this.name.hashCode() : 0);
+        hash = 53 * hash + (int) this.value;
+        return hash;
     }
 
 }
