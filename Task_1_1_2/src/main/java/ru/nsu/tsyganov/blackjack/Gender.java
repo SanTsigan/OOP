@@ -1,9 +1,9 @@
 package ru.nsu.tsyganov.blackjack;
 
 enum Gender {
-    MALE(),
-    FEMALE(),
-    NONE();
+    MALE,
+    FEMALE,
+    NONE;
 
     Gender() {}
 }

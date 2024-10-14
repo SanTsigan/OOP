@@ -20,6 +20,7 @@ public class Hand {
     /**
      * Рука в строку.
      */
+    @Override
     public String toString() {
         StringBuilder output = new StringBuilder();
         for (Card card : hand) {

@@ -23,13 +23,10 @@ public enum Suit {
      * Выводит правильное склонение масти.
      */
     public String correctGender(Gender gender) {
-        switch (gender) {
-            case MALE:
-                return suitNameMale;
-            case FEMALE:
-                return suitNameFemale;
-            default:
-                return suitNameNone;
-        }
+        return switch (gender) {
+            case MALE -> suitNameMale;
+            case FEMALE -> suitNameFemale;
+            default -> suitNameNone;
+        };
     }
 }

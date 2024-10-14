@@ -138,7 +138,15 @@ class MainTest {
         hand.takeCardFromDeck(fullDeck, discard);
         player.setHand(hand);
         assertEquals("Туз Трефы (11), ", player.getHand().toString());
+    }
+
+    @Test
+    void checkDealerName() {
         assertEquals("Дилер", dealer.getName());
+    }
+
+    @Test
+    void checkPlayerName() {
         player.setName("Санёк");
         assertEquals("Санёк", player.getName());
     }
