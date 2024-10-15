@@ -3,11 +3,7 @@ plugins {
     id 'jacoco'
 }
 
-<<<<<<< HEAD:Task_1_1_3/build.gradle
 group = 'ru.nsu.tsyganov.expressions'
-=======
-group = 'ru.nsu.tsyganov.blackjack'
->>>>>>> main:Task_1_1_2/build.gradle
 version = '1.0-SNAPSHOT'
 
 repositories {

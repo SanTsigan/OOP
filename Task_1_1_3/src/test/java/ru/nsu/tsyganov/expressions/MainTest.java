@@ -1,10 +1,9 @@
 package ru.nsu.tsyganov.expressions;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
     private Expression expSimple;
@@ -115,5 +114,11 @@ class MainTest {
     @Test
     void evalExp() {
         assertEquals(23, expSimple.eval("x = 10; y = 13"));
+    }
+
+    @Test
+    void testLongExp() {
+        Expression longExp = parser.parse("(((56*x)+(y/2)+(z*9))/((67-x)-(27*y)))");
+        assertEquals(202, longExp.eval("x = 10; y = 2; z = 5"));
     }
 }

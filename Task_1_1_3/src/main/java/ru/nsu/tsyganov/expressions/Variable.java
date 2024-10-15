@@ -27,7 +27,7 @@ public class Variable extends Expression {
     @Override
     public Expression derivative(String var) {
         if (var.isEmpty()) {
-            throw new RuntimeException("No variables");
+            throw new IllegalArgumentException("No variables");
         }
         return name.equals(var) ? new Number(1) : new Number(0);
     }
