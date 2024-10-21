@@ -73,15 +73,14 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E>{
             while((line = br.readLine()) != null) {
                 String[] parts = line.split(" ");
                 if(parts.length == 3) {
-                    String from = parts[0];
-                    String to = parts[1];
+                    Vertex<V> from = (Vertex<V>) new Vertex<String>(parts[0]);
+                    Vertex<V> to = (Vertex<V>) new Vertex<String>(parts[1]);
                     Double weight = Double.parseDouble(parts[2]);
 
-                    addVertex((Vertex<V>) new Vertex<>(from));
-                    addVertex((Vertex<V>) new Vertex<>(to));
-                    addEdge((Edge<V, E>) new Edge<>(vertices.get(Integer.parseInt(from)),
-                            vertices.get(Integer.parseInt(to)),
-                            from + " " + to,
+                    addVertex(from);
+                    addVertex(to);
+                    addEdge((Edge<V, E>) new Edge<>(from, to,
+                            "(" + parts[0] + ", " + parts[1] + ")",
                             weight));
                 }
             }
@@ -90,5 +89,10 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E>{
         } catch (NumberFormatException e) {
             System.out.println("Ошибка формат числа: " + e.getMessage());
         }
+    }
+
+    @Override
+    public List<Vertex<V>> topologicalSort(Graph<V, E> g) {
+        return List.of();
     }
 }

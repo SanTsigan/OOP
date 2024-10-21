@@ -11,5 +11,5 @@ public interface Graph<V, E> {
     void removeEdge(Edge<V, E> edge);
     List<Vertex<V>> getNeighbors(Vertex<V> vertex);
     void readFromFile(String filename);
-    //List<Vertex<V>> topologicalSort(Graph<V, E> g);
+    List<Vertex<V>> topologicalSort(Graph<V, E> g);
 }
