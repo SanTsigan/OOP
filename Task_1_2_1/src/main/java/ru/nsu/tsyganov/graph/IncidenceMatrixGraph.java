@@ -16,27 +16,22 @@ public class IncidenceMatrixGraph<V, E> implements Graph<V, E>{
     }
 
     @Override
-    public void addEdge(Vertex<V> source, Vertex<V> destination, E label, Double weight) {
+    public void addEdge(Edge<V, E> edge) {
 
     }
 
     @Override
-    public void removeEdge(Vertex<V> source, Vertex<V> destination) {
+    public void removeEdge(Edge<V, E> edge) {
 
     }
 
     @Override
-    public List<Edge<V, E>> getNeighbors(Vertex<V> vertex) {
+    public List<Vertex<V>> getNeighbors(Vertex<V> vertex) {
         return List.of();
     }
 
     @Override
     public void readFromFile(String filename) {
 
-    }
-
-    @Override
-    public List<Vertex<V>> topologicalSort(Graph<V, E> g) {
-        return List.of();
     }
 }

@@ -11,6 +11,10 @@ public class Vertex<V> implements Comparable<Vertex<V>>{
         this.label = label;
     }
 
+    public V getLabel() {
+        return label;
+    }
+
     @Override
     public String toString() {
         return this.label.toString();
