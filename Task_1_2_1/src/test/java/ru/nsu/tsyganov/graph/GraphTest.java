@@ -3,6 +3,11 @@ package ru.nsu.tsyganov.graph;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GraphTest{
@@ -24,7 +29,7 @@ class GraphTest{
     private String filename;
 
     @BeforeEach
-    void setup() {
+    void setup() throws URISyntaxException {
         graphAM = new AdjacencyMatrixGraph<>(6);
         graphAL = new AdjacencyListGraph<>();
         graphIM = new IncidenceMatrixGraph<>(6);
@@ -40,8 +45,11 @@ class GraphTest{
         edgeEB = new Edge<>(vertexE, vertexB, "(E, B)", (double)4);
         edgeCD = new Edge<>(vertexC, vertexD, "(C, D)", (double)5);
         edgeDB = new Edge<>(vertexD, vertexB, "(D, B)", (double)6);
-        filename = String.valueOf(
-                GraphTest.class.getClassLoader().getResource("Graph.txt"));
+        URL res =
+                GraphTest.class.getClassLoader().getResource("Graph.txt");
+        assert res != null;
+        File file = Paths.get(res.toURI()).toFile();
+        filename = file.getAbsolutePath();
     }
 
     @Test
