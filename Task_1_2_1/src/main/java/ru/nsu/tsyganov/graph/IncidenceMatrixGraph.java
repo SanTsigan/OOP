@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class IncidenceMatrixGraph<V, E> implements Graph<V, E>{
     private boolean[][] incidenceMatrix;
@@ -19,9 +20,18 @@ public class IncidenceMatrixGraph<V, E> implements Graph<V, E>{
         edges = new ArrayList<>();
     }
 
+    public boolean[][] getIncidenceMatrix() {
+        return incidenceMatrix;
+    }
+
     @Override
     public int vertices() {
         return vertices.size();
+    }
+
+    @Override
+    public int edges() {
+        return edges.size();
     }
 
     @Override
@@ -57,7 +67,6 @@ public class IncidenceMatrixGraph<V, E> implements Graph<V, E>{
                 }
             }
             incidenceMatrix = newMatrix;
-            // Обновляем рёбра, если нужно
             edges.removeIf(edge -> edge.getFrom().equals(vertex) || edge.getTo().equals(vertex));
             edgeCount = edges.size();
         }
@@ -138,6 +147,34 @@ public class IncidenceMatrixGraph<V, E> implements Graph<V, E>{
         } catch (NumberFormatException e) {
             System.out.println("Ошибка формат числа: " + e.getMessage());
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        } else if (!(obj instanceof IncidenceMatrixGraph<?,?>)) {
+            return false;
+        }
+
+        IncidenceMatrixGraph<?, ?> other = (IncidenceMatrixGraph<?, ?>) obj;
+        boolean vertexEquals = (other.vertices() == this.vertices()) ,
+                edgesEquals = (other.edges() == this.edges());
+        if (vertexEquals && edgesEquals) {
+            for(int i = 0; i < vertices.size(); i++) {
+                vertexEquals &= (other.vertices.get(i).equals(this.vertices.get(i)));
+            }
+
+            for(int i = 0; i < edges.size(); i++) {
+                edgesEquals &= (other.edges.get(i).equals(this.edges.get(i)));
+            }
+        }
+        return (vertexEquals && edgesEquals);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash((Object) incidenceMatrix);
     }
 
 }

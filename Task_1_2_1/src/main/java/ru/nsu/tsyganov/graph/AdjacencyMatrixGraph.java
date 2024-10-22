@@ -8,17 +8,28 @@ import java.io.FileReader;
 public class AdjacencyMatrixGraph<V, E> implements Graph<V, E>{
     private boolean[][] adjacencyMatrix;
     private List<Vertex<V>> vertexList;
+    private List<Edge<V, E>> edgeList;
     private Map<V, Integer> vertexIntegerMap;
 
     public AdjacencyMatrixGraph(int size) {
         adjacencyMatrix = new boolean[size][size];
         vertexList = new ArrayList<>();
         vertexIntegerMap = new HashMap<>();
+        edgeList = new ArrayList<>();
+    }
+
+    public boolean[][] getAdjacencyMatrix() {
+        return adjacencyMatrix;
     }
 
     @Override
     public int vertices() {
         return vertexList.size();
+    }
+
+    @Override
+    public int edges() {
+        return edgeList.size();
     }
 
     @Override
@@ -53,6 +64,7 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E>{
         int fromIndex = vertexIntegerMap.get(edge.getFrom().getLabel());
         int toIndex = vertexIntegerMap.get(edge.getTo().getLabel());
         adjacencyMatrix[fromIndex][toIndex] = true;
+        edgeList.add(edge);
     }
 
     @Override
@@ -60,6 +72,7 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E>{
         int fromIndex = vertexIntegerMap.get(edge.getFrom().getLabel());
         int toIndex = vertexIntegerMap.get(edge.getTo().getLabel());
         adjacencyMatrix[fromIndex][toIndex] = false;
+        edgeList.remove(edge);
     }
 
     @Override
@@ -97,5 +110,33 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E>{
         } catch (NumberFormatException e) {
             System.out.println("Ошибка формат числа: " + e.getMessage());
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        } else if (!(obj instanceof AdjacencyMatrixGraph<?,?>)) {
+            return false;
+        }
+
+        AdjacencyMatrixGraph<?, ?> other = (AdjacencyMatrixGraph<?, ?>) obj;
+        boolean vertexEquals = (other.vertices() == this.vertices()) ,
+                edgesEquals = (other.edges() == this.edges());
+        if(vertexEquals && edgesEquals) {
+            for(int i = 0; i < vertexList.size(); i++) {
+                vertexEquals = vertexEquals && (this.vertexList.get(i).equals(other.vertexList.get(i)));
+            }
+
+            for(int i = 0; i < edgeList.size(); i++) {
+                edgesEquals = edgesEquals && (other.edgeList.get(i).equals(this.edgeList.get(i)));
+            }
+        }
+        return (vertexEquals && edgesEquals);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash((Object) adjacencyMatrix);
     }
 }

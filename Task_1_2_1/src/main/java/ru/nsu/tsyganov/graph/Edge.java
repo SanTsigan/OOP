@@ -2,7 +2,7 @@ package ru.nsu.tsyganov.graph;
 
 import java.util.Objects;
 
-public class Edge<V, E> implements Comparable<Edge<V,E>>{
+public class Edge<V, E>{
 
     private Vertex<V> from;
     private Vertex<V> to;
@@ -37,12 +37,12 @@ public class Edge<V, E> implements Comparable<Edge<V,E>>{
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
-        } else if (!(obj instanceof Vertex<?>)) {
+        } else if (!(obj instanceof Edge<?,?>)) {
             return false;
         }
         Edge<?, ?> other = (Edge<?, ?>) obj;
-        return this.to == other.to && this.from == other.from
-                && this.label == other.label && this.weight.equals(other.weight);
+        return this.to.equals(other.to) && this.from.equals(other.from)
+                && Objects.equals(this.toString(), other.toString()) && Objects.equals(this.weight, other.weight);
     }
 
     @Override
@@ -50,15 +50,4 @@ public class Edge<V, E> implements Comparable<Edge<V,E>>{
         return Objects.hash(to, from, label, weight);
     }
 
-    @Override
-    public int compareTo(Edge<V, E> e) {
-        int cmp = Double.compare(this.weight, e.weight);
-        if (cmp == 0) {
-            cmp = this.from.toString().compareTo(e.from.toString());
-            if (cmp == 0) {
-                cmp = this.to.toString().compareTo(e.to.toString());
-            }
-        }
-        return cmp;
-    }
 }

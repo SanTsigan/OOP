@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface Graph<V, E> {
     int vertices();
+    int edges();
     List<Vertex<V>> vertexList();
     void addVertex(Vertex<V> vertex);
     void removeVertex(Vertex<V> vertex);

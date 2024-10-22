@@ -8,15 +8,26 @@ import java.util.*;
 public class AdjacencyListGraph<V, E> implements Graph<V, E> {
     private Map<Vertex<V>, List<Vertex<V>>> adjList;
     private List<Vertex<V>> vertexList;
-    private int vertices = 0;
+    private List<Edge<V, E>> edgeList;
 
     public AdjacencyListGraph() {
         adjList = new HashMap<>();
+        vertexList = new ArrayList<>();
+        edgeList = new ArrayList<>();
+    }
+
+    public Map<Vertex<V>, List<Vertex<V>>> getAdjList() {
+        return adjList;
     }
 
     @Override
     public int vertices() {
-        return vertices;
+        return vertexList.size();
+    }
+
+    @Override
+    public int edges() {
+        return edgeList.size();
     }
 
     @Override
@@ -27,8 +38,9 @@ public class AdjacencyListGraph<V, E> implements Graph<V, E> {
     @Override
     public void addVertex(Vertex<V> vertex) {
         adjList.putIfAbsent(vertex, new ArrayList<>());
-        vertexList.add(vertex);
-        vertices++;
+        if(!vertexList.contains(vertex)) {
+            vertexList.add(vertex);
+        }
     }
 
     @Override
@@ -38,7 +50,6 @@ public class AdjacencyListGraph<V, E> implements Graph<V, E> {
             neighbours.remove(vertex);
         }
         vertexList.remove(vertex);
-        vertices--;
     }
 
     @Override
@@ -46,6 +57,7 @@ public class AdjacencyListGraph<V, E> implements Graph<V, E> {
         adjList.putIfAbsent(edge.getFrom(), new ArrayList<>());
         adjList.putIfAbsent(edge.getTo(), new ArrayList<>());
         adjList.get(edge.getFrom()).add(edge.getTo());
+        edgeList.add(edge);
     }
 
     @Override
@@ -54,6 +66,7 @@ public class AdjacencyListGraph<V, E> implements Graph<V, E> {
         if (neighbors != null) {
             neighbors.remove(edge.getTo());
         }
+        edgeList.remove(edge);
     }
 
 
@@ -69,7 +82,7 @@ public class AdjacencyListGraph<V, E> implements Graph<V, E> {
             while((line = br.readLine()) != null) {
                 String[] parts = line.split(" ");
                 if(parts.length == 3) {
-                    Vertex<V> from = (Vertex<V>) new Vertex<String>(parts[0]);
+                    Vertex<V> from = (Vertex) new Vertex<String>(parts[0]);
                     Vertex<V> to = (Vertex<V>) new Vertex<String>(parts[1]);
                     Double weight = Double.parseDouble(parts[2]);
 
@@ -85,5 +98,33 @@ public class AdjacencyListGraph<V, E> implements Graph<V, E> {
         } catch (NumberFormatException e) {
             System.out.println("Ошибка формат числа: " + e.getMessage());
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        } else if (!(obj instanceof AdjacencyListGraph<?,?>)) {
+            return false;
+        }
+
+        AdjacencyListGraph<?, ?> other = (AdjacencyListGraph<?, ?>) obj;
+        boolean vertexEquals = (other.vertices() == this.vertices()) ,
+                edgesEquals = (other.edges() == this.edges());
+        if (vertexEquals && edgesEquals) {
+            for(int i = 0; i < vertexList.size(); i++) {
+                vertexEquals &= (other.vertexList.get(i).equals(this.vertexList.get(i)));
+            }
+
+            for(int i = 0; i < edgeList.size(); i++) {
+                edgesEquals &= (other.edgeList.get(i).equals(this.edgeList.get(i)));
+            }
+        }
+        return (vertexEquals && edgesEquals);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(adjList);
     }
 }
