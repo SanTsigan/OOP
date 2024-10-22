@@ -3,21 +3,32 @@ package ru.nsu.tsyganov.graph;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AdjacencyListGraph<V, E> implements Graph<V, E> {
     private Map<Vertex<V>, List<Vertex<V>>> adjList;
+    private List<Vertex<V>> vertexList;
+    private int vertices = 0;
 
     public AdjacencyListGraph() {
         adjList = new HashMap<>();
     }
 
     @Override
+    public int vertices() {
+        return vertices;
+    }
+
+    @Override
+    public List<Vertex<V>> vertexList(){
+        return vertexList;
+    }
+
+    @Override
     public void addVertex(Vertex<V> vertex) {
         adjList.putIfAbsent(vertex, new ArrayList<>());
+        vertexList.add(vertex);
+        vertices++;
     }
 
     @Override
@@ -26,6 +37,8 @@ public class AdjacencyListGraph<V, E> implements Graph<V, E> {
         for(List<Vertex<V>> neighbours : adjList.values()) {
             neighbours.remove(vertex);
         }
+        vertexList.remove(vertex);
+        vertices--;
     }
 
     @Override
@@ -72,10 +85,5 @@ public class AdjacencyListGraph<V, E> implements Graph<V, E> {
         } catch (NumberFormatException e) {
             System.out.println("Ошибка формат числа: " + e.getMessage());
         }
-    }
-
-    @Override
-    public List<Vertex<V>> topologicalSort(Graph<V, E> g) {
-        return List.of();
     }
 }

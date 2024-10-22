@@ -8,15 +8,25 @@ import java.util.List;
 
 public class IncidenceMatrixGraph<V, E> implements Graph<V, E>{
     private boolean[][] incidenceMatrix;
-    private List<Vertex> vertices;
+    private List<Vertex<V>> vertices;
     private int edgeCount;
-    private List<Edge> edges;
+    private List<Edge<V, E>> edges;
 
     public IncidenceMatrixGraph(int size) {
         incidenceMatrix = new boolean[size][size];
         vertices = new ArrayList<>();
         edgeCount = 0;
         edges = new ArrayList<>();
+    }
+
+    @Override
+    public int vertices() {
+        return vertices.size();
+    }
+
+    @Override
+    public List<Vertex<V>> vertexList() {
+        return vertices;
     }
 
     @Override
@@ -130,8 +140,4 @@ public class IncidenceMatrixGraph<V, E> implements Graph<V, E>{
         }
     }
 
-    @Override
-    public List<Vertex<V>> topologicalSort(Graph<V, E> g) {
-        return List.of();
-    }
 }

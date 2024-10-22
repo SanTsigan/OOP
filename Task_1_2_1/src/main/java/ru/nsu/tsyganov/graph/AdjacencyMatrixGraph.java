@@ -7,36 +7,44 @@ import java.io.FileReader;
 
 public class AdjacencyMatrixGraph<V, E> implements Graph<V, E>{
     private boolean[][] adjacencyMatrix;
-    private List<Vertex<V>> vertices;
+    private List<Vertex<V>> vertexList;
     private Map<V, Integer> vertexIntegerMap;
 
     public AdjacencyMatrixGraph(int size) {
         adjacencyMatrix = new boolean[size][size];
-        vertices = new ArrayList<>();
+        vertexList = new ArrayList<>();
         vertexIntegerMap = new HashMap<>();
+    }
+
+    @Override
+    public int vertices() {
+        return vertexList.size();
+    }
+
+    @Override
+    public List<Vertex<V>> vertexList(){
+        return vertexList;
     }
 
     @Override
     public void addVertex(Vertex<V> vertex) {
         if(!vertexIntegerMap.containsKey(vertex.getLabel())) {
-            vertexIntegerMap.put(vertex.getLabel(), vertices.size());
-            vertices.add(vertex);
+            vertexIntegerMap.put(vertex.getLabel(), vertexList.size());
+            vertexList.add(vertex);
         }
     }
 
     @Override
     public void removeVertex(Vertex<V> vertex) {
         Integer index = vertexIntegerMap.remove(vertex.getLabel());
-        if(index != null) {
-            vertices.remove((int)index);
-            for(int i = 0; i < adjacencyMatrix.length; i++) {
-                adjacencyMatrix[index][i] = false;
-                adjacencyMatrix[i][index] = false;
-            }
+        vertexList.remove((int)index);
+        for(int i = 0; i < adjacencyMatrix.length; i++) {
+            adjacencyMatrix[index][i] = false;
+            adjacencyMatrix[i][index] = false;
+        }
 
-            for(int i = index; i < vertices.size(); i++) {
-                vertexIntegerMap.put(vertices.get(i).getLabel(), i);
-            }
+        for(int i = index; i < vertexList.size(); i++) {
+            vertexIntegerMap.put(vertexList.get(i).getLabel(), i);
         }
     }
 
@@ -60,7 +68,7 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E>{
         int index = vertexIntegerMap.get(vertex.getLabel());
         for(int i = 0; i < adjacencyMatrix.length; i++) {
             if(adjacencyMatrix[index][i]) {
-                neighbours.add(vertices.get(i));
+                neighbours.add(vertexList.get(i));
             }
         }
         return neighbours;
@@ -85,14 +93,9 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E>{
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Ошибка чтения файла: " + e.getMessage());
         } catch (NumberFormatException e) {
             System.out.println("Ошибка формат числа: " + e.getMessage());
         }
-    }
-
-    @Override
-    public List<Vertex<V>> topologicalSort(Graph<V, E> g) {
-        return List.of();
     }
 }
