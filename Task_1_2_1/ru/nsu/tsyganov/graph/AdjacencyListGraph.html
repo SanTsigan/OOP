@@ -141,8 +141,11 @@ implements <a href="Graph.html" title="interface in ru.nsu.tsyganov.graph">Graph
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeVertex(ru.nsu.tsyganov.graph.Vertex)" class="member-name-link">removeVertex</a><wbr>(<a href="Vertex.html" title="class in ru.nsu.tsyganov.graph">Vertex</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&gt;&nbsp;vertex)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="Vertex.html" title="class in ru.nsu.tsyganov.graph">Vertex</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&gt;&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#topologicalSort(ru.nsu.tsyganov.graph.Graph)" class="member-name-link">topologicalSort</a><wbr>(<a href="Graph.html" title="interface in ru.nsu.tsyganov.graph">Graph</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>,<wbr><a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">E</a>&gt;&nbsp;g)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#vertexList()" class="member-name-link">vertexList</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#vertices()" class="member-name-link">vertices</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -174,6 +177,26 @@ implements <a href="Graph.html" title="interface in ru.nsu.tsyganov.graph">Graph
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="vertices()">
+<h3>vertices</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">vertices</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Graph.html#vertices()">vertices</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.tsyganov.graph">Graph</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>,<wbr><a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">E</a>&gt;</code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="vertexList()">
+<h3>vertexList</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Vertex.html" title="class in ru.nsu.tsyganov.graph">Vertex</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&gt;&gt;</span>&nbsp;<span class="element-name">vertexList</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Graph.html#vertexList()">vertexList</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.tsyganov.graph">Graph</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>,<wbr><a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">E</a>&gt;</code></dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="addVertex(ru.nsu.tsyganov.graph.Vertex)">
 <h3>addVertex</h3>
@@ -231,16 +254,6 @@ implements <a href="Graph.html" title="interface in ru.nsu.tsyganov.graph">Graph
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Graph.html#readFromFile(java.lang.String)">readFromFile</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.tsyganov.graph">Graph</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>,<wbr><a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">E</a>&gt;</code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="topologicalSort(ru.nsu.tsyganov.graph.Graph)">
-<h3>topologicalSort</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Vertex.html" title="class in ru.nsu.tsyganov.graph">Vertex</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&gt;&gt;</span>&nbsp;<span class="element-name">topologicalSort</span><wbr><span class="parameters">(<a href="Graph.html" title="interface in ru.nsu.tsyganov.graph">Graph</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>,<wbr><a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">E</a>&gt;&nbsp;g)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="Graph.html#topologicalSort(ru.nsu.tsyganov.graph.Graph)">topologicalSort</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in ru.nsu.tsyganov.graph">Graph</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>,<wbr><a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">E</a>&gt;</code></dd>
 </dl>
 </section>
 </li>
