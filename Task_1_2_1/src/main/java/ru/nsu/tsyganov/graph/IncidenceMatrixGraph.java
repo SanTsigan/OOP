@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class IncidenceMatrixGraph<V, E> implements Graph<V, E>{
+public class IncidenceMatrixGraph<V, E> implements Graph<V, E> {
     private boolean[][] incidenceMatrix;
     private List<Vertex<V>> vertices;
     private int edgeCount;
@@ -126,11 +126,11 @@ public class IncidenceMatrixGraph<V, E> implements Graph<V, E>{
 
     @Override
     public void readFromFile(String filename) {
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))){
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
-            while((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
                 String[] parts = line.split(" ");
-                if(parts.length == 3) {
+                if (parts.length == 3) {
                     Vertex<V> from = (Vertex<V>) new Vertex<String>(parts[0]);
                     Vertex<V> to = (Vertex<V>) new Vertex<String>(parts[1]);
                     Double weight = Double.parseDouble(parts[2]);
@@ -153,19 +153,19 @@ public class IncidenceMatrixGraph<V, E> implements Graph<V, E>{
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
-        } else if (!(obj instanceof IncidenceMatrixGraph<?,?>)) {
+        } else if (!(obj instanceof IncidenceMatrixGraph<?, ?>)) {
             return false;
         }
 
         IncidenceMatrixGraph<?, ?> other = (IncidenceMatrixGraph<?, ?>) obj;
-        boolean vertexEquals = (other.vertices() == this.vertices()) ,
-                edgesEquals = (other.edges() == this.edges());
+        boolean vertexEquals = (other.vertices() == this.vertices());
+        boolean edgesEquals = (other.edges() == this.edges());
         if (vertexEquals && edgesEquals) {
-            for(int i = 0; i < vertices.size(); i++) {
+            for (int i = 0; i < vertices.size(); i++) {
                 vertexEquals &= (other.vertices.get(i).equals(this.vertices.get(i)));
             }
 
-            for(int i = 0; i < edges.size(); i++) {
+            for (int i = 0; i < edges.size(); i++) {
                 edgesEquals &= (other.edges.get(i).equals(this.edges.get(i)));
             }
         }

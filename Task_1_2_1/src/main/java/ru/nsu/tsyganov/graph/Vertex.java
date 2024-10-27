@@ -2,7 +2,11 @@ package ru.nsu.tsyganov.graph;
 
 import java.util.Objects;
 
-public class Vertex<V>{
+/**
+ * Class for vertices.
+ * @param <V> type for vertex labels.
+ */
+public class Vertex<V> {
 
     private final V label;
     

@@ -1,7 +1,6 @@
 package ru.nsu.tsyganov.graph;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -10,18 +9,19 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-class GraphTest{
-    private Graph<String, String> graphAM;
-    private Graph<String, String> graphAL;
-    private Graph<String, String> graphIM;
-    private Edge<String, String> edgeFA;
-    private Edge<String, String> edgeEA;
-    private Edge<String, String> edgeFC;
-    private Edge<String, String> edgeEB;
-    private Edge<String, String> edgeCD;
-    private Edge<String, String> edgeDB;
+class GraphTest {
+    private Graph<String, String> graphAdjMat;
+    private Graph<String, String> graphAdjList;
+    private Graph<String, String> graphIncMat;
+    private Edge<String, String> edgeFtoA;
+    private Edge<String, String> edgeEtoA;
+    private Edge<String, String> edgeFtoC;
+    private Edge<String, String> edgeEtoB;
+    private Edge<String, String> edgeCtoD;
+    private Edge<String, String> edgeDtoB;
     private Vertex<String> vertexA;
     private Vertex<String> vertexB;
     private Vertex<String> vertexC;
@@ -32,21 +32,21 @@ class GraphTest{
 
     @BeforeEach
     void setup() throws URISyntaxException {
-        graphAM = new AdjacencyMatrixGraph<>(6);
-        graphAL = new AdjacencyListGraph<>();
-        graphIM = new IncidenceMatrixGraph<>(6);
+        graphAdjMat = new AdjacencyMatrixGraph<>(6);
+        graphAdjList = new AdjacencyListGraph<>();
+        graphIncMat = new IncidenceMatrixGraph<>(6);
         vertexA = new Vertex<>("A");
         vertexB = new Vertex<>("B");
         vertexC = new Vertex<>("C");
         vertexD = new Vertex<>("D");
         vertexE = new Vertex<>("E");
         vertexF = new Vertex<>("F");
-        edgeFA = new Edge<>(vertexF, vertexA, "(F, A)", (double)1);
-        edgeEA = new Edge<>(vertexE, vertexA, "(E, A)", (double)2);
-        edgeFC = new Edge<>(vertexF, vertexC, "(F, C)", (double)3);
-        edgeEB = new Edge<>(vertexE, vertexB, "(E, B)", (double)4);
-        edgeCD = new Edge<>(vertexC, vertexD, "(C, D)", (double)5);
-        edgeDB = new Edge<>(vertexD, vertexB, "(D, B)", (double)6);
+        edgeFtoA = new Edge<>(vertexF, vertexA, "(F, A)", (double) 1);
+        edgeEtoA = new Edge<>(vertexE, vertexA, "(E, A)", (double) 2);
+        edgeFtoC = new Edge<>(vertexF, vertexC, "(F, C)", (double) 3);
+        edgeEtoB = new Edge<>(vertexE, vertexB, "(E, B)", (double) 4);
+        edgeCtoD = new Edge<>(vertexC, vertexD, "(C, D)", (double) 5);
+        edgeDtoB = new Edge<>(vertexD, vertexB, "(D, B)", (double) 6);
         URL res =
                 GraphTest.class.getClassLoader().getResource("Graph.txt");
         assert res != null;
@@ -55,8 +55,8 @@ class GraphTest{
     }
 
     @Test
-    void checkAMFileRead() {
-        graphAM.readFromFile(filename);
+    void checkAdjMatFileRead() {
+        graphAdjMat.readFromFile(filename);
         Graph<String, String> graph = new AdjacencyMatrixGraph<>(6);
         graph.addVertex(vertexF);
         graph.addVertex(vertexA);
@@ -64,18 +64,18 @@ class GraphTest{
         graph.addVertex(vertexC);
         graph.addVertex(vertexB);
         graph.addVertex(vertexD);
-        graph.addEdge(edgeFA);
-        graph.addEdge(edgeEA);
-        graph.addEdge(edgeFC);
-        graph.addEdge(edgeEB);
-        graph.addEdge(edgeCD);
-        graph.addEdge(edgeDB);
-        assertEquals(graphAM, graph);
+        graph.addEdge(edgeFtoA);
+        graph.addEdge(edgeEtoA);
+        graph.addEdge(edgeFtoC);
+        graph.addEdge(edgeEtoB);
+        graph.addEdge(edgeCtoD);
+        graph.addEdge(edgeDtoB);
+        assertEquals(graphAdjMat, graph);
     }
 
     @Test
-    void checkALFileRead() {
-        graphAL.readFromFile(filename);
+    void checkAdjListFileRead() {
+        graphAdjList.readFromFile(filename);
         Graph<String, String> graph = new AdjacencyListGraph<>();
         graph.addVertex(vertexF);
         graph.addVertex(vertexA);
@@ -83,18 +83,18 @@ class GraphTest{
         graph.addVertex(vertexC);
         graph.addVertex(vertexB);
         graph.addVertex(vertexD);
-        graph.addEdge(edgeFA);
-        graph.addEdge(edgeEA);
-        graph.addEdge(edgeFC);
-        graph.addEdge(edgeEB);
-        graph.addEdge(edgeCD);
-        graph.addEdge(edgeDB);
-        assertEquals(graphAL, graph);
+        graph.addEdge(edgeFtoA);
+        graph.addEdge(edgeEtoA);
+        graph.addEdge(edgeFtoC);
+        graph.addEdge(edgeEtoB);
+        graph.addEdge(edgeCtoD);
+        graph.addEdge(edgeDtoB);
+        assertEquals(graphAdjList, graph);
     }
 
     @Test
-    void checkIMFileRead() {
-        graphIM.readFromFile(filename);
+    void checkIncMatFileRead() {
+        graphIncMat.readFromFile(filename);
         Graph<String, String> graph = new IncidenceMatrixGraph<>(6);
         graph.addVertex(vertexF);
         graph.addVertex(vertexA);
@@ -102,19 +102,18 @@ class GraphTest{
         graph.addVertex(vertexC);
         graph.addVertex(vertexB);
         graph.addVertex(vertexD);
-        graph.addEdge(edgeFA);
-        graph.addEdge(edgeEA);
-        graph.addEdge(edgeFC);
-        graph.addEdge(edgeEB);
-        graph.addEdge(edgeCD);
-        graph.addEdge(edgeDB);
-        assertEquals(graphIM, graph);
+        graph.addEdge(edgeFtoA);
+        graph.addEdge(edgeEtoA);
+        graph.addEdge(edgeFtoC);
+        graph.addEdge(edgeEtoB);
+        graph.addEdge(edgeCtoD);
+        graph.addEdge(edgeDtoB);
+        assertEquals(graphIncMat, graph);
     }
 
     @Test
-    void checkTopSortAM() {
-        Alg<String, String> tsort = new topSort<>();
-        graphAM.readFromFile(filename);
+    void checkTopSortAdjMat() {
+        graphAdjMat.readFromFile(filename);
         List<Vertex<String>> vertexList = new ArrayList<>();
         vertexList.add(vertexE); // [E, F, C, D, B, A]
         vertexList.add(vertexF);
@@ -122,14 +121,14 @@ class GraphTest{
         vertexList.add(vertexD);
         vertexList.add(vertexB);
         vertexList.add(vertexA);
-        List<Vertex<String>> sortedList = tsort.perform(graphAM);
+        Alg<String, String> tsort = new TopSort<>();
+        List<Vertex<String>> sortedList = tsort.perform(graphAdjMat);
         assertEquals(sortedList, vertexList);
     }
 
     @Test
-    void checkTopSortAL() {
-        Alg<String, String> tsort = new topSort<>();
-        graphAL.readFromFile(filename);
+    void checkTopSortAdjList() {
+        graphAdjList.readFromFile(filename);
         List<Vertex<String>> vertexList = new ArrayList<>();
         vertexList.add(vertexE); // [E, F, C, D, B, A]
         vertexList.add(vertexF);
@@ -137,14 +136,14 @@ class GraphTest{
         vertexList.add(vertexD);
         vertexList.add(vertexB);
         vertexList.add(vertexA);
-        List<Vertex<String>> sortedList = tsort.perform(graphAL);
+        Alg<String, String> tsort = new TopSort<>();
+        List<Vertex<String>> sortedList = tsort.perform(graphAdjList);
         assertEquals(sortedList, vertexList);
     }
 
     @Test
-    void checkTopSortIM() {
-        Alg<String, String> tsort = new topSort<>();
-        graphIM.readFromFile(filename);
+    void checkTopSortIncMat() {
+        graphIncMat.readFromFile(filename);
         List<Vertex<String>> vertexList = new ArrayList<>();
         vertexList.add(vertexE); // [E, F, C, D, B, A]
         vertexList.add(vertexF);
@@ -152,58 +151,59 @@ class GraphTest{
         vertexList.add(vertexD);
         vertexList.add(vertexB);
         vertexList.add(vertexA);
-        List<Vertex<String>> sortedList = tsort.perform(graphIM);
+        Alg<String, String> tsort = new TopSort<>();
+        List<Vertex<String>> sortedList = tsort.perform(graphIncMat);
         assertEquals(sortedList, vertexList);
     }
 
     @Test
-    void removePartsAM() {
-        graphAM.readFromFile(filename);
-        graphAM.removeVertex(vertexA);
-        graphAM.removeEdge(edgeDB);
+    void removePartsAdjMat() {
+        graphAdjMat.readFromFile(filename);
+        graphAdjMat.removeVertex(vertexA);
+        graphAdjMat.removeEdge(edgeDtoB);
         Graph<String, String> graph = new AdjacencyMatrixGraph<>(6);
         graph.addVertex(vertexF);
         graph.addVertex(vertexE);
         graph.addVertex(vertexC);
         graph.addVertex(vertexB);
         graph.addVertex(vertexD);
-        graph.addEdge(edgeFC);
-        graph.addEdge(edgeEB);
-        graph.addEdge(edgeCD);
-        assertEquals(graphAM, graph);
+        graph.addEdge(edgeFtoC);
+        graph.addEdge(edgeEtoB);
+        graph.addEdge(edgeCtoD);
+        assertEquals(graphAdjMat, graph);
     }
 
     @Test
-    void removePartsAL() {
-        graphAL.readFromFile(filename);
-        graphAL.removeVertex(vertexA);
-        graphAL.removeEdge(edgeDB);
+    void removePartsAdjList() {
+        graphAdjList.readFromFile(filename);
+        graphAdjList.removeVertex(vertexA);
+        graphAdjList.removeEdge(edgeDtoB);
         Graph<String, String> graph = new AdjacencyListGraph<>();
         graph.addVertex(vertexF);
         graph.addVertex(vertexE);
         graph.addVertex(vertexC);
         graph.addVertex(vertexB);
         graph.addVertex(vertexD);
-        graph.addEdge(edgeFC);
-        graph.addEdge(edgeEB);
-        graph.addEdge(edgeCD);
-        assertEquals(graphAL, graph);
+        graph.addEdge(edgeFtoC);
+        graph.addEdge(edgeEtoB);
+        graph.addEdge(edgeCtoD);
+        assertEquals(graphAdjList, graph);
     }
 
     @Test
-    void removePartsIM() {
-        graphIM.readFromFile(filename);
-        graphIM.removeVertex(vertexA);
-        graphIM.removeEdge(edgeDB);
+    void removePartsIncMat() {
+        graphIncMat.readFromFile(filename);
+        graphIncMat.removeVertex(vertexA);
+        graphIncMat.removeEdge(edgeDtoB);
         Graph<String, String> graph = new IncidenceMatrixGraph<>(6);
         graph.addVertex(vertexF);
         graph.addVertex(vertexE);
         graph.addVertex(vertexC);
         graph.addVertex(vertexB);
         graph.addVertex(vertexD);
-        graph.addEdge(edgeFC);
-        graph.addEdge(edgeEB);
-        graph.addEdge(edgeCD);
-        assertEquals(graphIM, graph);
+        graph.addEdge(edgeFtoC);
+        graph.addEdge(edgeEtoB);
+        graph.addEdge(edgeCtoD);
+        assertEquals(graphIncMat, graph);
     }
 }

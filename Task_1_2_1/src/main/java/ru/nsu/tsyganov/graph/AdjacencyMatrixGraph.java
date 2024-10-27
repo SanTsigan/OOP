@@ -1,11 +1,15 @@
 package ru.nsu.tsyganov.graph;
 
 import java.io.IOException;
-import java.util.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
-public class AdjacencyMatrixGraph<V, E> implements Graph<V, E>{
+public class AdjacencyMatrixGraph<V, E> implements Graph<V, E> {
     private boolean[][] adjacencyMatrix;
     private List<Vertex<V>> vertexList;
     private List<Edge<V, E>> edgeList;
@@ -33,13 +37,13 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E>{
     }
 
     @Override
-    public List<Vertex<V>> vertexList(){
+    public List<Vertex<V>> vertexList() {
         return vertexList;
     }
 
     @Override
     public void addVertex(Vertex<V> vertex) {
-        if(!vertexIntegerMap.containsKey(vertex.getLabel())) {
+        if (!vertexIntegerMap.containsKey(vertex.getLabel())) {
             vertexIntegerMap.put(vertex.getLabel(), vertexList.size());
             vertexList.add(vertex);
         }
@@ -48,22 +52,15 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E>{
     @Override
     public void removeVertex(Vertex<V> vertex) {
         Integer index = vertexIntegerMap.remove(vertex.getLabel());
-        vertexList.remove((int)index);
-        for(int i = 0; i < adjacencyMatrix.length; i++) {
+        vertexList.remove((int) index);
+        for (int i = 0; i < adjacencyMatrix.length; i++) {
             adjacencyMatrix[index][i] = false;
             adjacencyMatrix[i][index] = false;
         }
 
-//        for (int i = 0; i < edgeList.size(); i++) {
-//            if (edgeList.get(i).getFrom().equals(vertex) || edgeList.get(i).getTo().equals(vertex)) {
-//                edgeList.remove(i);
-//                i--;
-//            }
-//        }
-
         edgeList.removeIf(edge -> edge.getFrom().equals(vertex) || edge.getTo().equals(vertex));
 
-        for(int i = index; i < vertexList.size(); i++) {
+        for (int i = index; i < vertexList.size(); i++) {
             vertexIntegerMap.put(vertexList.get(i).getLabel(), i);
         }
     }
@@ -88,8 +85,8 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E>{
     public List<Vertex<V>> getNeighbors(Vertex<V> vertex) {
         List<Vertex<V>> neighbours = new ArrayList<>();
         int index = vertexIntegerMap.get(vertex.getLabel());
-        for(int i = 0; i < adjacencyMatrix.length; i++) {
-            if(adjacencyMatrix[index][i]) {
+        for (int i = 0; i < adjacencyMatrix.length; i++) {
+            if (adjacencyMatrix[index][i]) {
                 neighbours.add(vertexList.get(i));
             }
         }
@@ -100,9 +97,9 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E>{
     public void readFromFile(String filename) {
         try (BufferedReader br = new BufferedReader(new FileReader(filename))){
             String line;
-            while((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
                 String[] parts = line.split(" ");
-                if(parts.length == 3) {
+                if (parts.length == 3) {
                     Vertex<V> from = (Vertex<V>) new Vertex<String>(parts[0]);
                     Vertex<V> to = (Vertex<V>) new Vertex<String>(parts[1]);
                     Double weight = Double.parseDouble(parts[2]);
@@ -130,15 +127,15 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E>{
         }
 
         AdjacencyMatrixGraph<?, ?> other = (AdjacencyMatrixGraph<?, ?>) obj;
-        boolean vertexEquals = (other.vertices() == this.vertices()) ,
-                edgesEquals = (other.edges() == this.edges());
-        if(vertexEquals && edgesEquals) {
-            for(int i = 0; i < vertexList.size(); i++) {
-                vertexEquals = vertexEquals && (this.vertexList.get(i).equals(other.vertexList.get(i)));
+        boolean vertexEquals = (other.vertices() == this.vertices());
+        boolean edgesEquals = (other.edges() == this.edges());
+        if (vertexEquals && edgesEquals) {
+            for (int i = 0; i < vertexList.size(); i++) {
+                vertexEquals &= (this.vertexList.get(i).equals(other.vertexList.get(i)));
             }
 
-            for(int i = 0; i < edgeList.size(); i++) {
-                edgesEquals = edgesEquals && (other.edgeList.get(i).equals(this.edgeList.get(i)));
+            for (int i = 0; i < edgeList.size(); i++) {
+                edgesEquals &= (other.edgeList.get(i).equals(this.edgeList.get(i)));
             }
         }
         return (vertexEquals && edgesEquals);
