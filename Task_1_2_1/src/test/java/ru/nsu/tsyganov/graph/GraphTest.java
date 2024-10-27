@@ -112,7 +112,7 @@ class GraphTest{
     }
 
     @Test
-    void checkTopSort() {
+    void checkTopSortAM() {
         Alg<String, String> tsort = new topSort<>();
         graphAM.readFromFile(filename);
         List<Vertex<String>> vertexList = new ArrayList<>();
@@ -123,6 +123,36 @@ class GraphTest{
         vertexList.add(vertexB);
         vertexList.add(vertexA);
         List<Vertex<String>> sortedList = tsort.perform(graphAM);
+        assertEquals(sortedList, vertexList);
+    }
+
+    @Test
+    void checkTopSortAL() {
+        Alg<String, String> tsort = new topSort<>();
+        graphAL.readFromFile(filename);
+        List<Vertex<String>> vertexList = new ArrayList<>();
+        vertexList.add(vertexE); // [E, F, C, D, B, A]
+        vertexList.add(vertexF);
+        vertexList.add(vertexC);
+        vertexList.add(vertexD);
+        vertexList.add(vertexB);
+        vertexList.add(vertexA);
+        List<Vertex<String>> sortedList = tsort.perform(graphAL);
+        assertEquals(sortedList, vertexList);
+    }
+
+    @Test
+    void checkTopSortIM() {
+        Alg<String, String> tsort = new topSort<>();
+        graphIM.readFromFile(filename);
+        List<Vertex<String>> vertexList = new ArrayList<>();
+        vertexList.add(vertexE); // [E, F, C, D, B, A]
+        vertexList.add(vertexF);
+        vertexList.add(vertexC);
+        vertexList.add(vertexD);
+        vertexList.add(vertexB);
+        vertexList.add(vertexA);
+        List<Vertex<String>> sortedList = tsort.perform(graphIM);
         assertEquals(sortedList, vertexList);
     }
 }
