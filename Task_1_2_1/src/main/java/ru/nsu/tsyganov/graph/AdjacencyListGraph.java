@@ -9,11 +9,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Realisation of interface Graph through Adjacency List.
+ */
 public class AdjacencyListGraph<V, E> implements Graph<V, E> {
     private Map<Vertex<V>, List<Vertex<V>>> adjList;
     private List<Vertex<V>> vertexList;
     private List<Edge<V, E>> edgeList;
 
+    /**
+     * constructor.
+     */
     public AdjacencyListGraph() {
         adjList = new HashMap<>();
         vertexList = new ArrayList<>();

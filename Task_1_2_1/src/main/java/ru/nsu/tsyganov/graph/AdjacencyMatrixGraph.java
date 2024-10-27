@@ -9,12 +9,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Realisation of interface Graph through Adjacency Matrix.
+ */
 public class AdjacencyMatrixGraph<V, E> implements Graph<V, E> {
     private boolean[][] adjacencyMatrix;
     private List<Vertex<V>> vertexList;
     private List<Edge<V, E>> edgeList;
     private Map<V, Integer> vertexIntegerMap;
 
+    /**
+     * constructor.
+     */
     public AdjacencyMatrixGraph(int size) {
         adjacencyMatrix = new boolean[size][size];
         vertexList = new ArrayList<>();

@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
+/**
+ * Topological sort implementation.
+ */
 public class TopSort<V, E> implements Alg<V, E> {
     private void dfs(Graph<V, E> g, Vertex<V> v, boolean[] visited, Deque<Vertex<V>> stack) {
         int index = g.vertexList().indexOf(v);

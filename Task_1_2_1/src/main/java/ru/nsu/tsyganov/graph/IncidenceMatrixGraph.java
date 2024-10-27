@@ -7,12 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Realisation of interface Graph through Incidence Matrix.
+ */
 public class IncidenceMatrixGraph<V, E> implements Graph<V, E> {
     private boolean[][] incidenceMatrix;
     private List<Vertex<V>> vertices;
     private int edgeCount;
     private List<Edge<V, E>> edges;
 
+    /**
+     * constructor.
+     */
     public IncidenceMatrixGraph(int size) {
         incidenceMatrix = new boolean[size][size];
         vertices = new ArrayList<>();
