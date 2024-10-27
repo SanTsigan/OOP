@@ -49,6 +49,16 @@ public class AdjacencyListGraph<V, E> implements Graph<V, E> {
         for(List<Vertex<V>> neighbours : adjList.values()) {
             neighbours.remove(vertex);
         }
+
+//        for (int i = 0; i < edgeList.size(); i++) {
+//            if (edgeList.get(i).getFrom().equals(vertex) || edgeList.get(i).getTo().equals(vertex)) {
+//                edgeList.remove(i);
+//                i--;
+//            }
+//        }
+
+        edgeList.removeIf(edge -> edge.getFrom().equals(vertex) || edge.getTo().equals(vertex));
+
         vertexList.remove(vertex);
     }
 

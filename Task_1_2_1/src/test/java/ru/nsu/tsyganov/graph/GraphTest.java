@@ -155,4 +155,55 @@ class GraphTest{
         List<Vertex<String>> sortedList = tsort.perform(graphIM);
         assertEquals(sortedList, vertexList);
     }
+
+    @Test
+    void removePartsAM() {
+        graphAM.readFromFile(filename);
+        graphAM.removeVertex(vertexA);
+        graphAM.removeEdge(edgeDB);
+        Graph<String, String> graph = new AdjacencyMatrixGraph<>(6);
+        graph.addVertex(vertexF);
+        graph.addVertex(vertexE);
+        graph.addVertex(vertexC);
+        graph.addVertex(vertexB);
+        graph.addVertex(vertexD);
+        graph.addEdge(edgeFC);
+        graph.addEdge(edgeEB);
+        graph.addEdge(edgeCD);
+        assertEquals(graphAM, graph);
+    }
+
+    @Test
+    void removePartsAL() {
+        graphAL.readFromFile(filename);
+        graphAL.removeVertex(vertexA);
+        graphAL.removeEdge(edgeDB);
+        Graph<String, String> graph = new AdjacencyListGraph<>();
+        graph.addVertex(vertexF);
+        graph.addVertex(vertexE);
+        graph.addVertex(vertexC);
+        graph.addVertex(vertexB);
+        graph.addVertex(vertexD);
+        graph.addEdge(edgeFC);
+        graph.addEdge(edgeEB);
+        graph.addEdge(edgeCD);
+        assertEquals(graphAL, graph);
+    }
+
+    @Test
+    void removePartsIM() {
+        graphIM.readFromFile(filename);
+        graphIM.removeVertex(vertexA);
+        graphIM.removeEdge(edgeDB);
+        Graph<String, String> graph = new IncidenceMatrixGraph<>(6);
+        graph.addVertex(vertexF);
+        graph.addVertex(vertexE);
+        graph.addVertex(vertexC);
+        graph.addVertex(vertexB);
+        graph.addVertex(vertexD);
+        graph.addEdge(edgeFC);
+        graph.addEdge(edgeEB);
+        graph.addEdge(edgeCD);
+        assertEquals(graphIM, graph);
+    }
 }

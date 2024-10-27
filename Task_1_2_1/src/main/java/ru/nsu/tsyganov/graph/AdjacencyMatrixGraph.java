@@ -54,6 +54,15 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E>{
             adjacencyMatrix[i][index] = false;
         }
 
+//        for (int i = 0; i < edgeList.size(); i++) {
+//            if (edgeList.get(i).getFrom().equals(vertex) || edgeList.get(i).getTo().equals(vertex)) {
+//                edgeList.remove(i);
+//                i--;
+//            }
+//        }
+
+        edgeList.removeIf(edge -> edge.getFrom().equals(vertex) || edge.getTo().equals(vertex));
+
         for(int i = index; i < vertexList.size(); i++) {
             vertexIntegerMap.put(vertexList.get(i).getLabel(), i);
         }
