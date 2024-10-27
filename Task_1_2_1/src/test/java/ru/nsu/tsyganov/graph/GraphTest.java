@@ -7,6 +7,8 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -55,8 +57,6 @@ class GraphTest{
     @Test
     void checkAMFileRead() {
         graphAM.readFromFile(filename);
-//        graphAM.readFromFile("/home/aleksander/Документы/Универ/OOP" +
-//                "/OOP/Task_1_2_1/src/test/resources/Graph.txt");
         Graph<String, String> graph = new AdjacencyMatrixGraph<>(6);
         graph.addVertex(vertexF);
         graph.addVertex(vertexA);
@@ -76,8 +76,6 @@ class GraphTest{
     @Test
     void checkALFileRead() {
         graphAL.readFromFile(filename);
-//        graphAL.readFromFile("/home/aleksander/Документы/Универ/OOP" +
-//                "/OOP/Task_1_2_1/src/test/resources/Graph.txt");
         Graph<String, String> graph = new AdjacencyListGraph<>();
         graph.addVertex(vertexF);
         graph.addVertex(vertexA);
@@ -97,8 +95,6 @@ class GraphTest{
     @Test
     void checkIMFileRead() {
         graphIM.readFromFile(filename);
-//        graphIM.readFromFile("/home/aleksander/Документы/Универ/OOP" +
-//                "/OOP/Task_1_2_1/src/test/resources/Graph.txt");
         Graph<String, String> graph = new IncidenceMatrixGraph<>(6);
         graph.addVertex(vertexF);
         graph.addVertex(vertexA);
@@ -113,5 +109,20 @@ class GraphTest{
         graph.addEdge(edgeCD);
         graph.addEdge(edgeDB);
         assertEquals(graphIM, graph);
+    }
+
+    @Test
+    void checkTopSort() {
+        Alg<String, String> tsort = new topSort<>();
+        graphAM.readFromFile(filename);
+        List<Vertex<String>> vertexList = new ArrayList<>();
+        vertexList.add(vertexE); // [E, F, C, D, B, A]
+        vertexList.add(vertexF);
+        vertexList.add(vertexC);
+        vertexList.add(vertexD);
+        vertexList.add(vertexB);
+        vertexList.add(vertexA);
+        List<Vertex<String>> sortedList = tsort.perform(graphAM);
+        assertEquals(sortedList, vertexList);
     }
 }
