@@ -4,8 +4,6 @@ import java.util.Objects;
 
 /**
  * Class for Edges.
- * @param <V> type for vertex labels.
- * @param <E> type for edge labels.
  */
 public class Edge<V, E> {
 
@@ -50,8 +48,8 @@ public class Edge<V, E> {
         }
         Edge<?, ?> other = (Edge<?, ?>) obj;
         return this.to.equals(other.to) && this.from.equals(other.from)
-                && Objects.equals(this.toString(), other.toString()) &&
-                Objects.equals(this.weight, other.weight);
+                && Objects.equals(this.toString(), other.toString())
+                && Objects.equals(this.weight, other.weight);
     }
 
     @Override

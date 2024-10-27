@@ -1,8 +1,8 @@
 package ru.nsu.tsyganov.graph;
 
-import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -95,7 +95,7 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E> {
 
     @Override
     public void readFromFile(String filename) {
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))){
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(" ");
@@ -122,7 +122,7 @@ public class AdjacencyMatrixGraph<V, E> implements Graph<V, E> {
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
-        } else if (!(obj instanceof AdjacencyMatrixGraph<?,?>)) {
+        } else if (!(obj instanceof AdjacencyMatrixGraph<?, ?>)) {
             return false;
         }
 

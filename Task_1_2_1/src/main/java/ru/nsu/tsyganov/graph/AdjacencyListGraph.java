@@ -1,8 +1,8 @@
 package ru.nsu.tsyganov.graph;
 
-import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,14 +35,14 @@ public class AdjacencyListGraph<V, E> implements Graph<V, E> {
     }
 
     @Override
-    public List<Vertex<V>> vertexList(){
+    public List<Vertex<V>> vertexList() {
         return vertexList;
     }
 
     @Override
     public void addVertex(Vertex<V> vertex) {
         adjList.putIfAbsent(vertex, new ArrayList<>());
-        if(!vertexList.contains(vertex)) {
+        if (!vertexList.contains(vertex)) {
             vertexList.add(vertex);
         }
     }
@@ -50,7 +50,7 @@ public class AdjacencyListGraph<V, E> implements Graph<V, E> {
     @Override
     public void removeVertex(Vertex<V> vertex) {
         adjList.remove(vertex);
-        for(List<Vertex<V>> neighbours : adjList.values()) {
+        for (List<Vertex<V>> neighbours : adjList.values()) {
             neighbours.remove(vertex);
         }
 
@@ -84,7 +84,7 @@ public class AdjacencyListGraph<V, E> implements Graph<V, E> {
 
     @Override
     public void readFromFile(String filename) {
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))){
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(" ");
@@ -111,13 +111,13 @@ public class AdjacencyListGraph<V, E> implements Graph<V, E> {
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
-        } else if (!(obj instanceof AdjacencyListGraph<?,?>)) {
+        } else if (!(obj instanceof AdjacencyListGraph<?, ?>)) {
             return false;
         }
 
         AdjacencyListGraph<?, ?> other = (AdjacencyListGraph<?, ?>) obj;
-        boolean vertexEquals = (other.vertices() == this.vertices()) ,
-                edgesEquals = (other.edges() == this.edges());
+        boolean vertexEquals = (other.vertices() == this.vertices());
+        boolean edgesEquals = (other.edges() == this.edges());
         if (vertexEquals && edgesEquals) {
             for (int i = 0; i < vertexList.size(); i++) {
                 vertexEquals &= (other.vertexList.get(i).equals(this.vertexList.get(i)));

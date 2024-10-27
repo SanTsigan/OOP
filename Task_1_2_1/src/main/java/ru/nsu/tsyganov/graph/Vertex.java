@@ -4,7 +4,6 @@ import java.util.Objects;
 
 /**
  * Class for vertices.
- * @param <V> type for vertex labels.
  */
 public class Vertex<V> {
 
