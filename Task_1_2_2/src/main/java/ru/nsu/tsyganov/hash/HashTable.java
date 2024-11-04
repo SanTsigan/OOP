@@ -13,7 +13,7 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
     private int modCount;
 
     public HashTable() {
-        this.capacity = 16; // начальный размер
+        this.capacity = 16;
         this.loadFactor = 0.75f;
         this.threshold = (int) (capacity * loadFactor);
         this.table = new Entry[capacity];
@@ -38,10 +38,10 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
         int index = getIndex(key);
         while (table[index] != null) {
             if (table[index].key.equals(key)) {
-                table[index].value = value; // обновление значения
+                table[index].value = value;
                 return;
             }
-            index = (index + 1) % capacity; // линейное пробирование
+            index = (index + 1) % capacity;
         }
         table[index] = new Entry<>(key, value);
         size++;
@@ -61,24 +61,27 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
         return null; // ключ не найден
     }
 
-    public void remove(K key) {
+    public V remove(K key) {
+        V rValue;
         if (key == null) throw new NullPointerException("Key cannot be null");
 
         int index = getIndex(key);
         while (table[index] != null) {
             if (table[index].key.equals(key)) {
-                table[index] = null; // удаление
+                rValue = table[index].value;
+                table[index] = null;
                 size--;
                 modCount++;
-                rehash(index); // реорганизация таблицы
-                return;
+                rehash(index);
+                return rValue;
             }
             index = (index + 1) % capacity;
         }
+        return null;
     }
 
     public void update(K key, V value) {
-        put(key, value); // обновление через put
+        put(key, value);
     }
 
     public boolean containsKey(K key) {
@@ -90,7 +93,7 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
     }
 
     private void resize() {
-        capacity *= 2; // удвоение размера
+        capacity *= 2;
         threshold = (int) (capacity * loadFactor);
         Entry<K, V>[] oldTable = table;
         table = new Entry[capacity];
@@ -107,9 +110,9 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
         int index = (emptyIndex + 1) % capacity;
         while (table[index] != null) {
             Entry<K, V> entryToRehash = table[index];
-            table[index] = null; // временно удаляем элемент
-            size--; // уменьшаем размер для корректной вставки
-            put(entryToRehash.key, entryToRehash.value); // вставляем обратно
+            table[index] = null;
+            size--;
+            put(entryToRehash.key, entryToRehash.value);
             index = (index + 1) % capacity;
         }
     }
@@ -147,27 +150,27 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
         for (Entry<K, V> entry : this) {
             sb.append(entry.key).append("=").append(entry.value).append(", ");
         }
-        if (sb.length() > 1) sb.setLength(sb.length() - 2); // удаление последней запятой
+        if (sb.length() > 1) sb.setLength(sb.length() - 2);
         sb.append("}");
         return sb.toString();
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true; // Сравнение с самим собой
-        if (!(obj instanceof HashTable<?, ?>)) return false; // Проверка на совместимость типов
+        if (this == obj) return true;
+        if (!(obj instanceof HashTable<?, ?>)) return false;
 
         HashTable<K, V> other = (HashTable<K, V>) obj;
 
-        if (this.size != other.size) return false; // Сравнение размеров
+        if (this.size != other.size) return false;
 
         for (Entry<K, V> entry : this) {
             V otherValue = other.get(entry.key);
             if (!Objects.equals(entry.value, otherValue)) {
-                return false; // Если значения не равны, возвращаем false
+                return false;
             }
         }
-        return true; // Все пары ключ-значение равны
+        return true;
     }
 
     @Override
