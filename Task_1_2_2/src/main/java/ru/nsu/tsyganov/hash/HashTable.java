@@ -1,29 +1,29 @@
 package ru.nsu.tsyganov.hash;
-import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
-public class HashTable<K, V> {
-    private static final int INITIAL_CAPACITY = 16;
-    private static final float LOAD_FACTOR = 0.75f;
-
+public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
     private Entry<K, V>[] table;
     private int size;
+    private int capacity;
     private int threshold;
+    private final float loadFactor;
     private int modCount;
 
     public HashTable() {
-        table = new Entry[INITIAL_CAPACITY];
-        threshold = (int) (INITIAL_CAPACITY * LOAD_FACTOR);
-        size = 0;
-        modCount = 0;
+        this.capacity = 16; // начальный размер
+        this.loadFactor = 0.75f;
+        this.threshold = (int) (capacity * loadFactor);
+        this.table = new Entry[capacity];
+        this.size = 0;
+        this.modCount = 0;
     }
 
-    private static class Entry<K, V> {
+    static class Entry<K, V> {
         K key;
         V value;
-        Entry<K, V> next;
 
         Entry(K key, V value) {
             this.key = key;
@@ -31,94 +31,101 @@ public class HashTable<K, V> {
         }
     }
 
-    private int hash(K key) {
-        return key == null ? 0 : (key.hashCode() & 0x7FFFFFFF) % table.length;
-    }
-
     public void put(K key, V value) {
-        if (size >= threshold) {
-            resize();
-        }
-        int index = hash(key);
-        Entry<K, V> newEntry = new Entry<>(key, value);
+        if (key == null) throw new NullPointerException("Key cannot be null");
+        if (size >= threshold) resize();
 
-        if (table[index] == null) {
-            table[index] = newEntry;
-            size++;
-            modCount++;
-            return;
-        }
-
-        Entry<K, V> current = table[index];
-        while (true) {
-            if (current.key.equals(key)) {
-                current.value = value; // Update existing value
+        int index = getIndex(key);
+        while (table[index] != null) {
+            if (table[index].key.equals(key)) {
+                table[index].value = value; // обновление значения
                 return;
             }
-            if (current.next == null) {
-                current.next = newEntry; // Add new entry
-                size++;
-                modCount++;
-                return;
-            }
-            current = current.next;
+            index = (index + 1) % capacity; // линейное пробирование
         }
+        table[index] = new Entry<>(key, value);
+        size++;
+        modCount++;
     }
 
     public V get(K key) {
-        int index = hash(key);
-        Entry<K, V> current = table[index];
+        if (key == null) throw new NullPointerException("Key cannot be null");
 
-        while (current != null) {
-            if (current.key.equals(key)) {
-                return current.value;
+        int index = getIndex(key);
+        while (table[index] != null) {
+            if (table[index].key.equals(key)) {
+                return table[index].value;
             }
-            current = current.next;
+            index = (index + 1) % capacity;
         }
-        return null; // Key not found
+        return null; // ключ не найден
     }
 
     public void remove(K key) {
-        int index = hash(key);
-        Entry<K, V> current = table[index];
-        Entry<K, V> previous = null;
+        if (key == null) throw new NullPointerException("Key cannot be null");
 
-        while (current != null) {
-            if (current.key.equals(key)) {
-                if (previous == null) {
-                    table[index] = current.next; // Remove head
-                } else {
-                    previous.next = current.next; // Remove middle or end
-                }
+        int index = getIndex(key);
+        while (table[index] != null) {
+            if (table[index].key.equals(key)) {
+                table[index] = null; // удаление
                 size--;
                 modCount++;
+                rehash(index); // реорганизация таблицы
                 return;
             }
-            previous = current;
-            current = current.next;
+            index = (index + 1) % capacity;
         }
     }
 
     public void update(K key, V value) {
-        put(key, value); // Reuse put method for update
+        put(key, value); // обновление через put
     }
 
     public boolean containsKey(K key) {
         return get(key) != null;
     }
 
+    private int getIndex(K key) {
+        return Math.abs(key.hashCode()) % capacity;
+    }
+
+    private void resize() {
+        capacity *= 2; // удвоение размера
+        threshold = (int) (capacity * loadFactor);
+        Entry<K, V>[] oldTable = table;
+        table = new Entry[capacity];
+        size = 0;
+
+        for (Entry<K, V> entry : oldTable) {
+            if (entry != null) {
+                put(entry.key, entry.value);
+            }
+        }
+    }
+
+    private void rehash(int emptyIndex) {
+        int index = (emptyIndex + 1) % capacity;
+        while (table[index] != null) {
+            Entry<K, V> entryToRehash = table[index];
+            table[index] = null; // временно удаляем элемент
+            size--; // уменьшаем размер для корректной вставки
+            put(entryToRehash.key, entryToRehash.value); // вставляем обратно
+            index = (index + 1) % capacity;
+        }
+    }
+
+    @Override
     public Iterator<Entry<K, V>> iterator() {
-        return new Iterator<Entry<K, V>>() {
-            private int index = 0;
-            private Entry<K, V> current = null;
-            private int expectedModCount = modCount;
+        return new Iterator<>() {
+            private int currentIndex = 0;
+            private final int expectedModCount = modCount;
 
             @Override
             public boolean hasNext() {
-                while (current == null && index < table.length) {
-                    current = table[index++];
+                while (currentIndex < capacity && table[currentIndex] == null) {
+                    currentIndex++;
                 }
-                return current != null;
+                return currentIndex < capacity;
             }
 
             @Override
@@ -129,9 +136,7 @@ public class HashTable<K, V> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                Entry<K, V> entry = current;
-                current = current.next;
-                return entry;
+                return table[currentIndex++];
             }
         };
     }
@@ -139,30 +144,39 @@ public class HashTable<K, V> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("{");
-        for (Entry<K, V> entry : table) {
-            while (entry != null) {
-                sb.append(entry.key).append("=").append(entry.value).append(", ");
-                entry = entry.next;
-            }
+        for (Entry<K, V> entry : this) {
+            sb.append(entry.key).append("=").append(entry.value).append(", ");
         }
-        if (sb.length() > 1) {
-            sb.setLength(sb.length() - 2); // Remove last comma and space
-        }
+        if (sb.length() > 1) sb.setLength(sb.length() - 2); // удаление последней запятой
         sb.append("}");
         return sb.toString();
     }
 
-    private void resize() {
-        Entry<K, V>[] oldTable = table;
-        table = new Entry[oldTable.length * 2];
-        threshold = (int) (table.length * LOAD_FACTOR);
-        size = 0;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true; // Сравнение с самим собой
+        if (!(obj instanceof HashTable<?, ?>)) return false; // Проверка на совместимость типов
 
-        for (Entry<K, V> entry : oldTable) {
-            while (entry != null) {
-                put(entry.key, entry.value);
-                entry = entry.next;
+        HashTable<K, V> other = (HashTable<K, V>) obj;
+
+        if (this.size != other.size) return false; // Сравнение размеров
+
+        for (Entry<K, V> entry : this) {
+            V otherValue = other.get(entry.key);
+            if (!Objects.equals(entry.value, otherValue)) {
+                return false; // Если значения не равны, возвращаем false
             }
         }
+        return true; // Все пары ключ-значение равны
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 1;
+        for (Entry<K, V> entry : this) {
+            hash = 31 * hash + (entry.key == null ? 0 : entry.key.hashCode());
+            hash = 31 * hash + (entry.value == null ? 0 : entry.value.hashCode());
+        }
+        return hash;
     }
 }
