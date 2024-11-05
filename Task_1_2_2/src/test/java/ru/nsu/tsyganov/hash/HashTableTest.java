@@ -17,20 +17,27 @@ import org.junit.jupiter.api.Test;
  */
 public class HashTableTest {
     private HashTable<String, Integer> hashTable;
+    private HashTable<Integer, Float> otherHashTable;
 
     @BeforeEach
     public void setUp() {
         hashTable = new HashTable<>();
+        otherHashTable = new HashTable<>();
     }
 
     @Test
     public void testPutAndGet() {
         hashTable.put("one", 1);
         hashTable.put("two", 2);
+        otherHashTable.put(1, 0.1f);
+        otherHashTable.put(2, 0.2f);
 
         assertEquals(1, hashTable.get("one"));
         assertEquals(2, hashTable.get("two"));
         assertNull(hashTable.get("three"));
+        assertEquals(0.1f, otherHashTable.get(1));
+        assertEquals(0.2f, otherHashTable.get(2));
+        assertNull(otherHashTable.get(3));
     }
 
     @Test
