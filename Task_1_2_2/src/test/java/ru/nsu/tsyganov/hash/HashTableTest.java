@@ -28,7 +28,7 @@ public class HashTableTest {
     @Test
     public void testOverwriteValue() {
         hashTable.put("one", 1);
-        hashTable.put("one", 10); // Перезаписываем значение
+        hashTable.update("one", 10); // Перезаписываем значение
 
         assertEquals(10, hashTable.get("one"));
     }
@@ -59,6 +59,12 @@ public class HashTableTest {
 
         anotherHashTable.put("three", 3);
         assertNotEquals(hashTable, anotherHashTable);
+    }
+
+    @Test
+    public void testContains() {
+        hashTable.put("one", 1);
+        assertTrue(hashTable.containsKey("one"));
     }
 
     @Test

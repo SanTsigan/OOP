@@ -13,7 +13,7 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
     private int modCount;
 
     public HashTable() {
-        this.capacity = 16;
+        this.capacity = 4;
         this.loadFactor = 0.75f;
         this.threshold = (int) (capacity * loadFactor);
         this.table = new Entry[capacity];
