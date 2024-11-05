@@ -1,9 +1,15 @@
 package ru.nsu.tsyganov.hash;
+
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+/**
+ * HashTable class.
+ * @param <K> for keys.
+ * @param <V> for values.
+ */
 public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
     private Entry<K, V>[] table;
     private int size;
@@ -12,6 +18,9 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
     private final float loadFactor;
     private int modCount;
 
+    /**
+     * Constructor.
+     */
     public HashTable() {
         this.capacity = 4;
         this.loadFactor = 0.75f;
@@ -32,8 +41,13 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
     }
 
     public void put(K key, V value) {
-        if (key == null) throw new NullPointerException("Key cannot be null");
-        if (size >= threshold) resize();
+        if (key == null) {
+            throw new NullPointerException("Key cannot be null");
+        }
+
+        if (size >= threshold) {
+            resize();
+        }
 
         int index = getIndex(key);
         while (table[index] != null) {
@@ -53,7 +67,9 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
     }
 
     public V get(K key) {
-        if (key == null) throw new NullPointerException("Key cannot be null");
+        if (key == null) {
+            throw new NullPointerException("Key cannot be null");
+        }
 
         int index = getIndex(key);
         while (table[index] != null) {
@@ -66,18 +82,20 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
     }
 
     public V remove(K key) {
-        V rValue;
-        if (key == null) throw new NullPointerException("Key cannot be null");
+        V rvalue;
+        if (key == null) {
+            throw new NullPointerException("Key cannot be null");
+        }
 
         int index = getIndex(key);
         while (table[index] != null) {
             if (table[index].key.equals(key)) {
-                rValue = table[index].value;
+                rvalue = table[index].value;
                 table[index] = null;
                 size--;
                 modCount++;
                 rehash(index);
-                return rValue;
+                return rvalue;
             }
             index = (index + 1) % capacity;
         }
@@ -179,12 +197,18 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof HashTable<?, ?>)) return false;
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof HashTable<?, ?>)) {
+            return false;
+        }
 
         HashTable<K, V> other = (HashTable<K, V>) obj;
 
-        if (this.size != other.size) return false;
+        if (this.size != other.size) {
+            return false;
+        }
 
         for (Entry<K, V> entry : this) {
             V otherValue = other.get(entry.key);
