@@ -48,6 +48,10 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
         modCount++;
     }
 
+    public int getSize() {
+        return size;
+    }
+
     public V get(K key) {
         if (key == null) throw new NullPointerException("Key cannot be null");
 
