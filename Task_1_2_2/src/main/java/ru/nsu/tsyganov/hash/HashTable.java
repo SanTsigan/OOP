@@ -1,5 +1,8 @@
 package ru.nsu.tsyganov.hash;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -16,15 +19,11 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
     private int size;
     private int capacity;
     private int threshold;
-    private final float loadFactor;
+    private final float loadFactor = 0.75f;
     private int modCount;
 
-    /**
-     * Constructor.
-     */
     public HashTable() {
         this.capacity = 4;
-        this.loadFactor = 0.75f;
         this.threshold = (int) (capacity * loadFactor);
         this.table = new Entry[capacity];
         this.size = 0;
@@ -44,11 +43,7 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
     /**
      * Put value at key in hashtable.
      */
-    public void put(K key, V value) {
-        if (key == null) {
-            throw new NullPointerException("Key cannot be null");
-        }
-
+    public void put(@NotNull K key, V value) {
         if (size >= threshold) {
             resize();
         }
@@ -70,11 +65,10 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
         return size;
     }
 
-    public V get(K key) {
-        if (key == null) {
-            throw new NullPointerException("Key cannot be null");
-        }
-
+    /**
+     * Returns value at key.
+     */
+    public @Nullable V get(@NotNull K key) {
         int index = getIndex(key);
         while (table[index] != null) {
             if (table[index].key.equals(key)) {
@@ -88,11 +82,8 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
     /**
      * Remove value at key.
      */
-    public V remove(K key) {
+    public @Nullable V remove(@NotNull K key) {
         V rvalue;
-        if (key == null) {
-            throw new NullPointerException("Key cannot be null");
-        }
 
         int index = getIndex(key);
         while (table[index] != null) {
@@ -147,7 +138,7 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
     }
 
     @Override
-    public Iterator<Entry<K, V>> iterator() {
+    public @NotNull Iterator<Entry<K, V>> iterator() {
         return new Iterator<>() {
             private int currentIndex = 0;
             private int lastReturnedIndex = -1;
