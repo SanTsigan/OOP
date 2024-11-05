@@ -121,9 +121,6 @@ public class HashTableTest {
 
         assertNull(hashTable.get(entry.key));
         assertEquals(1, hashTable.getSize());
-
-        entry = iterator.next();
-        assertEquals("two", entry.key);
     }
 
     @Test

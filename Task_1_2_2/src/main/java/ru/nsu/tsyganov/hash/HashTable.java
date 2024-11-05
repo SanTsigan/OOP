@@ -125,6 +125,7 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
     public Iterator<Entry<K, V>> iterator() {
         return new Iterator<>() {
             private int currentIndex = 0;
+            private int lastReturnedIndex = -1;
             private final int expectedModCount = modCount;
 
             @Override
@@ -143,7 +144,24 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return table[currentIndex++];
+                lastReturnedIndex = currentIndex;
+                Entry<K, V> entry = table[currentIndex];
+                currentIndex++;
+                return entry;
+            }
+
+            @Override
+            public void remove() {
+                if (lastReturnedIndex == -1) {
+                    throw new IllegalStateException("Next must be called before remove");
+                }
+
+                if (modCount != expectedModCount) {
+                    throw new ConcurrentModificationException();
+                }
+
+                HashTable.this.remove(table[lastReturnedIndex].key);
+                lastReturnedIndex = -1;
             }
         };
     }
