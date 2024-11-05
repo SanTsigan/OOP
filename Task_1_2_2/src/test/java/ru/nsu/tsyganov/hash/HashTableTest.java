@@ -37,6 +37,9 @@ public class HashTableTest {
     public void testRemove() {
         hashTable.put("one", 1);
         hashTable.put("two", 2);
+        hashTable.put("three", 3);
+        hashTable.put("four", 4);
+        hashTable.put("five", 5);
 
         assertEquals(1, hashTable.remove("one"));
         assertNull(hashTable.get("one"));
@@ -141,5 +144,15 @@ public class HashTableTest {
         hashTable.put("three", 3);
 
         assertThrows(ConcurrentModificationException.class, iterator::next);
+    }
+
+    @Test
+    public void testToString() {
+        hashTable.put("one", 1);
+        hashTable.put("two", 2);
+        hashTable.put("three", 3);
+        hashTable.put("four", 4);
+        hashTable.put("five", 5);
+        System.out.println(hashTable.toString());
     }
 }
