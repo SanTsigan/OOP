@@ -1,15 +1,14 @@
 package ru.nsu.tsyganov.hash;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -121,9 +120,9 @@ public class HashTableTest {
         while (iterator.hasNext()) {
             HashTable.Entry<String, Integer> entry = iterator.next();
             count++;
-            assertTrue(entry.key.equals("one") ||
-                    entry.key.equals("two") ||
-                    entry.key.equals("three"));
+            assertTrue(entry.key.equals("one")
+                    || entry.key.equals("two")
+                    || entry.key.equals("three"));
         }
 
         assertEquals(3, count); // Должно быть три элемента

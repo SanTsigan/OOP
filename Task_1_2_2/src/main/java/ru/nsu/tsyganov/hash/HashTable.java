@@ -7,6 +7,7 @@ import java.util.Objects;
 
 /**
  * HashTable class.
+ *
  * @param <K> for keys.
  * @param <V> for values.
  */
@@ -40,6 +41,9 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
         }
     }
 
+    /**
+     * Put value at key in hashtable.
+     */
     public void put(K key, V value) {
         if (key == null) {
             throw new NullPointerException("Key cannot be null");
@@ -81,6 +85,9 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
         return null; // ключ не найден
     }
 
+    /**
+     * Remove value at key.
+     */
     public V remove(K key) {
         V rvalue;
         if (key == null) {
@@ -190,7 +197,9 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
         for (Entry<K, V> entry : this) {
             sb.append(entry.key).append("=").append(entry.value).append(", ");
         }
-        if (sb.length() > 1) sb.setLength(sb.length() - 2);
+        if (sb.length() > 1) {
+            sb.setLength(sb.length() - 2);
+        }
         sb.append("}");
         return sb.toString();
     }
