@@ -84,7 +84,6 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
      */
     public @Nullable V remove(@NotNull K key) {
         V rvalue;
-
         int index = getIndex(key);
         while (table[index] != null) {
             if (table[index].key.equals(key)) {

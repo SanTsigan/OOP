@@ -149,7 +149,7 @@ public class HashTableTest {
     }
 
     @Test
-    public void testIteratorConcurrentModification() {
+    public void testIteratorConcurrentModificationOnPut() {
         hashTable.put("one", 1);
         hashTable.put("two", 2);
 
@@ -160,6 +160,22 @@ public class HashTableTest {
         hashTable.put("three", 3);
 
         assertThrows(ConcurrentModificationException.class, iterator::next);
+    }
+
+    @Test
+    public void testIteratorConcurrentModificationOnRemove() {
+        hashTable.put("one", 1);
+        hashTable.put("two", 2);
+
+        Iterator<HashTable.Entry<String, Integer>> iterator = hashTable.iterator();
+
+        assertThrows(IllegalStateException.class, iterator::remove);
+
+        iterator.next();
+
+        hashTable.put("three", 3);
+
+        assertThrows(ConcurrentModificationException.class, iterator::remove);
     }
 
     @Test
