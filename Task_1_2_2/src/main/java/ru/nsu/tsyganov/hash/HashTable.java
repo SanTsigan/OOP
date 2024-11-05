@@ -1,8 +1,5 @@
 package ru.nsu.tsyganov.hash;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -138,7 +135,7 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
     }
 
     @Override
-    public @NotNull Iterator<Entry<K, V>> iterator() {
+    public Iterator<Entry<K, V>> iterator() {
         return new Iterator<>() {
             private int currentIndex = 0;
             private int lastReturnedIndex = -1;
