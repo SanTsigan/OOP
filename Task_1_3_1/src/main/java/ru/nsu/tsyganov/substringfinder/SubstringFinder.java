@@ -1,4 +1,4 @@
-package ru.nsu.tsyganov.String;
+package ru.nsu.tsyganov.substringfinder;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,9 +7,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс, ищущий подстроку, используя алгоритм Кнута-Морриса-Пратта.
+ */
 public class SubstringFinder {
 
-    // Метод для построения массива префикс-функции
     private static int[] buildPrefixFunction(String pattern) {
         int[] prefix = new int[pattern.length()];
         int j = 0;
