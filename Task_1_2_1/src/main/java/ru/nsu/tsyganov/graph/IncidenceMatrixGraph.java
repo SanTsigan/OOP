@@ -145,7 +145,7 @@ public class IncidenceMatrixGraph<V, E> implements Graph<V, E> {
                     addVertex(from);
                     addVertex(to);
                     addEdge(new Edge<>(from, to,
-                            (E)("(" + parts[0] + ", " + parts[1] + ")"),
+                            (E) ("(" + parts[0] + ", " + parts[1] + ")"),
                             weight));
                 }
             }
