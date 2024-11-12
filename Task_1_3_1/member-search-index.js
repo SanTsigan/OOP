@@ -1,1 +1,1 @@
-memberSearchIndex = [{"p":"ru.nsu.tsyganov.String","c":"SubstringFinder","l":"find(String, String)","u":"find(java.lang.String,java.lang.String)"},{"p":"ru.nsu.tsyganov.String","c":"SubstringFinder","l":"SubstringFinder()","u":"%3Cinit%3E()"}];updateSearchResults();
+memberSearchIndex = [{"p":"ru.nsu.tsyganov.substringfinder","c":"SubstringFinder","l":"find(String, String)","u":"find(java.lang.String,java.lang.String)"},{"p":"ru.nsu.tsyganov.substringfinder","c":"SubstringFinder","l":"SubstringFinder()","u":"%3Cinit%3E()"}];updateSearchResults();
