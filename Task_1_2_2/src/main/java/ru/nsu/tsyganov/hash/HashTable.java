@@ -1,12 +1,11 @@
 package ru.nsu.tsyganov.hash;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * HashTable class.
@@ -22,6 +21,9 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
     private final float loadFactor = 0.75f;
     private int modCount;
 
+    /**
+     * Constructor for hashTable.
+     */
     public HashTable() {
         this.capacity = 4;
         this.threshold = (int) (capacity * loadFactor);
