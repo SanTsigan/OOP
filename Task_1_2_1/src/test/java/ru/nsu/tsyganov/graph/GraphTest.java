@@ -9,6 +9,8 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,12 +31,15 @@ class GraphTest {
     private Vertex<String> vertexE;
     private Vertex<String> vertexF;
     private String filename;
+    private Function<String, String> vertexParsertoString;
+    private Function<String, Integer> vertexParsertoInteger;
 
     @BeforeEach
     void setup() throws URISyntaxException {
         graphAdjMat = new AdjacencyMatrixGraph<>(6);
         graphAdjList = new AdjacencyListGraph<>();
         graphIncMat = new IncidenceMatrixGraph<>(6);
+        vertexParsertoString = str -> String.valueOf(new Vertex<String>(str));
         vertexA = new Vertex<>("A");
         vertexB = new Vertex<>("B");
         vertexC = new Vertex<>("C");
@@ -56,7 +61,7 @@ class GraphTest {
 
     @Test
     void checkAdjMatFileRead() {
-        graphAdjMat.readFromFile(filename);
+        graphAdjMat.readFromFile(filename, vertexParsertoString);
         Graph<String, String> graph = new AdjacencyMatrixGraph<>(6);
         graph.addVertex(vertexF);
         graph.addVertex(vertexA);
@@ -75,7 +80,7 @@ class GraphTest {
 
     @Test
     void checkAdjListFileRead() {
-        graphAdjList.readFromFile(filename);
+        graphAdjList.readFromFile(filename, vertexParsertoString);
         Graph<String, String> graph = new AdjacencyListGraph<>();
         graph.addVertex(vertexF);
         graph.addVertex(vertexA);
@@ -94,7 +99,7 @@ class GraphTest {
 
     @Test
     void checkIncMatFileRead() {
-        graphIncMat.readFromFile(filename);
+        graphIncMat.readFromFile(filename, vertexParsertoString);
         Graph<String, String> graph = new IncidenceMatrixGraph<>(6);
         graph.addVertex(vertexF);
         graph.addVertex(vertexA);
@@ -113,7 +118,7 @@ class GraphTest {
 
     @Test
     void checkTopSortAdjMat() {
-        graphAdjMat.readFromFile(filename);
+        graphAdjMat.readFromFile(filename, vertexParsertoString);
         List<Vertex<String>> vertexList = new ArrayList<>();
         vertexList.add(vertexE); // [E, F, C, D, B, A]
         vertexList.add(vertexF);
@@ -128,7 +133,7 @@ class GraphTest {
 
     @Test
     void checkTopSortAdjList() {
-        graphAdjList.readFromFile(filename);
+        graphAdjList.readFromFile(filename, vertexParsertoString);
         List<Vertex<String>> vertexList = new ArrayList<>();
         vertexList.add(vertexE); // [E, F, C, D, B, A]
         vertexList.add(vertexF);
@@ -143,7 +148,7 @@ class GraphTest {
 
     @Test
     void checkTopSortIncMat() {
-        graphIncMat.readFromFile(filename);
+        graphIncMat.readFromFile(filename, vertexParsertoString);
         List<Vertex<String>> vertexList = new ArrayList<>();
         vertexList.add(vertexE); // [E, F, C, D, B, A]
         vertexList.add(vertexF);
@@ -158,7 +163,7 @@ class GraphTest {
 
     @Test
     void removePartsAdjMat() {
-        graphAdjMat.readFromFile(filename);
+        graphAdjMat.readFromFile(filename, vertexParsertoString);
         graphAdjMat.removeVertex(vertexA);
         graphAdjMat.removeEdge(edgeDtoB);
         Graph<String, String> graph = new AdjacencyMatrixGraph<>(6);
@@ -175,7 +180,7 @@ class GraphTest {
 
     @Test
     void removePartsAdjList() {
-        graphAdjList.readFromFile(filename);
+        graphAdjList.readFromFile(filename, vertexParsertoString);
         graphAdjList.removeVertex(vertexA);
         graphAdjList.removeEdge(edgeDtoB);
         Graph<String, String> graph = new AdjacencyListGraph<>();
@@ -192,7 +197,7 @@ class GraphTest {
 
     @Test
     void removePartsIncMat() {
-        graphIncMat.readFromFile(filename);
+        graphIncMat.readFromFile(filename, vertexParsertoString);
         graphIncMat.removeVertex(vertexA);
         graphIncMat.removeEdge(edgeDtoB);
         Graph<String, String> graph = new IncidenceMatrixGraph<>(6);
@@ -205,5 +210,33 @@ class GraphTest {
         graph.addEdge(edgeEtoB);
         graph.addEdge(edgeCtoD);
         assertEquals(graphIncMat, graph);
+    }
+
+    @Test
+    void otherTypesTest() throws URISyntaxException {
+        vertexParsertoInteger = Integer::parseInt;
+        URL res =
+                GraphTest.class.getClassLoader().getResource("Graph1.txt");
+        assert res != null;
+        File file = Paths.get(res.toURI()).toFile();
+        String filename = file.getAbsolutePath();
+        Graph<Integer, Integer> graph = new AdjacencyMatrixGraph<Integer, Integer>(4);
+        graph.readFromFile(filename, vertexParsertoInteger);
+        Graph<Integer, Integer> integerGraph = new AdjacencyMatrixGraph<>(4);
+        Vertex<Integer> vertex1 = new Vertex<Integer>(1);
+        Vertex<Integer> vertex2 = new Vertex<Integer>(2);
+        Vertex<Integer> vertex3 = new Vertex<Integer>(3);
+        Vertex<Integer> vertex4 = new Vertex<Integer>(4);
+        Edge<Integer, Integer> edge12 = new Edge<Integer, Integer>(vertex1, vertex2, 12, (double)1);
+        Edge<Integer, Integer> edge13 = new Edge<Integer, Integer>(vertex1, vertex3, 12, (double)1);
+        Edge<Integer, Integer> edge24 = new Edge<Integer, Integer>(vertex2, vertex4, 12, (double)1);
+        integerGraph.addVertex(vertex1);
+        integerGraph.addVertex(vertex2);
+        integerGraph.addVertex(vertex3);
+        integerGraph.addVertex(vertex4);
+        integerGraph.addEdge(edge12);
+        integerGraph.addEdge(edge13);
+        integerGraph.addEdge(edge24);
+        assertEquals(graph, integerGraph);
     }
 }

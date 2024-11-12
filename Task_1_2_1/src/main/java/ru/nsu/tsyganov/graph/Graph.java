@@ -3,6 +3,7 @@ package ru.nsu.tsyganov.graph;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Graph interface.
@@ -24,5 +25,5 @@ public interface Graph<V, E> {
 
     List<Vertex<V>> getNeighbors(Vertex<V> vertex);
 
-    void readFromFile(String filename);
+    void readFromFile(String filename, Function<String, V> vertexParser);
 }

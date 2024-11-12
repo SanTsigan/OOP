@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * Realisation of interface Graph through Incidence Matrix.
@@ -131,25 +132,25 @@ public class IncidenceMatrixGraph<V, E> implements Graph<V, E> {
     }
 
     @Override
-    public void readFromFile(String filename) {
+    public void readFromFile(String filename, Function<String, V> vertexParser) {
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(" ");
                 if (parts.length == 3) {
-                    Vertex<V> from = (Vertex<V>) new Vertex<String>(parts[0]);
-                    Vertex<V> to = (Vertex<V>) new Vertex<String>(parts[1]);
+                    Vertex<V> from = new Vertex<>(vertexParser.apply(parts[0]));
+                    Vertex<V> to = new Vertex<>(vertexParser.apply(parts[1]));
                     Double weight = Double.parseDouble(parts[2]);
 
                     addVertex(from);
                     addVertex(to);
-                    addEdge((Edge<V, E>) new Edge<>(from, to,
-                            "(" + parts[0] + ", " + parts[1] + ")",
+                    addEdge(new Edge<>(from, to,
+                            (E)("(" + parts[0] + ", " + parts[1] + ")"),
                             weight));
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Ошибка чтения файла: " + e.getMessage());
         } catch (NumberFormatException e) {
             System.out.println("Ошибка формат числа: " + e.getMessage());
         }
