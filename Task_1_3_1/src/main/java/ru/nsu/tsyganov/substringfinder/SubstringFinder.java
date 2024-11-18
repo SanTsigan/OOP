@@ -29,7 +29,9 @@ public class SubstringFinder {
         return prefix;
     }
 
-    // Метод для поиска подстроки с использованием алгоритма КМП
+    /**
+     * Метод для поиска подстроки с использованием алгоритма КМП.
+     */
     public List<Integer> find(String fileName, String substring) {
         List<Integer> indices = new ArrayList<>();
         StringBuilder previousLine = new StringBuilder();
@@ -39,7 +41,8 @@ public class SubstringFinder {
         // Построение префикс-функции для подстроки
         int[] prefix = buildPrefixFunction(substring);
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName, StandardCharsets.UTF_8))) {
+        try (BufferedReader reader =
+                     new BufferedReader(new FileReader(fileName, StandardCharsets.UTF_8))) {
             while ((line = reader.readLine()) != null) {
                 String combined = previousLine.toString() + line;
                 int m = substring.length();
