@@ -30,7 +30,7 @@ public class SubstringFinder {
     }
 
     // Метод для поиска подстроки с использованием алгоритма КМП
-    public static List<Integer> find(String fileName, String substring) {
+    public List<Integer> find(String fileName, String substring) {
         List<Integer> indices = new ArrayList<>();
         StringBuilder previousLine = new StringBuilder();
         String line;
@@ -68,25 +68,6 @@ public class SubstringFinder {
                 currentIndex += line.length();
                 previousLine.setLength(0);
                 previousLine.append(line);
-            }
-
-            // Проверка последней строки
-            String combined = previousLine.toString();
-            int m = substring.length();
-            int n = combined.length();
-            int j = 0;
-
-            for (int i = 0; i < n; i++) {
-                while (j > 0 && combined.charAt(i) != substring.charAt(j)) {
-                    j = prefix[j - 1];
-                }
-                if (combined.charAt(i) == substring.charAt(j)) {
-                    j++;
-                }
-                if (j == m) {
-                    indices.add(currentIndex + (i - m + 1));
-                    j = prefix[j - 1];
-                }
             }
 
         } catch (IOException e) {
