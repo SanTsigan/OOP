@@ -88,7 +88,6 @@ class SubstringFinderTest {
         File file = new File("largefile.txt");
         List<Integer> output = finder.find("largefile.txt", "abc");
         file.delete();
-
     }
 
 }
