@@ -132,31 +132,6 @@ public class IncidenceMatrixGraph<V, E> implements Graph<V, E> {
     }
 
     @Override
-    public void readFromFile(String filename, Function<String, V> vertexParser) {
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(" ");
-                if (parts.length == 3) {
-                    Vertex<V> from = new Vertex<>(vertexParser.apply(parts[0]));
-                    Vertex<V> to = new Vertex<>(vertexParser.apply(parts[1]));
-                    Double weight = Double.parseDouble(parts[2]);
-
-                    addVertex(from);
-                    addVertex(to);
-                    addEdge(new Edge<>(from, to,
-                            (E) ("(" + parts[0] + ", " + parts[1] + ")"),
-                            weight));
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Ошибка чтения файла: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.out.println("Ошибка формат числа: " + e.getMessage());
-        }
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
