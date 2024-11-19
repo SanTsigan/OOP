@@ -2,12 +2,17 @@ package ru.nsu.tsyganov.substringfinder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -57,6 +62,34 @@ class SubstringFinderTest {
         List<Integer> expected = new ArrayList<>();
         expected.add(565);
         assertEquals(output, expected);
+    }
+
+    public static class RandomFileGenerator {
+        private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        public void generateRandomFile(String filePath, int size) {
+            Random random = new Random();
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+                for (int i = 0; i < size; i++) {
+                    int index = random.nextInt(CHARACTERS.length());
+                    writer.write(CHARACTERS.charAt(index));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Test
+    void findInGeneratedFile() throws IOException {
+        RandomFileGenerator rgen = new RandomFileGenerator();
+        rgen.generateRandomFile("largefile.txt", Integer.MAX_VALUE);
+        File file = new File("largefile.txt");
+        List<Integer> output = finder.find("largefile.txt", "abc");
+        file.createNewFile();
+        file.delete();
+
     }
 
 }
