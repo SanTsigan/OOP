@@ -12,7 +12,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -65,7 +64,8 @@ class SubstringFinderTest {
     }
 
     public static class RandomFileGenerator {
-        private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        private static final String CHARACTERS
+                = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
         public void generateRandomFile(String filePath, int size) {
             Random random = new Random();
@@ -87,7 +87,6 @@ class SubstringFinderTest {
         rgen.generateRandomFile("largefile.txt", Integer.MAX_VALUE);
         File file = new File("largefile.txt");
         List<Integer> output = finder.find("largefile.txt", "abc");
-        file.createNewFile();
         file.delete();
 
     }
