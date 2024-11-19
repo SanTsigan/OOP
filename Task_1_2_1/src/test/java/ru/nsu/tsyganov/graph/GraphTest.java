@@ -226,9 +226,9 @@ class GraphTest {
         Vertex<Integer> vertex2 = new Vertex<Integer>(2);
         Vertex<Integer> vertex3 = new Vertex<Integer>(3);
         Vertex<Integer> vertex4 = new Vertex<Integer>(4);
-        Edge<Integer, Integer> edge12 = new Edge<Integer, Integer>(vertex1, vertex2, 12, (double)1);
-        Edge<Integer, Integer> edge13 = new Edge<Integer, Integer>(vertex1, vertex3, 12, (double)2);
-        Edge<Integer, Integer> edge24 = new Edge<Integer, Integer>(vertex2, vertex4, 12, (double)3);
+        Edge<Integer, Integer> edge12 = new Edge<Integer, Integer>(vertex1, vertex2, 12, (double) 1);
+        Edge<Integer, Integer> edge13 = new Edge<Integer, Integer>(vertex1, vertex3, 12, (double) 2);
+        Edge<Integer, Integer> edge24 = new Edge<Integer, Integer>(vertex2, vertex4, 12, (double) 3);
         integerGraph.addVertex(vertex1);
         integerGraph.addVertex(vertex2);
         integerGraph.addVertex(vertex3);
