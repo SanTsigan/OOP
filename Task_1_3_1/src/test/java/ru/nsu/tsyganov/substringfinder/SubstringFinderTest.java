@@ -17,6 +17,7 @@ class SubstringFinderTest {
     File file;
     private String filename1;
     private String filename2;
+    private static String filename3;
 
     @BeforeEach
     void setup() throws URISyntaxException {
@@ -29,6 +30,10 @@ class SubstringFinderTest {
         assert absPath != null;
         file = Paths.get(absPath.toURI()).toFile();
         filename2 = file.getAbsolutePath();
+        absPath = SubstringFinderTest.class.getClassLoader().getResource("emojitext.txt");
+        assert absPath != null;
+        file = Paths.get(absPath.toURI()).toFile();
+        filename3 = file.getAbsolutePath();
     }
 
     @Test
@@ -43,6 +48,15 @@ class SubstringFinderTest {
     @Test
     void testLargeText() {
         List<Integer> output = finder.find(filename2, "whale");
-        assertEquals(output.size(), 1362);
+        assertEquals(output.size(), 701);
     }
+
+    @Test
+    void testEmoji() {
+        List<Integer> output = finder.find(filename3, "\uD83C\uDF40");
+        List<Integer> expected = new ArrayList<>();
+        expected.add(565);
+        assertEquals(output, expected);
+    }
+
 }

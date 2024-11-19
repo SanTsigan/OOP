@@ -36,6 +36,7 @@ public class SubstringFinder {
         List<Integer> indices = new ArrayList<>();
         StringBuilder previousLine = new StringBuilder();
         String line;
+        int swap = 0;
         int currentIndex = 0;
 
         // Построение префикс-функции для подстроки
@@ -60,9 +61,14 @@ public class SubstringFinder {
                     if (j == m) {
                         // Найдено вхождение
                         if (i - m + 1 < previousLine.length()) {
-                            indices.add(currentIndex + (i - m + 1));
+                            if (swap == 1) {
+                                swap = 0;
+                            } else {
+                                indices.add(currentIndex + (i - m + 1));
+                            }
                         } else {
                             indices.add(currentIndex + (i - m + 1 - previousLine.length()));
+                            swap = 1;
                         }
                         j = prefix[j - 1]; // Продолжаем поиск
                     }
