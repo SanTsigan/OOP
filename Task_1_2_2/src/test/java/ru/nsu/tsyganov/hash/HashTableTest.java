@@ -12,8 +12,6 @@ import java.util.Iterator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.xml.stream.FactoryConfigurationError;
-
 /**
  * Test class.
  */
@@ -193,7 +191,7 @@ public class HashTableTest {
         hashTable.put("two", 2);
 
         assertThrows(ConcurrentModificationException.class, () -> {
-            for (var a: hashTable) {
+            for (var a : hashTable) {
                 hashTable.remove(a.key);
             }
         });

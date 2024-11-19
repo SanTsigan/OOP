@@ -79,7 +79,7 @@ public class HashTable<K, V> implements Iterable<HashTable.Entry<K, V>> {
             }
             index = (index + 1) % capacity;
         }
-        return null; // ключ не найден
+        return null;
     }
 
     /**
