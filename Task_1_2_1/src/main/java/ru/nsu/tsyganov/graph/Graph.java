@@ -27,7 +27,10 @@ public interface Graph<V, E> {
 
     List<Vertex<V>> getNeighbors(Vertex<V> vertex);
 
-    default void readFromFile(String filename, Function<String, V> vertexParser){
+    /**
+     * Метод для чтения графа из текстового файла.
+     */
+    default void readFromFile(String filename, Function<String, V> vertexParser) {
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null) {
