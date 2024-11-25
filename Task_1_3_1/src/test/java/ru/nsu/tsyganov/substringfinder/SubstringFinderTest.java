@@ -52,14 +52,14 @@ class SubstringFinderTest {
     @Test
     void testLargeText() {
         List<Integer> output = finder.find(filename2, "whale");
-        assertEquals(output.size(), 701);
+        assertEquals(output.size(), 682);
     }
 
     @Test
     void testEmoji() {
         List<Integer> output = finder.find(filename3, "\uD83C\uDF40");
         List<Integer> expected = new ArrayList<>();
-        expected.add(565);
+        expected.add(570);
         assertEquals(output, expected);
     }
 

@@ -7,9 +7,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Класс, ищущий подстроку, используя алгоритм Кнута-Морриса-Пратта.
- */
 public class SubstringFinder {
 
     private static int[] buildPrefixFunction(String pattern) {
@@ -29,28 +26,26 @@ public class SubstringFinder {
         return prefix;
     }
 
-    /**
-     * Метод для поиска подстроки с использованием алгоритма КМП.
-     */
     public List<Integer> find(String fileName, String substring) {
         List<Integer> indices = new ArrayList<>();
         StringBuilder previousLine = new StringBuilder();
-        String line;
-        int swap = 0;
         int currentIndex = 0;
 
-        // Построение префикс-функции для подстроки
         int[] prefix = buildPrefixFunction(substring);
+        int m = substring.length();
 
         try (BufferedReader reader =
                      new BufferedReader(new FileReader(fileName, StandardCharsets.UTF_8))) {
-            while ((line = reader.readLine()) != null) {
-                String combined = previousLine.toString() + line;
-                int m = substring.length();
-                int n = combined.length();
+            char[] buffer = new char[1024];
+            StringBuilder combined = new StringBuilder(previousLine);
+            int bytesRead;
 
-                // Поиск подстроки в объединенной строке
-                int j = 0; // Индекс для подстроки
+            while ((bytesRead = reader.read(buffer)) != -1) {
+                combined.append(buffer, 0, bytesRead);
+
+                int n = combined.length();
+                int j = 0;
+
                 for (int i = 0; i < n; i++) {
                     while (j > 0 && combined.charAt(i) != substring.charAt(j)) {
                         j = prefix[j - 1];
@@ -59,24 +54,18 @@ public class SubstringFinder {
                         j++;
                     }
                     if (j == m) {
-                        // Найдено вхождение
-                        if (i - m + 1 < previousLine.length()) {
-                            if (swap == 1) {
-                                swap = 0;
-                            } else {
-                                indices.add(currentIndex + (i - m + 1));
-                            }
-                        } else {
-                            indices.add(currentIndex + (i - m + 1 - previousLine.length()));
-                            swap = 1;
-                        }
-                        j = prefix[j - 1]; // Продолжаем поиск
+                        indices.add(currentIndex + (i - m + 1));
+                        j = prefix[j - 1];
                     }
                 }
 
-                currentIndex += line.length();
-                previousLine.setLength(0);
-                previousLine.append(line);
+                currentIndex += bytesRead;
+
+                if (combined.length() > m) {
+                    combined.delete(0, combined.length() - m);
+                } else {
+                    combined.setLength(0);
+                }
             }
 
         } catch (IOException e) {
