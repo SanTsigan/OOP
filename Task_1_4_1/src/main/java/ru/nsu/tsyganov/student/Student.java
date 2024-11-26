@@ -5,12 +5,14 @@ import java.util.List;
 
 public class Student {
     private String name;
+    private String group;
     private List<Grade> grades;
     private StudyForm studyForm;
     private boolean thesisGradeExcellent;
 
-    public Student(String name, StudyForm studyForm) {
+    public Student(String name, String group, StudyForm studyForm) {
         this.name = name;
+        this.group = group;
         this.studyForm = studyForm;
         this.grades = new ArrayList<>();
         this.thesisGradeExcellent = false; // По умолчанию квалификационная работа не оценена
@@ -40,7 +42,7 @@ public class Student {
                     totalPoints += 3;
                     break;
                 case UNSATISFACTORY:
-                    totalPoints += 1; // предположим, что неудовлетворительная оценка - это 1
+                    totalPoints += 2;
                     break;
             }
         }
@@ -85,7 +87,8 @@ public class Student {
     @Override
     public String toString() {
         return "Student{" +
-                "name='" + name +
+                "name='" + name + "'" +
+                "group='" + group + "'" +
                 ", grades=" + grades +
                 ", studyForm=" + studyForm +
                 '}';
