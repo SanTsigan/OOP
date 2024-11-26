@@ -8,89 +8,80 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class StudentTest {
-    private Student student;
+    private Student recordBook;
 
     @BeforeEach
     void setUp() {
-        student = new Student("John Doe", "23213", StudyForm.PAID);
+        recordBook = new Student("Alexander Tsyganov", 2, "23213", StudyForm.BUDGET);
     }
 
     @Test
-    void testCalculategpa_NoGrades() {
-        assertEquals(0.0, student.calculateGPA());
+    void testCalculateAverage_NoGrades() {
+        assertEquals(0.0, recordBook.calculateAverage());
     }
 
     @Test
-    void testCalculategpa_ValidGrades() {
-        student.addGrade(Grade.EXCELLENT);
-        student.addGrade(Grade.GOOD);
-        student.addGrade(Grade.SATISFACTORY);
-        student.addGrade(Grade.UNSATISFACTORY);
-
-        assertEquals(3.5, student.calculateGPA());
+    void testCalculateAverage_OnlySatisfactory() {
+        recordBook.addGrade(new Grade(GradeType.EXAM, GradeValue.SATISFACTORY));
+        assertEquals(0.0, recordBook.calculateAverage());
     }
 
     @Test
-    void testCanTransferToBudget_NotEnoughGrades() {
-        assertFalse(student.canTransferToBudget());
+    void testCalculateAverage_MixedGrades() {
+        recordBook.addGrade(new Grade(GradeType.EXAM, GradeValue.EXCELLENT));
+        recordBook.addGrade(new Grade(GradeType.EXAM, GradeValue.GOOD));
+        recordBook.addGrade(new Grade(GradeType.EXAM, GradeValue.SATISFACTORY));
+
+        // Средний балл считается только по "отлично" и "хорошо"
+        assertEquals(4.5, recordBook.calculateAverage());
     }
 
     @Test
-    void testCanTransferToBudget_InvalidGrades() {
-        student.addGrade(Grade.EXCELLENT);
-        student.addGrade(Grade.GOOD);
-        student.addGrade(Grade.SATISFACTORY);
-        student.addGrade(Grade.UNSATISFACTORY);
+    void testCanTransferToBudget_NoSatisfactoryGrades() {
+        recordBook.addGrade(new Grade(GradeType.EXAM, GradeValue.EXCELLENT));
+        recordBook.addGrade(new Grade(GradeType.EXAM, GradeValue.GOOD));
 
-        assertFalse(student.canTransferToBudget());
+        assertTrue(recordBook.canTransferToBudget());
     }
 
     @Test
-    void testCanTransferToBudget_ValidTransfer() {
-        student.addGrade(Grade.EXCELLENT);
-        student.addGrade(Grade.EXCELLENT);
-        student.addGrade(Grade.EXCELLENT);
-        student.addGrade(Grade.EXCELLENT);
+    void testCanTransferToBudget_WithSatisfactoryGrades() {
+        recordBook.addGrade(new Grade(GradeType.EXAM, GradeValue.SATISFACTORY));
+        recordBook.addGrade(new Grade(GradeType.EXAM, GradeValue.EXCELLENT));
 
-        assertTrue(student.canTransferToBudget());
+        assertFalse(recordBook.canTransferToBudget());
     }
 
     @Test
-    void testCanGetRedDiploma_NoGrades() {
-        assertFalse(student.canGetRedDiploma());
+    void testCanReceiveRedDiploma_AllExcellent() {
+        recordBook.addGrade(new Grade(GradeType.EXAM, GradeValue.EXCELLENT));
+        recordBook.addGrade(new Grade(GradeType.DIFF_CREDIT, GradeValue.EXCELLENT));
+        recordBook.setQualificationWorkGrade(GradeValue.EXCELLENT);
+
+        assertTrue(recordBook.canGetRedDiploma());
     }
 
     @Test
-    void testCanGetRedDiploma_WithSatisfactory() {
-        student.addGrade(Grade.EXCELLENT);
-        student.addGrade(Grade.SATISFACTORY);
+    void testCanReceiveRedDiploma_WithSatisfactory() {
+        recordBook.addGrade(new Grade(GradeType.EXAM, GradeValue.SATISFACTORY));
+        recordBook.addGrade(new Grade(GradeType.DIFF_CREDIT, GradeValue.EXCELLENT));
+        recordBook.setQualificationWorkGrade(GradeValue.EXCELLENT);
 
-        assertFalse(student.canGetRedDiploma());
+        assertFalse(recordBook.canGetRedDiploma());
     }
 
     @Test
-    void testCanGetRedDiploma_ValidConditions() {
-        student.addGrade(Grade.EXCELLENT);
-        student.addGrade(Grade.EXCELLENT);
-        student.addGrade(Grade.EXCELLENT);
-        student.setThesisGradeExcellent(true);
+    void testCanReceiveIncreasedScholarship_HighAverage() {
+        recordBook.addGrade(new Grade(GradeType.EXAM, GradeValue.EXCELLENT));
+        recordBook.addGrade(new Grade(GradeType.EXAM, GradeValue.GOOD));
 
-        assertTrue(student.canGetRedDiploma());
+        assertTrue(recordBook.canGetIncreasedScholarship());
     }
 
     @Test
-    void testCanGetIncreasedScholarship_LowGpa() {
-        student.addGrade(Grade.GOOD);
-        student.addGrade(Grade.GOOD);
+    void testCanReceiveIncreasedScholarship_LowAverage() {
+        recordBook.addGrade(new Grade(GradeType.EXAM, GradeValue.SATISFACTORY));
 
-        assertFalse(student.canGetIncreasedScholarship());
-    }
-
-    @Test
-    void testCanGetIncreasedScholarship_HighGpa() {
-        student.addGrade(Grade.EXCELLENT);
-        student.addGrade(Grade.EXCELLENT);
-
-        assertTrue(student.canGetIncreasedScholarship());
+        assertFalse(recordBook.canGetIncreasedScholarship());
     }
 }

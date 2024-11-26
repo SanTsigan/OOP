@@ -3,6 +3,6 @@ package ru.nsu.tsyganov.student;
 /**
  * Оценки.
  */
-public enum Grade {
+public enum GradeValue {
     EXCELLENT, GOOD, SATISFACTORY, UNSATISFACTORY
 }

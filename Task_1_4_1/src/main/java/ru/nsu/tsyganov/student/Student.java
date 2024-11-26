@@ -9,14 +9,16 @@ import java.util.List;
 public class Student {
     private String name;
     private String group;
+    private int semester;
     private List<Grade> grades;
     private StudyForm studyForm;
     private boolean thesisGradeExcellent;
+    private GradeValue qualificationWorkGrade;
 
     /**
      * Конструктор.
      */
-    public Student(String name, String group, StudyForm studyForm) {
+    public Student(String name, int course, String group, StudyForm studyForm) {
         this.name = name;
         this.group = group;
         this.studyForm = studyForm;
@@ -32,67 +34,57 @@ public class Student {
         this.thesisGradeExcellent = excellent;
     }
 
-    public double calculateGPA() {
-        if (grades.isEmpty()) {
-            return 0.0;
-        }
-
-        int totalPoints = 0;
-        for (Grade grade : grades) {
-            switch (grade) {
-                case EXCELLENT:
-                    totalPoints += 5;
-                    break;
-                case GOOD:
-                    totalPoints += 4;
-                    break;
-                case SATISFACTORY:
-                    totalPoints += 3;
-                    break;
-                case UNSATISFACTORY:
-                    totalPoints += 2;
-                    break;
-            }
-        }
-        return (double) totalPoints / grades.size();
+    /**
+     * Расчситывает среднюю оценку студента.
+     */
+    public double calculateAverage() {
+        return grades.stream()
+                .filter(grade -> !grade.isSatisfactory()) // исключаем "удовлетворительно"
+                .mapToInt(grade -> switch (grade.getValue()) {
+                    case EXCELLENT -> 5;
+                    case GOOD -> 4;
+                    default -> 0; // Неправильная оценка
+                })
+                .average()
+                .orElse(0.0);
     }
 
+    /**
+     * Возможность перехода на бюджетную форму обучения.
+     */
     public boolean canTransferToBudget() {
-        if (grades.size() < 4) {
-            return false;
-        }
-
-        int satisfactoryCount = 0;
-        for (int i = grades.size() - 4; i < grades.size(); i++) {
-            if (grades.get(i) == Grade.SATISFACTORY) {
-                satisfactoryCount++;
-            }
-        }
-        return satisfactoryCount == 0 && studyForm == StudyForm.PAID;
+        long lastTwoSessions = grades.stream()
+                .filter(g -> g.getType() == GradeType.EXAM)
+                .skip(Math.max(0, grades.size() - 2))
+                .filter(Grade::isSatisfactory)
+                .count();
+        return lastTwoSessions == 0;
     }
 
+    /**
+     * Возможность получения красного диплома.
+     */
     public boolean canGetRedDiploma() {
-        if (grades.isEmpty()) {
-            return false;
-        }
+        long excellentCount = grades.stream()
+                .filter(g -> g.getType() == GradeType.EXAM || g.getType() == GradeType.DIFF_CREDIT)
+                .filter(Grade::isExcellent)
+                .count();
 
-        int excellentCount = 0;
-        for (Grade grade : grades) {
-            if (grade == Grade.EXCELLENT) {
-                excellentCount++;
-            }
-            if (grade == Grade.SATISFACTORY || grade == Grade.UNSATISFACTORY) {
-                return false; // Наличие неудовлетворительных оценок
-            }
-        }
+        long totalCount = grades.stream()
+                .filter(g -> g.getType() == GradeType.EXAM || g.getType() == GradeType.DIFF_CREDIT)
+                .count();
 
-        double percentage = (double) excellentCount / grades.size();
-        return percentage >= 0.75 && thesisGradeExcellent;
+        boolean hasSatisfactory = grades.stream()
+                .anyMatch(Grade::isSatisfactory);
+
+        boolean qualificationWorkExcellent = (qualificationWorkGrade == GradeValue.EXCELLENT);
+
+        return totalCount > 0 && (excellentCount * 100.0 / totalCount >= 75) && !hasSatisfactory && qualificationWorkExcellent;
     }
 
     public boolean canGetIncreasedScholarship() {
         // Предположим, что повышенная стипендия может быть получена, если GPA выше 4.5
-        return calculateGPA() > 4.5;
+        return calculateAverage() >= 4.5;
     }
 
     @Override
@@ -103,5 +95,9 @@ public class Student {
                 + ", grades=" + grades
                 + ", studyForm=" + studyForm
                 + '}';
+    }
+
+    public void setQualificationWorkGrade(GradeValue grade) {
+        this.qualificationWorkGrade = grade;
     }
 }
