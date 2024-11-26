@@ -102,7 +102,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String,ru.nsu.tsyganov.student.StudyForm)" class="member-name-link">Student</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,int,java.lang.String,ru.nsu.tsyganov.student.StudyForm)" class="member-name-link">Student</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ int&nbsp;course,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;group,
  <a href="StudyForm.html" title="enum class in ru.nsu.tsyganov.student">StudyForm</a>&nbsp;studyForm)</code></div>
 <div class="col-last even-row-color">
@@ -123,26 +124,35 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addGrade(ru.nsu.tsyganov.student.Grade)" class="member-name-link">addGrade</a><wbr>(<a href="Grade.html" title="enum class in ru.nsu.tsyganov.student">Grade</a>&nbsp;grade)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addGrade(ru.nsu.tsyganov.student.Grade)" class="member-name-link">addGrade</a><wbr>(<a href="Grade.html" title="class in ru.nsu.tsyganov.student">Grade</a>&nbsp;grade)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#calculateGPA()" class="member-name-link">calculateGPA</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#calculateAverage()" class="member-name-link">calculateAverage</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Расчситывает среднюю оценку студента.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#canGetIncreasedScholarship()" class="member-name-link">canGetIncreasedScholarship</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#canGetRedDiploma()" class="member-name-link">canGetRedDiploma</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Возможность получения красного диплома.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#canTransferToBudget()" class="member-name-link">canTransferToBudget</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Возможность перехода на бюджетную форму обучения.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setThesisGradeExcellent(boolean)" class="member-name-link">setThesisGradeExcellent</a><wbr>(boolean&nbsp;excellent)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setQualificationWorkGrade(ru.nsu.tsyganov.student.GradeValue)" class="member-name-link">setQualificationWorkGrade</a><wbr>(<a href="GradeValue.html" title="enum class in ru.nsu.tsyganov.student">GradeValue</a>&nbsp;grade)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setThesisGradeExcellent(boolean)" class="member-name-link">setThesisGradeExcellent</a><wbr>(boolean&nbsp;excellent)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -161,9 +171,10 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.String,ru.nsu.tsyganov.student.StudyForm)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,int,java.lang.String,ru.nsu.tsyganov.student.StudyForm)">
 <h3>Student</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Student</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ int&nbsp;course,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;group,
  <a href="StudyForm.html" title="enum class in ru.nsu.tsyganov.student">StudyForm</a>&nbsp;studyForm)</span></div>
 <div class="block">Конструктор.</div>
@@ -180,7 +191,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="addGrade(ru.nsu.tsyganov.student.Grade)">
 <h3>addGrade</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addGrade</span><wbr><span class="parameters">(<a href="Grade.html" title="enum class in ru.nsu.tsyganov.student">Grade</a>&nbsp;grade)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addGrade</span><wbr><span class="parameters">(<a href="Grade.html" title="class in ru.nsu.tsyganov.student">Grade</a>&nbsp;grade)</span></div>
 </section>
 </li>
 <li>
@@ -190,21 +201,24 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="calculateGPA()">
-<h3>calculateGPA</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">calculateGPA</span>()</div>
+<section class="detail" id="calculateAverage()">
+<h3>calculateAverage</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">calculateAverage</span>()</div>
+<div class="block">Расчситывает среднюю оценку студента.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="canTransferToBudget()">
 <h3>canTransferToBudget</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">canTransferToBudget</span>()</div>
+<div class="block">Возможность перехода на бюджетную форму обучения.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="canGetRedDiploma()">
 <h3>canGetRedDiploma</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">canGetRedDiploma</span>()</div>
+<div class="block">Возможность получения красного диплома.</div>
 </section>
 </li>
 <li>
@@ -221,6 +235,12 @@ loadScripts(document, 'script');</script>
 <dt>Overrides:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setQualificationWorkGrade(ru.nsu.tsyganov.student.GradeValue)">
+<h3>setQualificationWorkGrade</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setQualificationWorkGrade</span><wbr><span class="parameters">(<a href="GradeValue.html" title="enum class in ru.nsu.tsyganov.student">GradeValue</a>&nbsp;grade)</span></div>
 </section>
 </li>
 </ul>
