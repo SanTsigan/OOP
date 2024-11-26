@@ -3,6 +3,9 @@ package ru.nsu.tsyganov.student;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Главный класс зачётной книжки.
+ */
 public class Student {
     private String name;
     private String group;
@@ -10,6 +13,9 @@ public class Student {
     private StudyForm studyForm;
     private boolean thesisGradeExcellent;
 
+    /**
+     * Конструктор.
+     */
     public Student(String name, String group, StudyForm studyForm) {
         this.name = name;
         this.group = group;
@@ -27,7 +33,9 @@ public class Student {
     }
 
     public double calculateGPA() {
-        if (grades.isEmpty()) return 0.0;
+        if (grades.isEmpty()) {
+            return 0.0;
+        }
 
         int totalPoints = 0;
         for (Grade grade : grades) {
@@ -50,8 +58,9 @@ public class Student {
     }
 
     public boolean canTransferToBudget() {
-        // Проверяем последние две сессии (предположим, что последние 4 оценки - это последние две сессии)
-        if (grades.size() < 4) return false;
+        if (grades.size() < 4) {
+            return false;
+        }
 
         int satisfactoryCount = 0;
         for (int i = grades.size() - 4; i < grades.size(); i++) {
@@ -63,7 +72,9 @@ public class Student {
     }
 
     public boolean canGetRedDiploma() {
-        if (grades.isEmpty()) return false;
+        if (grades.isEmpty()) {
+            return false;
+        }
 
         int excellentCount = 0;
         for (Grade grade : grades) {
@@ -86,11 +97,11 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" +
-                "name='" + name + "'" +
-                "group='" + group + "'" +
-                ", grades=" + grades +
-                ", studyForm=" + studyForm +
-                '}';
+        return "Student{"
+                + "name='" + name + "'"
+                + "group='" + group + "'"
+                + ", grades=" + grades
+                + ", studyForm=" + studyForm
+                + '}';
     }
 }

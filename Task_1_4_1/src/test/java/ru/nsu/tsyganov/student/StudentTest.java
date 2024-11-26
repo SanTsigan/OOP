@@ -1,11 +1,11 @@
 package ru.nsu.tsyganov.student;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class StudentTest {
     private Student student;
@@ -16,12 +16,12 @@ class StudentTest {
     }
 
     @Test
-    void testCalculateGPA_NoGrades() {
+    void testCalculategpa_NoGrades() {
         assertEquals(0.0, student.calculateGPA());
     }
 
     @Test
-    void testCalculateGPA_ValidGrades() {
+    void testCalculategpa_ValidGrades() {
         student.addGrade(Grade.EXCELLENT);
         student.addGrade(Grade.GOOD);
         student.addGrade(Grade.SATISFACTORY);
@@ -79,7 +79,7 @@ class StudentTest {
     }
 
     @Test
-    void testCanGetIncreasedScholarship_LowGPA() {
+    void testCanGetIncreasedScholarship_LowGpa() {
         student.addGrade(Grade.GOOD);
         student.addGrade(Grade.GOOD);
 
@@ -87,7 +87,7 @@ class StudentTest {
     }
 
     @Test
-    void testCanGetIncreasedScholarship_HighGPA() {
+    void testCanGetIncreasedScholarship_HighGpa() {
         student.addGrade(Grade.EXCELLENT);
         student.addGrade(Grade.EXCELLENT);
 
