@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ru.nsu.tsyganov.student","l":"Grade"},{"p":"ru.nsu.tsyganov.student","l":"Student"},{"p":"ru.nsu.tsyganov.student","l":"StudyForm"}];updateSearchResults();
