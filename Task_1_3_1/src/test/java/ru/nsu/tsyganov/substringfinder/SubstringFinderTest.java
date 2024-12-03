@@ -67,11 +67,11 @@ class SubstringFinderTest {
         private static final String CHARACTERS
                 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        public void generateRandomFile(String filePath, int size) {
+        public void generateRandomFile(String filePath, float size) {
             Random random = new Random();
 
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-                for (int i = 0; i < size; i++) {
+                for (float i = 0; i < size; i++) {
                     int index = random.nextInt(CHARACTERS.length());
                     writer.write(CHARACTERS.charAt(index));
                 }
@@ -84,7 +84,7 @@ class SubstringFinderTest {
     @Test
     void findInGeneratedFile() throws IOException {
         RandomFileGenerator rgen = new RandomFileGenerator();
-        rgen.generateRandomFile("largefile.txt", Integer.MAX_VALUE);
+        rgen.generateRandomFile("largefile.txt", 16106127360f);
         File file = new File("largefile.txt");
         List<Integer> output = finder.find("largefile.txt", "abc");
         file.delete();
