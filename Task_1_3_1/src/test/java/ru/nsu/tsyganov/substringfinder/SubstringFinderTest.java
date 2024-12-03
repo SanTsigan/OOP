@@ -65,7 +65,8 @@ class SubstringFinderTest {
     }
 
     public static class RandomFileGenerator {
-        private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        private static final String CHARACTERS =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         private static final int BUFFER_SIZE = 1048576; // 1 MB
         private static final int STRING_LENGTH = 1024;
 
@@ -73,7 +74,8 @@ class SubstringFinderTest {
             Random random = new Random();
             StringBuilder sb = new StringBuilder(STRING_LENGTH);
 
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, StandardCharsets.UTF_8), BUFFER_SIZE)) {
+            try (BufferedWriter writer = new BufferedWriter(
+                    new FileWriter(filePath, StandardCharsets.UTF_8), BUFFER_SIZE)) {
                 long totalChars = (long) (size * 1024 * 1024);
                 long writtenChars = 0;
 
