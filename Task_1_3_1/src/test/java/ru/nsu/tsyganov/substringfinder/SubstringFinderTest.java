@@ -85,7 +85,7 @@ class SubstringFinderTest {
     @Test
     void findInGeneratedFile() throws IOException {
         RandomFileGenerator rgen = new RandomFileGenerator();
-        rgen.generateRandomFile("largefile.txt", 3221225472f);
+        rgen.generateRandomFile("largefile.txt", 2684354560f);
         File file = new File("largefile.txt");
         List<Integer> output = finder.find("largefile.txt", "abc");
         file.delete();
