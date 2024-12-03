@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,7 @@ class SubstringFinderTest {
         public void generateRandomFile(String filePath, float size) {
             Random random = new Random();
 
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, StandardCharsets.UTF_8))) {
                 for (float i = 0; i < size; i++) {
                     int index = random.nextInt(CHARACTERS.length());
                     writer.write(CHARACTERS.charAt(index));
