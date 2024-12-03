@@ -7,6 +7,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс, для поиска подстроки с помощью алгоритма КМП.
+ */
 public class SubstringFinder {
 
     private static int[] buildPrefixFunction(String pattern) {
@@ -26,6 +29,9 @@ public class SubstringFinder {
         return prefix;
     }
 
+    /**
+     * Буфферизированное чтение файла и поиск всех вхождений подстроки в нем.
+     */
     public List<Integer> find(String fileName, String substring) {
         List<Integer> indices = new ArrayList<>();
         StringBuilder previousLine = new StringBuilder();
