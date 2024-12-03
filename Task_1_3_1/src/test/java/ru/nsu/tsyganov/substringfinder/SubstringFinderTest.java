@@ -65,15 +65,26 @@ class SubstringFinderTest {
     }
 
     public static class RandomFileGenerator {
-        private static final String CHARACTERS
-                = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        private static final int BUFFER_SIZE = 1048576; // 1 MB
+        private static final int STRING_LENGTH = 1024;
+
         public void generateRandomFile(String filePath, float size) {
             Random random = new Random();
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath,
-                    StandardCharsets.UTF_8), 1048576)) {
-                for (float i = 0f; i < size; i += 1f) {
-                    int index = random.nextInt(CHARACTERS.length());
-                    writer.write(CHARACTERS.charAt(index));
+            StringBuilder sb = new StringBuilder(STRING_LENGTH);
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, StandardCharsets.UTF_8), BUFFER_SIZE)) {
+                long totalChars = (long) (size * 1024 * 1024);
+                long writtenChars = 0;
+
+                while (writtenChars < totalChars) {
+                    sb.setLength(0);
+                    for (int i = 0; i < STRING_LENGTH; i++) {
+                        int index = random.nextInt(CHARACTERS.length());
+                        sb.append(CHARACTERS.charAt(index));
+                    }
+                    writer.write(sb.toString());
+                    writtenChars += STRING_LENGTH;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -84,7 +95,7 @@ class SubstringFinderTest {
     @Test
     void findInGeneratedFile() throws IOException {
         RandomFileGenerator rgen = new RandomFileGenerator();
-        rgen.generateRandomFile("largefile.txt", 1073741824f);
+        rgen.generateRandomFile("largefile.txt", 12288f);
         File file = new File("largefile.txt");
         List<Integer> output = finder.find("largefile.txt", "abc");
         file.delete();
