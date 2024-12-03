@@ -79,7 +79,8 @@ public class Student {
 
         boolean qualificationWorkExcellent = (qualificationWorkGrade == GradeValue.EXCELLENT);
 
-        return totalCount > 0 && (excellentCount * 100.0 / totalCount >= 75) && !hasSatisfactory && qualificationWorkExcellent;
+        return totalCount > 0 && (excellentCount * 100.0 / totalCount >= 75)
+                && !hasSatisfactory && qualificationWorkExcellent;
     }
 
     public boolean canGetIncreasedScholarship() {
