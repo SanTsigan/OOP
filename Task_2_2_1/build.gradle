@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'jacococ'
+    id 'jacoco'
 }
 
 group = 'ru.nsu.tsyganov.pizza'
