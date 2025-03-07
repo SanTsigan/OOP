@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ru.nsu.tsyganov.primes","l":"PrimesSequential"},{"p":"ru.nsu.tsyganov.primes","l":"PrimesStreams"},{"p":"ru.nsu.tsyganov.primes","l":"PrimesThreads"}];updateSearchResults();
