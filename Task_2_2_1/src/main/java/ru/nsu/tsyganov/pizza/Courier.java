@@ -1,5 +1,7 @@
 package ru.nsu.tsyganov.pizza;
 
+import java.util.List;
+
 public class Courier implements Runnable {
     private int courierId;
     private int trunkCapacity; // Вместимость багажника
