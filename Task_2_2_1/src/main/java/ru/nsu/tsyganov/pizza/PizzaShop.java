@@ -1,5 +1,6 @@
 package ru.nsu.tsyganov.pizza;
 
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -72,5 +73,9 @@ public class PizzaShop {
 
     public static void orderCompleted() {
         activeOrders.decrementAndGet(); // Уменьшаем счётчик активных заказов
+    }
+
+    public static Queue<Order> getOrderQueue() {
+        return orderQueue;
     }
 }
