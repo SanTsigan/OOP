@@ -27,6 +27,9 @@ public class Courier implements Runnable {
             }
 
             System.out.println("Courier " + courierId + " has delivered orders: " + orders);
+            for (Order order : orders) {
+                PizzaShop.orderCompleted(); // Уменьшаем счётчик активных заказов
+            }
         }
     }
 }

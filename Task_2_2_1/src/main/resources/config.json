@@ -1,0 +1,28 @@
+{
+  "storageCapacity": 10,
+  "bakers": [
+    {
+      "id": 1,
+      "cookingSpeed": 2
+    },
+    {
+      "id": 2,
+      "cookingSpeed": 3
+    },
+    {
+      "id": 3,
+      "cookingSpeed": 4
+    }
+  ],
+  "couriers": [
+    {
+      "id": 1,
+      "trunkCapacity": 3
+    },
+    {
+      "id": 2,
+      "trunkCapacity": 5
+    }
+  ],
+  "simulationDuration": 60
+}
