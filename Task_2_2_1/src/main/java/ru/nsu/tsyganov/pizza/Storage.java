@@ -40,4 +40,8 @@ public class Storage {
         notifyAll();
         return orders;
     }
+
+    public boolean isEmpty() {
+        return storage.isEmpty();
+    }
 }

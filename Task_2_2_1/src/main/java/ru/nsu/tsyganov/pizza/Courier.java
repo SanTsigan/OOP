@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Courier implements Runnable {
     private int courierId;
-    private int trunkCapacity; // Вместимость багажника
+    private int trunkCapacity;
     private Storage storage;
 
     public Courier(int courierId, int trunkCapacity, Storage storage) {
@@ -15,21 +15,31 @@ public class Courier implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        while (PizzaShop.isRunning() || !storage.isEmpty()) { //флажок про пекарей
             List<Order> orders = storage.takePizzas(trunkCapacity);
-            if (orders.isEmpty()) break; // Если пицц больше нет, завершаем работу
+            if (orders.isEmpty()) {
+                try {
+                    Thread.sleep(1000); // Ждём новых пицц
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
+                continue;
+            }
 
             System.out.println("Courier " + courierId + " is delivering orders: " + orders);
             try {
                 Thread.sleep(2000); // Имитация времени доставки
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
+                break;
             }
 
             System.out.println("Courier " + courierId + " has delivered orders: " + orders);
             for (Order order : orders) {
-                PizzaShop.orderCompleted(); // Уменьшаем счётчик активных заказов
+                PizzaShop.orderCompleted();
             }
         }
+        System.out.println("Courier " + courierId + " has finished work.");
     }
 }
