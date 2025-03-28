@@ -4,7 +4,7 @@ module ru.nsu.tsyganov.snake {
     requires javafx.graphics;
 
     opens ru.nsu.tsyganov.snake.model to javafx.base;
-    opens com.example.snake.controller to javafx.fxml;
+    opens ru.nsu.tsyganov.snake.controller to javafx.fxml;
 
     exports ru.nsu.tsyganov.snake;
     exports ru.nsu.tsyganov.snake.model;

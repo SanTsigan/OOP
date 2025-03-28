@@ -3,7 +3,6 @@ plugins {
     id 'jacoco'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
-    id 'org.beryx.jlink' version '3.1.1'
 }
 
 group = 'ru.nsu.tsyganov.snake'
@@ -13,17 +12,17 @@ repositories {
     mavenCentral()
 }
 
-mainClassName = 'com.example.snake.Main'
-
-javafx {
-    version = "24"
-    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics' ]
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
-jlink {
-    launcher {
-        name = 'hellofx'
-    }
+mainClassName = 'ru.nsu.tsyganov.snake.Main'
+
+javafx {
+    version = "17"
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics' ]
 }
 
 dependencies {
@@ -39,4 +38,11 @@ jacocoTestReport {
     reports {
         xml.required = true
     }
+}
+
+run {
+    jvmArgs = [
+            '--module-path', classpath.asPath,
+            '--add-modules', 'javafx.controls,javafx.fxml,javafx.graphics'
+    ]
 }
