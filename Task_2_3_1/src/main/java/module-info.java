@@ -5,6 +5,7 @@ module ru.nsu.tsyganov.snake {
 
     opens ru.nsu.tsyganov.snake.model to javafx.base;
     opens ru.nsu.tsyganov.snake.controller to javafx.fxml;
+    opens ru.nsu.tsyganov.snake.view to javafx.controls;
 
     exports ru.nsu.tsyganov.snake;
     exports ru.nsu.tsyganov.snake.model;

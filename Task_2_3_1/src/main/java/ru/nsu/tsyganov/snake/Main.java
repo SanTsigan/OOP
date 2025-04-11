@@ -11,10 +11,19 @@ import java.util.Objects;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/game.fxml")));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/game.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root, 600, 500);
+
+        // Даем фокус сцене
+        scene.setOnMouseClicked(e -> scene.getRoot().requestFocus());
+
+        primaryStage.setScene(scene);
         primaryStage.setTitle("Змейка");
-        primaryStage.setScene(new Scene(root, 600, 500));
         primaryStage.show();
+
+        // Фокус на корневой элемент
+        scene.getRoot().requestFocus();
     }
 
     public static void main(String[] args) {

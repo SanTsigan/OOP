@@ -1,80 +1,96 @@
 package ru.nsu.tsyganov.snake.model;
 
 import javafx.geometry.Point2D;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class Snake {
-    private LinkedList<Point2D> body;
-    private Direction direction;
+public class Snake implements Actor {
+    private final LinkedList<Point2D> body = new LinkedList<>();
+    private Direction direction = Direction.RIGHT;
     private boolean grow;
+    private volatile boolean alive = true;
 
     public Snake(Point2D startPosition) {
-        body = new LinkedList<>();
         body.add(startPosition);
-        direction = Direction.RIGHT;
-        grow = false;
     }
 
-    public void move() {
-        Point2D head = getHead();
-        Point2D newHead = null;
+    @Override
+    public synchronized void update(GameModel model) {
+        if (!alive) return;
 
-        switch (direction) {
-            case UP:
-                newHead = new Point2D(head.getX(), head.getY() - 1);
-                break;
-            case DOWN:
-                newHead = new Point2D(head.getX(), head.getY() + 1);
-                break;
-            case LEFT:
-                newHead = new Point2D(head.getX() - 1, head.getY());
-                break;
-            case RIGHT:
-                newHead = new Point2D(head.getX() + 1, head.getY());
-                break;
-        }
+        move();
+        checkCollisions(model);
+    }
+
+    private void move() {
+        Point2D head = getHead();
+        Point2D newHead = switch (direction) {
+            case UP -> new Point2D(head.getX(), head.getY() - 1);
+            case DOWN -> new Point2D(head.getX(), head.getY() + 1);
+            case LEFT -> new Point2D(head.getX() - 1, head.getY());
+            case RIGHT -> new Point2D(head.getX() + 1, head.getY());
+        };
 
         body.addFirst(newHead);
 
+        // Удаляем хвост только если не растем
         if (!grow) {
             body.removeLast();
         } else {
-            grow = false;
+            grow = false; // Сбрасываем флаг после роста
         }
     }
 
-    public void grow() {
-        this.grow = true;
-    }
-
-    public boolean collidesWith(Point2D point) {
-        return body.contains(point);
-    }
-
-    public boolean collidesWithSelf() {
+    private void checkCollisions(GameModel model) {
         Point2D head = getHead();
-        return body.stream().skip(1).anyMatch(segment -> segment.equals(head));
+
+        // Стены
+        if (head.getX() < 0 || head.getX() > model.getWidth() ||
+                head.getY() < 0 || head.getY() > model.getHeight()) {
+            alive = false;
+        }
+
+        // Самопересечение
+        if (body.stream().skip(1).anyMatch(segment -> segment.equals(head))) {
+            alive = false;
+        }
     }
 
-    public Point2D getHead() {
+    @Override
+    public boolean isAlive() {
+        return alive;
+    }
+
+    @Override
+    public boolean isThreadSafe() {
+        return true;
+    }
+
+    public synchronized ArrayList<Point2D> getBody() {
+        return new ArrayList<>(body);
+    }
+
+    public synchronized Point2D getHead() {
         return body.getFirst();
     }
 
-    public LinkedList<Point2D> getBody() {
-        return body;
-    }
-
-    public void setDirection(Direction direction) {
-        // Prevent 180-degree turns
-        if ((this.direction == Direction.UP && direction != Direction.DOWN) ||
-                (this.direction == Direction.DOWN && direction != Direction.UP) ||
-                (this.direction == Direction.LEFT && direction != Direction.RIGHT) ||
-                (this.direction == Direction.RIGHT && direction != Direction.LEFT)) {
-            this.direction = direction;
+    public synchronized void setDirection(Direction newDirection) {
+        // Запрещаем разворот на 180°
+        if ((direction == Direction.UP && newDirection != Direction.DOWN) ||
+                (direction == Direction.DOWN && newDirection != Direction.UP) ||
+                (direction == Direction.LEFT && newDirection != Direction.RIGHT) ||
+                (direction == Direction.RIGHT && newDirection != Direction.LEFT)) {
+            this.direction = newDirection;
+            System.out.println("Direction changed to: " + newDirection); // Отладка
         }
     }
 
-    public Direction getDirection() {
-        return direction;
+    public synchronized void grow() {
+        this.grow = true;
+    }
+
+    public synchronized int getLength() {
+        return body.size();
     }
 }

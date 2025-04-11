@@ -3,70 +3,130 @@ package ru.nsu.tsyganov.snake.view;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import ru.nsu.tsyganov.snake.model.GameModel;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import ru.nsu.tsyganov.snake.model.Actor;
 import ru.nsu.tsyganov.snake.model.Snake;
 import ru.nsu.tsyganov.snake.model.Food;
+import ru.nsu.tsyganov.snake.model.GameModel;
 
 import javafx.geometry.Point2D;
 
-public class GameView {
-    private Canvas canvas;
-    private GraphicsContext gc;
-    private double cellSize;
+import java.util.LinkedList;
+import java.util.List;
 
-    public GameView(Canvas canvas, int width, int height) {
+public class GameView {
+    private final Canvas canvas;
+    private final double cellSize;
+    private final Text textHelper = new Text();
+    private static final Font UI_FONT = Font.font("Arial", 24);
+    private static final Font MESSAGE_FONT = Font.font("Arial", FontWeight.BOLD, 48);
+
+    public GameView(Canvas canvas, int gridWidth, int gridHeight) {
         this.canvas = canvas;
-        this.gc = canvas.getGraphicsContext2D();
-        this.cellSize = Math.min(canvas.getWidth() / width, canvas.getHeight() / height);
+        this.cellSize = Math.min(
+                canvas.getWidth() / gridWidth,
+                canvas.getHeight() / gridHeight
+        );
     }
 
-    public void render(GameModel model) {
+    public void render(List<Actor> actors, GameModel model) {
+        GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        // Draw grid
-        gc.setStroke(Color.LIGHTGRAY);
-        for (int i = 0; i <= model.getWidth(); i++) {
-            gc.strokeLine(i * cellSize, 0, i * cellSize, model.getHeight() * cellSize);
-        }
-        for (int i = 0; i <= model.getHeight(); i++) {
-            gc.strokeLine(0, i * cellSize, model.getWidth() * cellSize, i * cellSize);
-        }
+        // 1. Рисуем игровые объекты
+        drawActors(gc, actors);
 
-        // Draw snake
-        gc.setFill(Color.GREEN);
-        for (Point2D segment : model.getSnake().getBody()) {
-            gc.fillRect(segment.getX() * cellSize, segment.getY() * cellSize, cellSize, cellSize);
-        }
-
-        // Draw head
-        gc.setFill(Color.DARKGREEN);
-        Point2D head = model.getSnake().getHead();
-        gc.fillRect(head.getX() * cellSize, head.getY() * cellSize, cellSize, cellSize);
-
-        // Draw food
-        gc.setFill(Color.RED);
-        for (Food food : model.getFoods()) {
-            Point2D position = food.getPosition();
-            gc.fillOval(position.getX() * cellSize, position.getY() * cellSize, cellSize, cellSize);
-        }
-
-        // Draw game over or win message
+        // 3. Рисуем сообщения о конце игры
         if (model.isGameOver()) {
-            drawCenteredText("Game Over!", Color.RED);
+            drawCenteredMessage(gc, "GAME OVER", Color.RED);
         } else if (model.isGameWon()) {
-            drawCenteredText("You Win!", Color.GREEN);
+            drawCenteredMessage(gc, "YOU WON!", Color.GREEN);
         }
     }
 
-    private void drawCenteredText(String text, Color color) {
-        gc.setFill(color);
-        gc.setFont(javafx.scene.text.Font.font(48));
-        gc.fillText(text,
-                (canvas.getWidth() - gc.getFont().getSize() * text.length() / 2) / 2,
-                canvas.getHeight() / 2);
+    private void drawActors(GraphicsContext gc, List<Actor> actors) {
+        actors.forEach(actor -> {
+            if (actor instanceof Snake) {
+                drawSnake((Snake) actor);
+            } else if (actor instanceof Food) {
+                drawFood((Food) actor);
+            }
+        });
     }
 
-    public double getCellSize() {
-        return cellSize;
+    private void drawUI(GraphicsContext gc, GameModel model) {
+        gc.setFont(UI_FONT);
+        gc.setFill(Color.BLACK);
+        String scoreText = "Score: " + model.getScore() + "/" + model.getTargetScore();
+        gc.fillText(scoreText, 20, 30);
+    }
+
+    private void drawCenteredMessage(GraphicsContext gc, String text, Color color) {
+        gc.setFont(MESSAGE_FONT);
+        gc.setFill(color);
+
+        double textWidth = computeTextWidth(text, MESSAGE_FONT);
+        double x = (canvas.getWidth() - textWidth) / 2;
+        double y = canvas.getHeight() / 2;
+
+        gc.fillText(text, x, y);
+    }
+
+    private double computeTextWidth(String text, Font font) {
+        textHelper.setText(text);
+        textHelper.setFont(font);
+        return textHelper.getLayoutBounds().getWidth();
+    }
+
+    private void drawGrid(GraphicsContext gc) {
+        gc.setStroke(Color.LIGHTGRAY);
+        for (int i = 0; i <= canvas.getWidth() / cellSize; i++) {
+            gc.strokeLine(i * cellSize, 0, i * cellSize, canvas.getHeight());
+        }
+        for (int i = 0; i <= canvas.getHeight() / cellSize; i++) {
+            gc.strokeLine(0, i * cellSize, canvas.getWidth(), i * cellSize);
+        }
+    }
+
+    private void drawActor(Actor actor) {
+        if (actor instanceof Snake) {
+            drawSnake((Snake) actor);
+        } else if (actor instanceof Food) {
+            drawFood((Food) actor);
+        }
+    }
+
+    private void drawSnake(Snake snake) {
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setFill(Color.GREEN);
+        snake.getBody().forEach(segment -> {
+            gc.fillRect(
+                    segment.getX() * cellSize,
+                    segment.getY() * cellSize,
+                    cellSize, cellSize
+            );
+        });
+
+        // Выделяем голову
+        gc.setFill(Color.DARKGREEN);
+        Point2D head = snake.getHead();
+        gc.fillRect(
+                head.getX() * cellSize,
+                head.getY() * cellSize,
+                cellSize, cellSize
+        );
+    }
+
+    private void drawFood(Food food) {
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setFill(Color.RED);
+        Point2D pos = food.getPosition();
+        gc.fillOval(
+                pos.getX() * cellSize,
+                pos.getY() * cellSize,
+                cellSize, cellSize
+        );
     }
 }
