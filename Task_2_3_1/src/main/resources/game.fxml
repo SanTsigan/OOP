@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.canvas.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ru.nsu.tsyganov.snake.controller.GameController">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" style="-fx-background-color: #f0f0f0;">
+            <Label fx:id="scoreLabel" text="Score: 0"
+                   style="-fx-font-size: 18; -fx-padding: 10; -fx-font-weight: bold;"/>
+        </HBox>
+    </top>
+
+    <center>
+        <Canvas fx:id="gameCanvas" width="600" height="500"/>
+    </center>
+</BorderPane>
