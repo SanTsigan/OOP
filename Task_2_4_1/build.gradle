@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+    id 'groovy'
+    id 'jacoco'
+}
+
+group = 'ru.nsu.tsyganov.dsl'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'org.codehaus.groovy:groovy-all:3.0.9'  // Для работы с Groovy
+    testImplementation 'junit:junit:4.13.2'                // Тестирование
+    implementation 'com.puppycrawl.tools:checkstyle:10.3.3' // Checkstyle
+}
+
+test {
+    useJUnitPlatform()
+}
