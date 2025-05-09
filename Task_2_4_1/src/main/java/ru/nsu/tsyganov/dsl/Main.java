@@ -1,17 +1,66 @@
 package ru.nsu.tsyganov.dsl;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import ru.nsu.tsyganov.dsl.model.CourseConfig;
+import ru.nsu.tsyganov.dsl.model.SubmissionResult;
+import ru.nsu.tsyganov.dsl.config.ConfigLoader;
+import ru.nsu.tsyganov.dsl.git.GitService;
+import ru.nsu.tsyganov.dsl.build.BuildService;
+import ru.nsu.tsyganov.dsl.test.TestService;
+import ru.nsu.tsyganov.dsl.report.ReportService;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        if (args.length == 0 || args[0].equals("check")) {
+            System.out.println("Запуск проверки...");
+            CourseConfig config = ConfigLoader.load("courseConfig.groovy");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+            // 1) Клонирование/обновление репозиториев
+            config.getChecks().forEach(ch -> {
+                String repoUrl = config.getGroups().stream()
+                        .flatMap(g -> g.getStudents().stream())
+                        .filter(s -> s.getGithub().equals(ch.getGithub()))
+                        .map(s -> s.getRepoUrl())
+                        .findFirst().orElse(null);
+                GitService.cloneOrUpdate(repoUrl, ch.getGithub());
+            });
+
+            // 2) Компиляция, Javadoc, проверка стиля, тестирование
+            config.getTasks().forEach(task -> {
+                config.getChecks().stream()
+                        .filter(ch -> ch.getTaskId().equals(task.getId()))
+                        .forEach(ch -> {
+                            String workDir = "repos/" + ch.getGithub();
+                            boolean compiled = BuildService.compile(workDir);
+                            if (compiled) {
+                                BuildService.generateJavadoc(workDir);
+                                BuildService.checkStyle(workDir);
+                                TestService.runTests(workDir, task.getId());
+                            }
+                        });
+            });
+
+            // 3) Сбор результатов и генерация HTML-отчета
+            List<SubmissionResult> results = new ArrayList<>();
+            config.getTasks().forEach(task -> {
+                config.getChecks().stream()
+                        .filter(ch -> ch.getTaskId().equals(task.getId()))
+                        .forEach(ch -> {
+                            String workDir = "repos/" + ch.getGithub();
+                            SubmissionResult res = new SubmissionResult(ch.getGithub(), task.getId());
+                            res.setCompiled(BuildService.compile(workDir));
+                            if (res.isCompiled()) {
+                                res.setTestsPassed(TestService.runTestsWithResult(workDir, task.getId()));
+                                res.setDocumentationGenerated(BuildService.generateJavadoc(workDir));
+                            }
+                            results.add(res);
+                        });
+            });
+            ReportService.generateHtmlReport(results, "reports/result.html");
+        } else {
+            System.out.println("Неизвестная команда. Используйте: check");
         }
     }
 }
