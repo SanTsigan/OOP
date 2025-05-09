@@ -23,7 +23,7 @@ class CourseConfigBuilder {
         def list = [] as List<Group>;
         def delegate = new Object() {
             def group(Map attrs, Closure<?> gcl) {
-                Group g = new Group(); g.setName(attrs.name);
+                Group g = new Group(); g.setName(attrs.name as String);
                 def students = [] as List<Student>;
                 def sd = new Object() { def student(Closure<?> scl) { Student s = new Student(); scl.delegate = s; scl.resolveStrategy = Closure.DELEGATE_FIRST; scl(); students << s }};
                 gcl.delegate = sd; gcl.resolveStrategy = Closure.DELEGATE_FIRST; gcl();
