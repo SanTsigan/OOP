@@ -1,60 +1,37 @@
-course {
+import java.time.LocalDate
+
+builder.course {
     tasks {
         task {
-            id = '2.4.1'
-            name = 'Инкапсуляция'
-            maxPoints = 10
-            softDeadline = LocalDate.parse('2025-05-10')
-            hardDeadline = LocalDate.parse('2025-05-15')
-        }
-        task {
-            id = '2.4.2'
-            name = 'Наследование'
-            maxPoints = 15
-            softDeadline = LocalDate.parse('2025-05-20')
-            hardDeadline = LocalDate.parse('2025-05-25')
+            id = 'Task_1_1_3'
+            name = 'Хэш-таблица'
+            maxPoints = 5
+            softDeadline = LocalDate.parse('2025-12-31')
+            hardDeadline = LocalDate.parse('2026-01-15')
         }
     }
 
     groups {
-        group(name: 'A') {
+        group(name: 'JustMe') {
             student {
-                github = 'student123'
-                fullName = 'Иванов Иван'
-                repoUrl = 'https://github.com/student123/oop-course'
-            }
-            student {
-                github = 'student456'
-                fullName = 'Петров Петр'
-                repoUrl = 'https://github.com/student456/oop-course'
+                github = 'SanTsigan'
+                fullName = 'Цыганов Александр'
+                repoUrl = 'https://github.com/SanTsigan/OOP'
             }
         }
     }
 
     checks {
         check {
-            taskId = '2.4.1'
-            github = 'student123'
-        }
-        check {
-            taskId = '2.4.2'
-            github = 'student456'
+            taskId = 'Task_1_1_3'
+            github = 'SanTsigan'
         }
     }
 
-    checkpoints {
-        checkpoint {
-            name = '1-я контрольная'
-            date = LocalDate.parse('2025-06-01')
-        }
-        checkpoint {
-            name = '2-я контрольная'
-            date = LocalDate.parse('2025-06-15')
-        }
-    }
+    checkpoints {}
 
     settings {
-        gradeConversion = [90: '5', 75: '4', 60: '3']
-        bonusPoints = ['student123': ['2.4.1': 2]]
+        gradeConversion = [5:'5',3:'4',1:'3']
+        bonusPoints = [:]
     }
 }

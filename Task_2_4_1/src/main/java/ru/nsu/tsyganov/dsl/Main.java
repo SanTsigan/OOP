@@ -33,7 +33,7 @@ public class Main {
                 config.getChecks().stream()
                         .filter(ch -> ch.getTaskId().equals(task.getId()))
                         .forEach(ch -> {
-                            String workDir = "repos/" + ch.getGithub();
+                            String workDir = "repos/" + ch.getGithub() + "/" + ch.getTaskId();
                             boolean compiled = BuildService.compile(workDir);
                             if (compiled) {
                                 BuildService.generateJavadoc(workDir);
