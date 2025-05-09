@@ -42,15 +42,14 @@ public class BuildService {
 
     /**
      * Применяет форматирование Google Java Format к исходникам.
+     *
      * @param projectDir директория проекта
-     * @return true, если форматирование прошло успешно
      */
-    public static boolean checkStyle(String projectDir) {
+    public static void checkStyle(String projectDir) {
         try {
             int exitCode = new ProcessBuilder(
                     "google-java-format", "--replace", projectDir + "/src/**/*.java"
             ).directory(new File(projectDir)).inheritIO().start().waitFor();
-            return exitCode == 0;
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException("Ошибка проверки стиля: " + e.getMessage(), e);
         }

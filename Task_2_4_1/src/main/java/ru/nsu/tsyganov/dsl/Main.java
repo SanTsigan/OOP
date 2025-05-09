@@ -1,6 +1,7 @@
 package ru.nsu.tsyganov.dsl;
 
 import ru.nsu.tsyganov.dsl.model.CourseConfig;
+import ru.nsu.tsyganov.dsl.model.Student;
 import ru.nsu.tsyganov.dsl.model.SubmissionResult;
 import ru.nsu.tsyganov.dsl.config.ConfigLoader;
 import ru.nsu.tsyganov.dsl.git.GitService;
@@ -22,7 +23,7 @@ public class Main {
                 String repoUrl = config.getGroups().stream()
                         .flatMap(g -> g.getStudents().stream())
                         .filter(s -> s.getGithub().equals(ch.getGithub()))
-                        .map(s -> s.getRepoUrl())
+                        .map(Student::getRepoUrl)
                         .findFirst().orElse(null);
                 GitService.cloneOrUpdate(repoUrl, ch.getGithub());
             });
