@@ -21,29 +21,44 @@ public class BuildService {
     public static boolean compile(String projectDir) {
         try {
             List<String> javaFiles = Files.walk(Paths.get(projectDir, "src"))
+                    .filter(p -> p.toString().endsWith(".java"))
+                    .map(Path::toAbsolutePath)
                     .map(Path::toString)
-                    .filter(string -> string.endsWith(".java"))
-                    .toList();
+                    .collect(Collectors.toList());
 
             if (javaFiles.isEmpty()) {
                 System.out.println("Нет .java файлов для компиляции в: " + projectDir);
                 return false;
             }
 
+            // Создаём временный файл со списком исходников
+            File sourcesFile = File.createTempFile("sources", ".txt");
+            Files.write(sourcesFile.toPath(), javaFiles);
+
             List<String> command = new ArrayList<>();
             command.add("javac");
+            command.add("-cp");
+            command.add(getJUnitClasspath());
             command.add("-d");
             command.add(projectDir + "/out");
-            command.addAll(javaFiles);
+            command.add("@" + sourcesFile.getAbsolutePath());
 
             ProcessBuilder pb = new ProcessBuilder(command);
             pb.directory(new File(projectDir));
-            return pb.inheritIO().start().waitFor() == 0;
+            boolean result = pb.inheritIO().start().waitFor() == 0;
+
+            sourcesFile.delete(); // удалим временный файл
+
+            return result;
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException("Ошибка компиляции: " + e.getMessage(), e);
         }
     }
 
+    public static String getJUnitClasspath() {
+        String classpath = System.getProperty("java.class.path");
+        return classpath;
+    }
 
     /**
      * Генерация Javadoc для проекта.
