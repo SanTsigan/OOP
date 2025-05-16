@@ -31,6 +31,9 @@ public class BuildService {
                 return false;
             }
 
+            System.out.println("Current classpath: " + System.getProperty("java.class.path"));
+
+
             // Создаём временный файл со списком исходников
             File sourcesFile = File.createTempFile("sources", ".txt");
             Files.write(sourcesFile.toPath(), javaFiles);
@@ -57,6 +60,20 @@ public class BuildService {
 
     public static String getJUnitClasspath() {
         String classpath = System.getProperty("java.class.path");
+        // Добавим все .jar файлы из lib, если они есть
+        File libDir = new File("build/libs");
+        if (libDir.exists()) {
+            File[] jars = libDir.listFiles((dir, name) -> name.endsWith(".jar"));
+            if (jars != null) {
+                for (File jar : jars) {
+                    classpath += File.pathSeparator + jar.getAbsolutePath();
+                }
+            }
+        }
+
+        classpath += File.pathSeparator + System.getProperty("user.home") +
+                "/.gradle/caches/modules-2/files-2.1/org.junit.jupiter/junit-jupiter/5.9.2/";
+
         return classpath;
     }
 

@@ -6,6 +6,7 @@ import ru.nsu.tsyganov.dsl.model.SubmissionResult;
 import ru.nsu.tsyganov.dsl.config.ConfigLoader;
 import ru.nsu.tsyganov.dsl.git.GitService;
 import ru.nsu.tsyganov.dsl.build.BuildService;
+import ru.nsu.tsyganov.dsl.build.GradleService;
 import ru.nsu.tsyganov.dsl.test.TestService;
 import ru.nsu.tsyganov.dsl.report.ReportService;
 
@@ -33,13 +34,16 @@ public class Main {
                 config.getChecks().stream()
                         .filter(ch -> ch.getTaskId().equals(task.getId()))
                         .forEach(ch -> {
-                            String workDir = "repos/" + ch.getGithub() + "/" + ch.getTaskId();
-                            boolean compiled = BuildService.compile(workDir);
+                            String workDir = "repos/" + ch.getGithub() + "/" + task.getId().replace('.', '_');
+                            boolean compiled = GradleService.runTask(workDir, "build");
                             if (compiled) {
-                                BuildService.generateJavadoc(workDir);
-                                BuildService.checkStyle(workDir);
-                                TestService.runTests(workDir, task.getId());
+                                GradleService.checkStyle(workDir);
+                                //BuildService.generateJavadoc(workDir);
+                                GradleService.runTask(workDir, "javadoc");
+                                //TestService.runTests(workDir, task.getId());
+                                GradleService.runTask(workDir, "test");
                             }
+
                         });
             });
 
@@ -49,12 +53,13 @@ public class Main {
                 config.getChecks().stream()
                         .filter(ch -> ch.getTaskId().equals(task.getId()))
                         .forEach(ch -> {
-                            String workDir = "repos/" + ch.getGithub();
+                            String workDir = "repos/" + ch.getGithub() + "/" + task.getId().replace('.', '_');
                             SubmissionResult res = new SubmissionResult(ch.getGithub(), task.getId());
-                            res.setCompiled(BuildService.compile(workDir));
+                            res.setCompiled(GradleService.runTask(workDir, "build"));
                             if (res.isCompiled()) {
-                                res.setTestsPassed(TestService.runTestsWithResult(workDir, task.getId()));
-                                res.setDocumentationGenerated(BuildService.generateJavadoc(workDir));
+                                GradleService.checkStyle(workDir);
+                                res.setTestsPassed(GradleService.runTestsAndGetPassed(workDir));;
+                                res.setDocumentationGenerated(GradleService.runTask(workDir, "javadoc"));
                             }
                             results.add(res);
                         });
