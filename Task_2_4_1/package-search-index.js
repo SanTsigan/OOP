@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ru.nsu.tsyganov.dsl"},{"l":"ru.nsu.tsyganov.dsl.build"},{"l":"ru.nsu.tsyganov.dsl.git"},{"l":"ru.nsu.tsyganov.dsl.model"},{"l":"ru.nsu.tsyganov.dsl.report"},{"l":"ru.nsu.tsyganov.dsl.test"}];updateSearchResults();
