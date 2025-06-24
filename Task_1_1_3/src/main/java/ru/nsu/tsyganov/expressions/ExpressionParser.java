@@ -1,10 +1,10 @@
 package ru.nsu.tsyganov.expressions;
 
-import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.Deque;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Deque;
+import java.util.ArrayDeque;
 
 class ExpressionParser {
     private static final Set<String> OPERATORS = new HashSet<>(Arrays.asList("+", "-", "*", "/"));
@@ -37,17 +37,13 @@ class ExpressionParser {
                     operators.addFirst("(");
                 } else if (ch == ')') {
                     while (!operators.isEmpty() && !operators.peek().equals("(")) {
-                        values.addFirst(applyOperator(operators.removeFirst(),
-                                values.removeFirst(),
-                                values.removeFirst()));
+                        values.addFirst(applyOperator(operators.removeFirst(), values.removeFirst(), values.removeFirst()));
                     }
                     operators.removeFirst(); // Удаляем '('
                 } else if (OPERATORS.contains(String.valueOf(ch))) {
                     while (!operators.isEmpty()
                             && precedence(operators.peek()) >= precedence(String.valueOf(ch))) {
-                        values.addFirst(applyOperator(operators.removeFirst(),
-                                values.removeFirst(),
-                                values.removeFirst()));
+                        values.addFirst(applyOperator(operators.removeFirst(), values.removeFirst(), values.removeFirst()));
                     }
                     operators.addFirst(String.valueOf(ch));
                 }
@@ -60,9 +56,7 @@ class ExpressionParser {
         }
 
         while (!operators.isEmpty()) {
-            values.addFirst(applyOperator(operators.removeFirst(),
-                    values.removeFirst(),
-                    values.removeFirst()));
+            values.addFirst(applyOperator(operators.removeFirst(), values.removeFirst(), values.removeFirst()));
         }
 
         return values.removeFirst();
