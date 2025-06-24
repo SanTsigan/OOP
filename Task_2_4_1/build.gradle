@@ -1,0 +1,60 @@
+plugins {
+    id 'java'
+    id 'groovy'
+    id 'application'
+    id 'jacoco'
+}
+
+group = 'ru.nsu.tsyganov.dsl'
+version = '1.0.0'
+
+application {
+    mainClass = 'ru.nsu.tsyganov.dsl.Main'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation localGroovy()
+    implementation 'org.codehaus.groovy:groovy:3.0.17'
+
+    // JUnit 5
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+
+    // Для платформенного запуска тестов вручную
+    implementation 'org.junit.platform:junit-platform-launcher:1.9.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-engine:1.9.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = []
+        }
+        groovy {
+            srcDirs = ['src/main/java', 'src/main/groovy']
+        }
+    }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
+}
